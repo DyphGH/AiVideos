@@ -11,6 +11,7 @@ import {Ep7, EP7_FRAMES} from './Ep7';
 import {FactoPe, PE_FRAMES, FPS_PE} from './FactoPe';
 import {FactoOlho, OLHO_FRAMES, FPS_OLHO} from './FactoOlho';
 import {FactoLer, LER_FRAMES, FPS_LER} from './FactoLer';
+import {FactoBR, DUR_BR, FPS_BR} from './FactoBR';
 import {Story3, STORY3_FRAMES} from './Story3';
 import {Story4, STORY4_FRAMES} from './Story4';
 import {Story6, STORY6_FRAMES} from './Story6';
@@ -31,6 +32,8 @@ export const Root: React.FC = () => (
     <Composition id="Ep7" component={Ep7} durationInFrames={EP7_FRAMES} fps={FPS} width={1080} height={1920} />
     <Composition id="Story6" component={Story6} durationInFrames={STORY6_FRAMES} fps={FPS} width={1080} height={1920} />
     <Composition id="FactoOlho" component={FactoOlho} durationInFrames={OLHO_FRAMES} fps={FPS_OLHO} width={1080} height={1920} />
+    <Composition id="FactoMosquitoBR" component={FactoBR as any} defaultProps={{which: 'mosquito'}} durationInFrames={Math.round(DUR_BR.mosquito*FPS_BR)} fps={FPS_BR} width={1080} height={1920} />
+    <Composition id="FactoCerebroBR" component={FactoBR as any} defaultProps={{which: 'cerebro'}} durationInFrames={Math.round(DUR_BR.cerebro*FPS_BR)} fps={FPS_BR} width={1080} height={1920} />
     <Composition id="FactoLer" component={FactoLer} durationInFrames={LER_FRAMES} fps={FPS_LER} width={1080} height={1920} />
   </>
 );
