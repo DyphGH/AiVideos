@@ -1,0 +1,38 @@
+EPISÓDIO 7 — "ELE GUARDOU A CHAVE… E O KLÉBER ERROU" — NARRAÇÃO
+Resultado do Ep6: ESPERAR 62% (16) ✕ DESTAPAR 38% (10) no Instagram + 1 DESTAPAR no TikTok → ganhou ESPERAR.
+Comentário em destaque: thiago_trumpet_ "Primeiro fixa Esperar!"
+
+Vozes (fixas): Narrador = Gabriel (Stab 35 / Style 45) · Nando = Matheus Santos · Cliente (Seu Arnaldo) = Diego
+Modelo: Eleven v3 (as marcas [ ] só funcionam no v3).
+
+=== NARRADOR ===
+[sussurrando] Ele tinha a chave na mão… e guardou de volta.
+[animado] Sessenta e dois por cento de vocês mandaram esperar.
+Vinte e quatro dias… oitenta e um mil… e só quatro clientes.
+[sério] Aí chegou um Gol soltando fumaça.
+[animado] Mil e duzentos de conserto… e o cliente trouxe mais cinco!
+[suspense] Só que o Nando guardou uma prova…
+Posta e expõe o Kléber… ou fica quieto e rouba os clientes dele devagar? Comenta!
+
+=== CLIENTE (Seu Arnaldo) ===
+Fiz a troca de nove e noventa no Kléber… e agora o motor tá batendo!
+[curioso] E esse carro aí debaixo da lona… tá à venda?
+
+=== NANDO ===
+[indignado] Ele botou óleo errado no seu carro!
+
+ORDEM / TEMPOS ALVO (acertar depois com a voz real):
+0,0 s   NARRADOR: Ele tinha a chave na mão… e guardou de volta.   (frame 0: chave em cima da lona, volta pra lata, tampa "CLACK")
+2,8 s   NARRADOR: Sessenta e dois por cento…                       (cartão de votos 62% ESPERAR + thiago_trumpet_)
+5,0 s   NARRADOR: Vinte e quatro dias…                             (HUD: 24 dias · R$ 81.050 · CLIENTES 4) + selo "VOCÊ DECIDE NO FINAL 👇"
+8,5 s   NARRADOR: Aí chegou um Gol soltando fumaça.
+10,5 s  CLIENTE: Fiz a troca de nove e noventa no Kléber…
+14,0 s  NANDO: Ele botou óleo errado no seu carro!
+16,5 s  NARRADOR: Mil e duzentos de conserto…                      (DÍVIDA 81.050 → 79.850 · CLIENTES 4 → 9)
+20,5 s  CLIENTE: E esse carro aí debaixo da lona… tá à venda?       (tensão: olhar para a lona)
+23,5 s  NARRADOR: Só que o Nando guardou uma prova…                 (frasco de óleo errado + recibo SPEEDFIX)
+26,5 s  NARRADOR: Posta e expõe o Kléber… ou fica quieto…? Comenta! (ecrã de votação curto, ~3 s: EXPOR ✕ CALAR)
+Duração alvo: 30–33 s.
+
+Regras deste episódio: frame 0 forte (nada de recap); contexto numa frase só; votação anunciada cedo (selo aos 5 s) e ecrã final curto;
+mexer no dinheiro (dívida desce pela 1.ª vez); NÃO usar sondagem do Instagram nem enquete nos comentários — só comentário escrito.
