@@ -1,0 +1,39 @@
+EPISÓDIO 5 — "O GOLPE E A LONA" — NARRAÇÃO
+Narrador: Gabriel · Pai (Tio Zé): voz masculina mais velha, gritando · Kléber: voz "gerente", falsa simpatia
+Definições: Stability 30–40% · Style 40–50% · Speaker boost ligado. Marcas [ ] só no modelo v3.
+
+=== NARRADOR ===
+[animado] O influencer dos dois milhões... tinha dois mil.
+E um de vocês descobriu antes de todo mundo.
+Mas vocês queriam outra coisa: a lona!
+[suspira] Só tinha um problema... o pai.
+Ele desligou na cara dele.
+[sussurrando] Aí o Turbo resolveu sozinho...
+E alguém viu.
+Metade da dívida... ou o que tem debaixo da lona? Comenta!
+
+=== NANDO (Gabriel ou voz jovem) ===
+Pai... e se eu tirar a lona?
+
+=== PAI ===
+[gritando] NÃO MEXE NAS LONAS!
+
+=== KLÉBER ===
+Te dou quarenta mil... pela oficina. Com TUDO que tá dentro.
+
+TEMPOS ALVO (src/timeline5.ts):
+0,0 s   NARRADOR: O influencer dos dois milhões... tinha dois mil.  (o número racha aos 0,8 s; GOLPE! aos 1,6 s)
+3,1 s   NARRADOR: E um de vocês descobriu antes de todo mundo.     (cartões do Gleebzito; ACERTOU! aos 4,4 s)
+7,1 s   NARRADOR: Mas vocês queriam outra coisa: a lona!
+10,1 s  NARRADOR: Só tinha um problema... o pai.                   (videochamada)
+13,3 s  NANDO: Pai... e se eu tirar a lona?                       (grande plano do Nando)
+17,3 s  PAI: NÃO MEXE NAS LONAS!                                   (20,6 s: chamada encerrada)
+22,1 s  NARRADOR: Ele desligou na cara dele.                       (cara "DESLIGOU?!")
+24,1 s  NARRADOR: Aí o Turbo resolveu sozinho...                  (a lona abre aos 24,8–26,4 s; o Nando tapa aos 28,6 s)
+31,1 s  NARRADOR: E alguém viu.                                    (o Kléber na porta)
+35,3 s  KLÉBER: Te dou quarenta mil... pela oficina. Com TUDO que tá dentro.  ("COM TUDO" aparece aos 37,4 s)
+42,1 s  NARRADOR: Metade da dívida... ou o que tem debaixo da lona? Comenta!
+
+Junta tudo em public/voz5.mp3.
+Render:  sh build-art.sh && npx remotion render src/index.ts Ep5 out/ep5.mp4
+Volume:  ffmpeg -i out/ep5.mp4 -c:v copy -af "loudnorm=I=-14:TP=-1:LRA=11" -c:a aac -b:a 256k out/ep5-final.mp4

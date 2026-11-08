@@ -1,0 +1,37 @@
+EPISÓDIO 4 — "O VÍDEO" — NARRAÇÃO
+Narrador: Gabriel (a mesma voz do story) · Rubinho: voz jovem animada · Influencer: voz "de influencer", cheia de si
+Definições: Stability 30–40% · Style 40–50% · Speaker boost ligado. Marcas [ ] só no modelo v3.
+
+=== NARRADOR ===
+[sussurrando] Esse vídeo teve quarenta e oito mil views... mas olha o fundo.
+[animado] E tudo começou com vocês: gravar ganhou com cinquenta por cento!
+E o sntz deu a ideia: grava ele trabalhando.
+[rindo] Mas o Rubinho quis fazer do jeito dele. Primeiro... uma dancinha.
+Depois, o desafio do Turbo. Cento e quarenta views.
+Aí chegou o Uno do Seu Armando... com fumaça no porta-luvas. O Rubinho só filmou. [animado] Quarenta e oito mil views!
+O WhatsApp explodiu! Quatro clientes novos. E o Seu Armando pagou... em ovos.
+[sussurrando] Mas todo mundo reparou numa coisa no fundo do vídeo...
+E aí chegou isso. Dois milhões de seguidores... será?
+O influencer... ou convencer o pai a destapar a lona? Comenta!
+
+=== RUBINHO ===
+Gênio!
+
+=== INFLUENCER (opcional, por cima do ecrã do DM) ===
+Fala mecânico! Conserta meu carro ao vivo? De graça, né... é divulgação.
+
+TEMPOS ALVO (src/timeline4.ts):
+0,0 s   Esse vídeo teve quarenta e oito mil views... mas olha o fundo.   (o reel viral com a lona e a seta)
+2,9 s   E tudo começou com vocês: gravar ganhou com 50%!   (barra + cartões aos 3,2 / 3,8 / 4,4 s)
+6,9 s   E o sntz deu a ideia…       (8,8 s: RUBINHO "Gênio!")
+10,6 s  Mas o Rubinho…               (13,1 s: TOMBO)
+15,1 s  Depois, o desafio do Turbo…
+19,1 s  Aí chegou o Uno…            (21,4 s: TEC TEC · 22,2 s: views a subir · 24,2 s: ASMR MECÂNICO)
+26,6 s  O WhatsApp explodiu!…       (mensagens 26,8 / 27,5 / 28,2 / 28,9 s · ovos 29,8 s)
+32,1 s  Mas todo mundo reparou…     (comentários da lona 33,3 / 34,0 / 34,7 s · 35,4 s: cara "HMMM…")
+38,1 s  E aí chegou isso…           (40,6 s: carimbo SERÁ?)
+43,1 s  O influencer... ou… a lona? Comenta!
+
+Junta tudo em public/voz4.mp3.
+Render:  sh build-art.sh && npx remotion render src/index.ts Ep4 out/ep4.mp4
+Volume:  ffmpeg -i out/ep4.mp4 -c:v copy -af "loudnorm=I=-14:TP=-1:LRA=11" -c:a aac -b:a 256k out/ep4-final.mp4

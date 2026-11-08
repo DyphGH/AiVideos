@@ -1,0 +1,36 @@
+EPISÓDIO 2 (VERSÃO 2) — NARRAÇÃO
+Narrador: Brian · Kléber: outra voz masculina (mais aguda, irritada, tipo "gerente")
+Definições para dar energia: Stability 30–40% · Style 40–50% · Speaker boost ligado · Speed 1.1
+
+=== NARRADOR (gera tudo num ficheiro, com pausas) ===
+Vocês escolheram: vender as peças do Corsa!
+Primeira tentativa: anúncio na internet. Três mil reais... e a primeira oferta foi... cinquenta.
+Segunda tentativa: o ferro-velho. Oitenta reais. Pelo carro INTEIRO.
+Terceira tentativa: arrancar as peças ele mesmo. Só que aí... ele achou isso. O Corsa não era dele!
+E a peça que faltava? Tava embaixo do Turbo. Vinte minutos depois...
+A dona pagou! Primeiro cliente!
+Até o banco ligar. Juros de atraso: dois mil reais.
+A Dona Cida... é mãe do Kléber.
+E agora? Pedir desculpa... ou enfrentar? Comenta!
+
+=== KLÉBER (ficheiro separado) ===
+Você tava com o carro da minha mãe desde 2019?!
+
+TEMPOS ALVO (src/timeline2b.ts → SHOTS2 e LINES2):
+0,1 s   Vocês escolheram: vender as peças do Corsa!
+2,3 s   Primeira tentativa: anúncio na internet. Três mil reais...
+5,6 s   ...e a primeira oferta foi... cinquenta.        (5,8 s: corte para a cara "50 REAIS?!")
+8,3 s   Segunda tentativa: o ferro-velho. Oitenta reais. Pelo carro inteiro.   (11,4 s: cara "OITENTA?!")
+13,3 s  Terceira tentativa: arrancar as peças ele mesmo. Só que aí... ele achou isso.   (15,4 s: aparece a etiqueta)
+17,8 s  O Corsa não era dele!                             (17,8 s: cara "NÃO É MEU?!")
+20,3 s  E a peça que faltava? Tava embaixo do Turbo. Vinte minutos depois...   (22,8 s: VRUUUM)
+26,2–29,8 s  só WhatsApp no ecrã (sem voz)
+29,8 s  A dona pagou! Primeiro cliente!
+32,3 s  Até o banco ligar. Juros de atraso: dois mil reais.   (36,5 s: cara "GLUP!")
+39,2 s  KLÉBER: Você tava com o carro da minha mãe desde 2019?!
+42,8 s  A Dona Cida... é mãe do Kléber.                   (42,8 s: grande plano do Kléber)
+45,3 s  E agora? Pedir desculpa... ou enfrentar? Comenta!
+
+Junta os dois áudios num só (public/voz2b.mp3) ou põe o do Kléber como segundo <Audio> em src/Ep2b.tsx.
+Render:  npx remotion render src/index.ts Ep2b out/ep2b.mp4
+Volume:  ffmpeg -i out/ep2b.mp4 -c:v copy -af "loudnorm=I=-14:TP=-1:LRA=11" -c:a aac -b:a 256k out/ep2b-final.mp4

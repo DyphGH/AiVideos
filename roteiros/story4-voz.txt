@@ -1,0 +1,17 @@
+STORY EP. 4 — VOZ DO NANDO (Gabriel, PT-BR, animado; ~11 s, ~190 caracteres)
+
+[animado] Ô, o episódio quatro já tá no ar! É só clicar no link!
+E todo mundo quer saber o que tem debaixo da lona...
+[rindo] O seu comentário pode aparecer no episódio cinco!
+Vota aí: influencer ou lona?
+
+TEMPOS (FALA4 em art-src/shots-story.js; legendas em src/timelineStory4.ts):
+0,0–1,9 s   "Ô, o episódio quatro já tá no ar!"
+2,1–3,3 s   "É só clicar no link!"         (o Nando aponta)
+3,6–6,2 s   "E todo mundo quer saber…"     (selo O QUE TEM DEBAIXO DA LONA?)
+6,5–8,9 s   "O seu comentário…"
+9,1–11,2 s  "Vota aí: influencer ou lona?" (selo verde)
+
+Guarda como public/voz-story4.mp3
+Render: sh build-art.sh && npx remotion render src/index.ts Story4 out/story4.mp4
+No Instagram: sticker LINK (reel do Ep. 4) dentro do retângulo tracejado.

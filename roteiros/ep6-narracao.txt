@@ -1,0 +1,38 @@
+EPISÓDIO 6 — "RECUSOU… E O KLÉBER SE VINGOU" — NARRAÇÃO
+Narrador: Gabriel · Kléber: voz "gerente", irritado · Pai: voz mais velha, calma, no áudio de WhatsApp
+Definições: Stability 30–40% · Style 40–50% · Speaker boost ligado. Marcas [ ] só no modelo v3.
+
+=== NARRADOR ===
+[animado] Ele recusou quarenta mil... por causa disso.
+O Nando tem vinte e cinco dias pra pagar oitenta e um mil... ou perde a oficina do pai.
+[sério] No dia seguinte, o Kléber se vingou. Troca de óleo a nove e noventa.
+[suspira] Dezessete clientes sumiram.
+[sussurrando] À noite, sozinho... ele levantou só uma ponta.
+[espantado] A lata de biscoito!
+Usa a chave hoje... ou espera? Comenta!
+
+=== KLÉBER ===
+Você vai se arrepender.
+
+=== NANDO ===
+Raios cromados?!
+
+=== PAI (áudio de WhatsApp) ===
+Filho... se apertar mesmo... a chave tá na lata de biscoito. Mas só se apertar!
+
+TEMPOS ALVO (src/timeline6.ts):
+0,0 s   NARRADOR: Ele recusou quarenta mil... por causa disso.     (o contrato rasga aos 0,25 s)
+3,1 s   NARRADOR: O Nando tem vinte e cinco dias…                  (contexto para quem chegou agora)
+6,6 s   KLÉBER: Você vai se arrepender.
+9,6 s   NARRADOR: No dia seguinte, o Kléber se vingou…            (a faixa R$ 9,90 cai aos 9,7 s)
+15,1 s  NARRADOR: Dezessete clientes sumiram.                      (CLIENTES 21 → 4)
+19,1 s  NARRADOR: À noite, sozinho... ele levantou só uma ponta.   (a roda aparece aos 21,2 s)
+22,3 s  NANDO: Raios cromados?!
+25,7 s  PAI: Filho... se apertar mesmo... a chave tá na lata de biscoito. Mas só se apertar!
+31,1 s  NARRADOR: A lata de biscoito!                              (a chave sobe aos 31,7 s; cara "A CHAVE!" aos 33,2 s)
+35,1 s  NARRADOR: Usa a chave hoje... ou espera? Comenta!
+
+Junta tudo em public/voz6.mp3.
+Render:  sh build-art.sh && npx remotion render src/index.ts Ep6 out/ep6.mp4
+Volume:  ffmpeg -i out/ep6.mp4 -c:v copy -af "loudnorm=I=-14:TP=-1:LRA=11" -c:a aac -b:a 256k out/ep6-final.mp4
+IMPORTANTE: não uses o sticker de sondagem do Instagram — a votação é só nos comentários.

@@ -1,0 +1,30 @@
+EPISÓDIO 2 — NARRAÇÃO (voz Brian, ElevenLabs) — 443 caracteres
+Gera tudo num só áudio, com pausas, e guarda como public/voz2.mp3
+
+Vocês escolheram: vender as peças do Corsa.
+Só tinha um problema... o Corsa não era dele.
+E, ao abrir o capô, descobriu por que ele nunca saiu daqui: faltava uma peça.
+Ela tava aqui o tempo todo. Embaixo do Turbo.
+Sete anos parado. Vinte minutos de serviço.
+E a dona pagou!
+Dia bom, né? Até o telefone tocar.
+Juros de atraso. Dois mil reais.
+E tá devendo mais que ontem.
+Aí chegou o Rubinho.
+O que o Nando faz? Comenta: viralizar... ou cobrar.
+
+TEMPOS ALVO (ajusta em src/timeline2.ts → SHOTS2 e LINES2 se a voz ficar diferente):
+0,1 s  Vocês escolheram: vender as peças do Corsa.
+2,6 s  Só tinha um problema... o Corsa não era dele.
+7,1 s  E, ao abrir o capô, descobriu por que ele nunca saiu daqui: faltava uma peça.
+11,1 s Ela tava aqui o tempo todo. Embaixo do Turbo.
+15,1 s Sete anos parado. Vinte minutos de serviço.
+20,1 s E a dona pagou!   (20–26 s: só o WhatsApp no ecrã, sem voz)
+26,1 s Dia bom, né? Até o telefone tocar.
+31,1 s Juros de atraso. Dois mil reais.
+37,1 s E tá devendo mais que ontem.
+40,1 s Aí chegou o Rubinho.
+43,1 s O que o Nando faz? Comenta: viralizar... ou cobrar.
+
+Render:  npx remotion render src/index.ts Ep2 out/ep2.mp4
+Volume:  ffmpeg -i out/ep2.mp4 -c:v copy -af "loudnorm=I=-14:TP=-1:LRA=11" -c:a aac -b:a 256k out/ep2-final.mp4

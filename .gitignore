@@ -1,0 +1,5 @@
+node_modules/
+remotion/out/
+*.mp4
+*.mkv
+.DS_Store

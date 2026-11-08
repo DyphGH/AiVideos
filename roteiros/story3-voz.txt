@@ -1,0 +1,16 @@
+STORY — VOZ DO NANDO (PT-BR, voz jovem e animada; ~12 s)
+Sugestão ElevenLabs: Stability 30% · Style 50% · voz brasileira nativa
+
+[animado] Ô, o episódio três já tá no ar! É só clicar no link aqui!
+No próximo episódio o seu comentário pode aparecer... o mais engraçado vai aparecer com certeza!
+[rindo] Mas não esquece de votar, hein!
+
+TEMPOS (a boca mexe nestas janelas — art-src/shots-story.js → FALA):
+0,2–2,2 s   "Ô, o episódio três já tá no ar!"
+2,5–4,6 s   "É só clicar no link aqui!"   (o Nando aponta)
+4,9–8,4 s   "No próximo episódio… vai aparecer com certeza!"
+8,7–11,6 s  "Mas não esquece de votar, hein!"
+
+Guarda como public/voz-story3.mp3
+Render: sh build-art.sh && npx remotion render src/index.ts Story3 out/story3.mp4
+No Instagram: põe o sticker LINK (com o link do reel do Ep. 3) dentro do retângulo tracejado.

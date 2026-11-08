@@ -1,0 +1,38 @@
+EPISÓDIO 3 — NARRAÇÃO (Dia 3)
+Narrador: voz BRASILEIRA nativa (Voice Library → Portuguese → Brazilian, estilo narrador/storytelling)
+Kléber: outra voz masculina, irritada · Rubinho: voz jovem animada
+Definições: Stability 30–40% · Style 40–50% · Speaker boost ligado
+Se usares o modelo v3, as marcas entre [ ] dão emoção (apaga-as se usares outro modelo).
+
+=== NARRADOR ===
+[animado] Setenta e cinco por cento de vocês mandaram o Nando pedir desculpa!
+[rindo] Mas teve um fortão aí que queria bater nele... kkkk
+Passo um: atravessar a rua e pedir desculpa. E o Kléber? [suspira] Gravou tudo.
+E postou na internet.
+Só que o vídeo bombou... do jeito errado.
+Os comentários? "Esse mecânico é honesto!" E a própria Dona Cida: "Ele é um anjo!"
+[animado] No dia seguinte... fila na porta! Seis clientes. Oitocentos e cinquenta reais!
+E agora? Gravar com o Rubinho... ou só trabalhar? Comenta!
+
+=== KLÉBER ===
+Fala de novo... mais alto!
+Isso não vai ficar assim.
+
+=== RUBINHO ===
+Mano, você viralizou! Bora gravar mais?
+
+TEMPOS ALVO (src/timeline3.ts):
+0,1 s   Setenta e cinco por cento… (cartões dos comentários entram aos 0,9 / 1,5 / 2,1 s)
+4,6 s   Mas teve um fortão…  (7,1 s: cara do Nando "EU HEIN?!")
+8,1 s   Passo um… Gravou tudo.
+13,1 s  KLÉBER: Fala de novo... mais alto!  →  NARRADOR: E postou na internet.
+17,1 s  Só que o vídeo bombou... do jeito errado.
+22,1 s  Os comentários?…
+27,6 s  No dia seguinte… (carros entram aos 27,9 / 28,7 / 29,5 / 30,3 / 31,1 s; "+R$ 850" aos 31,9 s)
+35,4 s  KLÉBER: Isso não vai ficar assim.
+39,1 s  RUBINHO: Mano, você viralizou! Bora gravar mais?
+41,5 s  NARRADOR: E agora? Gravar com o Rubinho... ou só trabalhar? Comenta!
+
+Junta tudo em public/voz3.mp3.
+Render:  sh build-art.sh && npx remotion render src/index.ts Ep3 out/ep3.mp4
+Volume:  ffmpeg -i out/ep3.mp4 -c:v copy -af "loudnorm=I=-14:TP=-1:LRA=11" -c:a aac -b:a 256k out/ep3-final.mp4
