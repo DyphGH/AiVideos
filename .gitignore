@@ -3,3 +3,6 @@ remotion/out/
 *.mp4
 *.mkv
 .DS_Store
+
+# exceção: vídeos finais pedidos para o repositório
+!videos/**/*.mp4
