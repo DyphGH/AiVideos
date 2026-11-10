@@ -22,6 +22,16 @@ const LINES: Record<string, Line[]> = {
     {start: 30.0, end: 31.87, chunks: ['VOCÊ É DAQUELES', 'QUE SEMPRE', 'SÃO *PICADOS?*']},
     {start: 32.12, end: 33.3, chunks: ['COMENTA', '*SIM* OU *NÃO!*']},
   ],
+  mosquito2: [
+    {start: 0.0, end: 2.0, chunks: ['UM MOSQUITO', 'TE PICA COM', '*6 AGULHAS*']},
+    {start: 2.22, end: 3.23, chunks: ['E VOCÊ', 'NEM *SENTE*']},
+    {start: 3.5, end: 6.7, chunks: ['DUAS *SERRAM*', 'A PELE', 'DUAS *ABREM*', 'CAMINHO', 'UMA COSPE', '*SALIVA*']},
+    {start: 6.96, end: 7.97, chunks: ['E A ÚLTIMA', '*SUGA*']},
+    {start: 8.24, end: 10.91, chunks: ['TEM GENTE', 'QUE ATRAI', 'ATÉ *100 VEZES*', 'MAIS MOSQUITOS']},
+    {start: 11.14, end: 12.69, chunks: ['CIENTISTAS', 'DESCOBRIRAM', 'POR QUÊ']},
+    {start: 13.0, end: 14.01, chunks: ['O *CHEIRO*', 'DA PELE']},
+    {start: 14.31, end: 15.62, chunks: ['E ELE', '*NÃO MUDA*', 'POR ANOS']},
+  ],
   cerebro: [
     {start: 0.0, end: 2.15, chunks: ['CRUZA O DEDO', 'DO *MEIO*', 'POR CIMA DO', '*INDICADOR*']},
     {start: 2.58, end: 5.42, chunks: ['AGORA ENCOSTA', 'AS DUAS PONTAS', 'NA PONTA', 'DO *NARIZ*']},
@@ -43,7 +53,7 @@ const LINES: Record<string, Line[]> = {
     {start: 31.35, end: 32.45, chunks: ['CONSEGUIU?', '*COMENTA!*']},
   ],
 };
-export const DUR_BR: Record<string, number> = {mosquito: 33.3, cerebro: 32.45};
+export const DUR_BR: Record<string, number> = {mosquito: 33.3, cerebro: 32.45, mosquito2: 17.96};
 
 function useFonts() {
   const [h] = useState(() => delayRender('fonte'));
@@ -79,7 +89,7 @@ export const FactoBR: React.FC<{which: string}> = ({which}) => {
   return (
     <AbsoluteFill style={{backgroundColor: '#000'}}>
       <OffthreadVideo src={staticFile(`br-${which}.mp4`)} />
-      <Caption t={t} lines={LINES[which]} />
+      {!(which === 'mosquito2' && t > 15.8) && <Caption t={t} lines={LINES[which]} />}
     </AbsoluteFill>
   );
 };

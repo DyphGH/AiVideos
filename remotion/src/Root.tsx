@@ -37,6 +37,7 @@ export const Root: React.FC = () => (
     <Composition id="Story6" component={Story6} durationInFrames={STORY6_FRAMES} fps={FPS} width={1080} height={1920} />
     <Composition id="FactoOlho" component={FactoOlho} durationInFrames={OLHO_FRAMES} fps={FPS_OLHO} width={1080} height={1920} />
     <Composition id="FactoMosquitoBR" component={FactoBR as any} defaultProps={{which: 'mosquito'}} durationInFrames={Math.round(DUR_BR.mosquito*FPS_BR)} fps={FPS_BR} width={1080} height={1920} />
+    <Composition id="FactoMosquito2BR" component={FactoBR as any} defaultProps={{which: 'mosquito2'}} durationInFrames={Math.round(DUR_BR.mosquito2*FPS_BR)} fps={FPS_BR} width={1080} height={1920} />
     <Composition id="FactoCerebroBR" component={FactoBR as any} defaultProps={{which: 'cerebro'}} durationInFrames={Math.round(DUR_BR.cerebro*FPS_BR)} fps={FPS_BR} width={1080} height={1920} />
     <Composition id="FactoBocejo" component={FactoBocejo} durationInFrames={BOC_FRAMES} fps={FPS_BOC} width={1080} height={1920} />
     <Composition id="FactoBocejoB" component={FactoBocejoB} durationInFrames={BOCB_FRAMES} fps={FPS_BOCB} width={1080} height={1920} />
