@@ -1,0 +1,13 @@
+2 FATOS (BR) — "DUVIDO VOCÊ CONSEGUIR" (lamber o cotovelo + engolir de boca aberta) — ~21 s
+Voz: Gabriel – Shorts & Reels · Eleven v3 · gerar tudo seguido.
+
+[urgent] Tenta lamber o seu cotovelo. Agora!
+[laughs] Não dá, né? Quase ninguém consegue… o braço é curto demais.
+[mischievously] E essa: abre bem a boca… e tenta engolir.
+[surprised] Travou! Pra engolir, a língua precisa empurrar o céu da boca.
+[playful] Manda pra quem acha que consegue os dois!
+
+NOTAS (regras 09–10/11): frame 0 já com o boneco a esticar a língua para o cotovelo (ação, não texto parado);
+sem ponte entre fatos; pausa ~2 s depois de "tenta engolir" (eu meto); pedido de partilha no fim;
+ecrã final ≤ 2 s com movimento e loop para o início.
+Texto no topo desde o frame 0: "DUVIDO VOCÊ CONSEGUIR 😏"
