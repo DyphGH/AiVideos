@@ -10,10 +10,10 @@ type Seg = {name: string; start: number; end: number; capY: number};
 const SEGS: Seg[] = [
   {name: 'td_tendao', start: 0, end: 10.63, capY: 1470},
   {name: 'td_espiral', start: 10.63, end: 21.38, capY: 1470},
-  {name: 'td_mao', start: 21.38, end: 26.43, capY: 1470},
-  {name: 'td_fim', start: 26.43, end: 30.5, capY: 1470},
+  {name: 'td_mao', start: 21.38, end: 26.35, capY: 1470},
+  {name: 'td_fim', start: 26.35, end: 28.8, capY: 1470},
 ];
-export const DUR_TD = 30.5;
+export const DUR_TD = 28.8;
 type Line = {start: number; end: number; chunks: string[]};
 const LINES: Line[] = [
   {start: 0.0, end: 3.05, chunks: ['JUNTA O', 'POLEGAR', 'COM O *MINDINHO*', 'E DOBRA O PULSO']},
