@@ -2715,11 +2715,62 @@ FP.mq_sinto=(t,dur)=>{
 };
 // 5 · Fim ≤2 s com movimento + loop
 FP.mq_fim=(t,dur)=>{
-  if(t>dur-.25) return FP.mq_abre(0.05,2.47);
+  if(t>dur-.25) return FP.mq_corte(0.05,8.65);
   let o=fBg(t,'#2a2470','#0b0a2a',1000);
   const k=pop(t,0); o+=`<g transform="translate(540 640) scale(${k})">${fTxt(0,0,'MARCA QUEM É',104,'#fff')}${fTxt(0,125,'O BUFFET DOS',104,FY)}${fTxt(0,250,'MOSQUITOS 😂',104,FY)}</g>`;
   for(let i=0;i<3;i++) o+=mosq(540+Math.sin(t*4+i*2)*330, 1250+Math.cos(t*5+i)*140, .7, t+i, {look:'feliz',napkin:true});
   if(t>0.5){ const p=pop(t,0.5); o+=`<g transform="translate(540 1600) scale(${p})"><rect x="-420" y="-75" width="840" height="150" rx="75" fill="${FY}" stroke="${FK}" stroke-width="8"/><text x="0" y="-8" font-family="M" font-weight="900" font-size="54" fill="${FK}" text-anchor="middle" stroke="none">SEGUE · AMANHÃ</text><text x="0" y="52" font-family="M" font-weight="900" font-size="46" fill="#e0483a" text-anchor="middle" stroke="none">TEM MAIS 2 FATOS</text></g>`; }
   return o;
+};
+// ===== Corte da pele: as 6 agulhas a entrar (0 – 8,65) =====
+// passos (tempo global): serram 0 · abrem 3,5 · saliva 4,78 · suga 6,11
+FP.mq_corte=(t,dur)=>{
+  const SY=900, DY=1150, VY=1430; // topo da pele, derme, vaso
+  let o=`<rect width="1080" height="1920" fill="#fbe3cf" stroke="none"/>`;
+  // camadas
+  o+=`<rect x="0" y="${SY}" width="1080" height="110" fill="#f1c49d" stroke="none"/><path d="M0,${SY} H1080" stroke="${FK}" stroke-width="8"/>`;
+  o+=`<rect x="0" y="${SY+110}" width="1080" height="1010" fill="#f2a7a0" stroke="none"/>`;
+  for(let i=0;i<9;i++) o+=`<circle cx="${(i*137)%1080}" cy="${SY+200+(i*91)%260}" r="16" fill="#e98f88" stroke="none"/>`;
+  // vaso sanguíneo com glóbulos a correr
+  o+=`<rect x="0" y="${VY-70}" width="1080" height="140" fill="#c8402f" stroke="${FK}" stroke-width="8"/>`;
+  for(let i=0;i<10;i++){ const x=((i*130+t*160)%1240)-80; o+=`<ellipse cx="${x}" cy="${VY+((i%3)-1)*30}" rx="34" ry="18" fill="#e0483a" stroke="#7a1d14" stroke-width="5"/>`; }
+  // cabeça do mosquito (de frente, por cima da pele)
+  const happy=t>=6.11, cx=540;
+  const z=1.12-0.12*ease(clamp(t/2.4,0,1));
+  let h=`<g stroke="${FK}" stroke-width="8" stroke-linecap="round" stroke-linejoin="round">`;
+  h+=`<ellipse cx="${cx}" cy="560" rx="190" ry="150" fill="#6a6a78"/>`;
+  h+=`<ellipse cx="${cx-80}" cy="520" rx="70" ry="${happy?24:80}" fill="#fff"/><ellipse cx="${cx+80}" cy="520" rx="70" ry="${happy?24:80}" fill="#fff"/>`;
+  if(!happy) h+=`<circle cx="${cx-70}" cy="540" r="30" fill="#e0483a" stroke="none"/><circle cx="${cx+70}" cy="540" r="30" fill="#e0483a" stroke="none"/><path d="M${cx-170},430 l120,50 M${cx+170},430 l-120,50" stroke-width="14"/>`;
+  h+=`<path d="M${cx-150},440 q-80,-120 -40,-220 M${cx+150},440 q80,-120 40,-220" fill="none" stroke-width="10"/>`;
+  h+=`<rect x="${cx-40}" y="690" width="80" height="${SY-690+20}" rx="30" fill="#4a4a55"/>`;
+  // 6 estiletes
+  const enter=ease(clamp(t/0.7,0,1)); const depth=SY+40+enter*360; // até perto do vaso
+  const saw=t<3.5?Math.sin(t*22)*14:0;
+  const open=ease(clamp((t-3.5)/0.5,0,1))*55;
+  const st=(x0,x1,col,w,dy=0)=>`<path d="M${x0},${SY-10} L${x1},${depth+dy}" stroke="${col}" stroke-width="${w}"/>`;
+  // 2 serram (laranja, mexem para cima e baixo)
+  h+=st(cx-30,cx-60,'#ff8a2a',18,saw)+st(cx+30,cx+60,'#ff8a2a',18,-saw);
+  // 2 abrem (azuis, afastam)
+  h+=st(cx-16,cx-30-open*1.6,'#3fa4ff',16)+st(cx+16,cx+30+open*1.6,'#3fa4ff',16);
+  // saliva (verde)
+  h+=st(cx-6,cx-10,'#3fd47a',14,-20);
+  // tubo que suga (rosa; vira canudinho às riscas)
+  h+=`<path d="M${cx+4},${SY-10} L${cx+6},${depth+20}" stroke="#ff4fa0" stroke-width="22"/>`;
+  if(happy){ h+=`<path d="M${cx+4},${SY-10} L${cx+6},${depth+20}" stroke="#fff" stroke-width="6" stroke-dasharray="14 14"/>`;
+    const lv=ease(clamp((t-6.11)/1.6,0,1)); h+=`<path d="M${cx+6},${depth+20} L${cx+4},${depth+20-(depth-SY+30)*lv}" stroke="#c8402f" stroke-width="10"/>`; h+=`<path d="M${cx-30},640 q30,26 60,0" fill="none" stroke-width="8"/>`; }
+  else h+=`<path d="M${cx-30},650 q30,-16 60,0" fill="none" stroke-width="8"/>`;
+  if(t>=4.78&&t<6.11) for(let i=0;i<4;i++){ const p=((t*1.6+i*.25)%1); h+=`<circle cx="${cx-6+Math.sin(i*2)*20}" cy="${depth-10+p*80}" r="${20-p*8}" fill="#7fffb0" stroke="${FK}" stroke-width="4"/>`; }
+  h+=`</g>`;
+  o+=`<g transform="translate(540 900) scale(${z}) translate(-540 -900)">${h}</g>`;
+  // etiquetas curtas junto às agulhas (só a do passo atual)
+  const lab=(txt,col,x,y)=>`<g transform="translate(${x} ${y})"><rect x="-120" y="-34" width="240" height="68" rx="16" fill="${col}" stroke="${FK}" stroke-width="6"/><text x="0" y="16" font-family="M" font-weight="900" font-size="42" fill="#fff" text-anchor="middle" stroke="none">${txt}</text></g>`;
+  if(t>=2.47&&t<3.5) o+=lab('SERRAM','#ff8a2a',260,1080);
+  if(t>=3.5&&t<4.78) o+=lab('ABREM','#3fa4ff',820,1080);
+  if(t>=4.78&&t<6.11) o+=lab('SALIVA','#2f9e6e',260,1080);
+  if(happy){ o+=ono('SLURP!',820,760,t,6.3,'#ff4fa0',8,110); }
+  // contador 6 risquinhos
+  const n=t<3.5?2:t<4.78?4:t<6.11?5:6;
+  o+=`<g transform="translate(540 1600)">${[...Array(6)].map((_,k)=>`<path d="M${-125+k*50},-40 v80" stroke="${k<n?'#ffffff':'#ffffff55'}" stroke-width="14" stroke-linecap="round"/>`).join('')}</g>`;
+  return o+hookMq(t,2.47)+(t>2.47?fPill('FATO 1/2',t-2.47):'');
 };
 export {buildShot, buildFacto};

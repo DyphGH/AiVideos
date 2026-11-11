@@ -8,8 +8,7 @@ type Seg = {name: string; start: number; end: number; capY: number};
 // tempos acertados à voz (voz-pe.mp3, 30,3 s)
 // voz nova (eleven v4) + 3,6 s de silêncio depois de "foca bem nele"
 const SEGS: Seg[] = [
-  {name: 'mq_abre', start: 0, end: 2.47, capY: 1840},
-  {name: 'mq_kit', start: 2.47, end: 8.65, capY: 1650},
+  {name: 'mq_corte', start: 0, end: 8.65, capY: 1800},
   {name: 'mq_buffet', start: 8.65, end: 13.7, capY: 1870},
   {name: 'mq_sinto', start: 13.7, end: 16.7, capY: 1870},
   {name: 'mq_fim', start: 16.7, end: 18.9, capY: 1840},
