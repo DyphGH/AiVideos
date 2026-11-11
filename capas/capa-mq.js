@@ -1,0 +1,16 @@
+const {chromium}=require('playwright');const fs=require('fs');
+const art=fs.readFileSync('/home/claude/oficina-remotion/src/art.js','utf8').replace(/export \{[^}]*\};?/,'');
+const font='data:font/woff2;base64,'+fs.readFileSync('/home/claude/oficina-remotion/public/fonts/mont900.woff2').toString('base64');
+const capa=`(()=>{let o=fBg(1,'#2a2470','#0b0a2a',950);
+ o+='<defs><clipPath id="cC"><rect x="90" y="560" width="900" height="1000" rx="44"/></clipPath></defs>';
+ o+='<rect x="100" y="574" width="900" height="1000" rx="44" fill="#000" opacity=".4"/>';
+ o+='<g clip-path="url(#cC)"><g transform="translate(90 560) scale(.9) translate(-40 -360)">'+FP.mq_corte(5.3,8.65)+'</g></g>';
+ o+='<rect x="90" y="560" width="900" height="1000" rx="44" fill="none" stroke="'+FK+'" stroke-width="14"/><rect x="90" y="560" width="900" height="1000" rx="44" fill="none" stroke="'+FY+'" stroke-width="6"/>';
+ o+=fTxt(540,300,'ESSE MOSQUITO',88,'#fff')+fTxt(540,395,'TE PICA COM',88,'#fff')+fTxt(540,530,'6 AGULHAS',150,FY,'middle',18);
+ o+=fStamp(9,0,770,1470,'SLURP!','#ff4fa0',80,-8);
+ o+=fPill('2 FATOS',9,1680);
+ return o;})()`;
+(async()=>{const b=await chromium.launch();const p=await b.newPage({viewport:{width:1080,height:1920}});
+await p.setContent(`<style>@font-face{font-family:M;src:url(${font});font-weight:900}body{margin:0}</style><svg id=s width=1080 height=1920 viewBox="0 0 1080 1920"></svg><script>window.window=window;${art}; document.getElementById('s').innerHTML=${capa};</script>`);
+await p.evaluate(()=>document.fonts.ready); await p.waitForTimeout(400);
+await p.screenshot({path:`${process.argv[2]}/capa-mosquito.png`}); await b.close();})();
