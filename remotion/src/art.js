@@ -2665,14 +2665,12 @@ function caixa(x,y,s,open,t){
 }
 // 1 · Frame 0: mosquito a chegar + kit (0 – 2,47)
 FP.mq_abre=(t,dur)=>{
-  // frame 0: o mosquito JÁ está a serrar a pele; kit aberto ao lado com as 6 agulhas
-  let o=FP.mq_kit(Math.min(t,0.95),9);
-  o+=`<g transform="translate(880 860) scale(.5)">`+caixa(0,0,1,1,t)+`</g>`;
-  if(t>0.6) o+=fStamp(t,0.6,900,640,'6!','#e0483a',130,-10);
-  return o+hookMq(t,2.47);
+  // frame 0 limpo: um único foco — o mosquito JÁ a serrar a pele; só o gancho no topo
+  const z=1.18-0.12*ease(clamp(t/2.4,0,1));
+  return `<g transform="translate(735 1200) scale(${z}) translate(-735 -1200)">`+FP.mq_kit(Math.min(t,0.95),9,true)+`</g>`+hookMq(t,2.47);
 };
 // 2 · As ferramentas (2,47 – 8,6) local: 0 serra · 1,0 abre · 2,31 saliva · 3,64 canudinho
-FP.mq_kit=(t,dur)=>{
+FP.mq_kit=(t,dur,clean=false)=>{
   let o=pele(t);
   o+=`<path d="M0,1250 Q540,1210 1080,1250 L1080,1920 L0,1920 Z" fill="#e7a6a0" stroke="none"/><path d="M0,1520 H1080" stroke="#c8402f" stroke-width="60" opacity=".85"/>`;
   for(let i=0;i<12;i++){ const x=((i*97+t*120)%1180)-50; o+=`<ellipse cx="${x}" cy="1520" rx="22" ry="12" fill="#e0483a" stroke="#8a1f16" stroke-width="3"/>`; }
@@ -2681,14 +2679,14 @@ FP.mq_kit=(t,dur)=>{
   o+=mosq(480,1105,1.3,t,{look:slurp?'feliz':'mau',straw:slurp,beak:!slurp});
   o+=`<g opacity="${.6+.4*Math.sin(t*10)}"><ellipse cx="735" cy="1262" rx="40" ry="12" fill="#c8402f" stroke="none"/><path d="M705,1258 l-24,30 M735,1265 l0,40 M765,1258 l24,30" stroke="#c8402f" stroke-width="8" stroke-linecap="round"/></g>`;
   // ferramentas a atuar no ponto da picada (~720,1260)
-  if(step===0){ const s=Math.sin(t*30)*20; o+=`<g transform="translate(${735+s} 1245) rotate(-20)" stroke="${FK}" stroke-width="6"><path d="M-90,0 h180 v-30 l-20,-10 h-160 Z" fill="#cfd6db"/>${[...Array(9)].map((_,k)=>`<path d="M${-80+k*20},0 l10,16 l10,-16" fill="#cfd6db"/>`).join('')}<rect x="90" y="-46" width="60" height="50" rx="12" fill="#a0522d"/></g>`; o+=fTxt(540,560,'SERRA!',110,FY); }
-  if(step===1){ const k=Math.abs(Math.sin(t*6))*30; o+=`<g transform="translate(720 1220)" stroke="${FK}" stroke-width="7"><path d="M${-20-k},40 L-10,-80 M${20+k},40 L10,-80" stroke="#9aa3a8" stroke-width="18"/><path d="M-10,-80 L-40,-180 M10,-80 L40,-180" stroke="#e0483a" stroke-width="26"/></g>`; o+=fTxt(540,560,'ABRE CAMINHO!',96,FY); }
-  if(step===2){ for(let i=0;i<5;i++){const p=((t*2+i*.2)%1); o+=`<circle cx="${725+i*6}" cy="${1180+p*110}" r="${14-p*6}" fill="#7fe7ff" stroke="${FK}" stroke-width="4"/>`;} o+=fTxt(540,560,'CUSPE DE SALIVA!',88,'#7fe7ff'); }
+  if(step===0){ const s=Math.sin(t*30)*20; o+=`<g transform="translate(${735+s} 1245) rotate(-20)" stroke="${FK}" stroke-width="6"><path d="M-90,0 h180 v-30 l-20,-10 h-160 Z" fill="#cfd6db"/>${[...Array(9)].map((_,k)=>`<path d="M${-80+k*20},0 l10,16 l10,-16" fill="#cfd6db"/>`).join('')}<rect x="90" y="-46" width="60" height="50" rx="12" fill="#a0522d"/></g>`; }
+  if(step===1){ const k=Math.abs(Math.sin(t*6))*30; o+=`<g transform="translate(720 1220)" stroke="${FK}" stroke-width="7"><path d="M${-20-k},40 L-10,-80 M${20+k},40 L10,-80" stroke="#9aa3a8" stroke-width="18"/><path d="M-10,-80 L-40,-180 M10,-80 L40,-180" stroke="#e0483a" stroke-width="26"/></g>`; }
+  if(step===2){ for(let i=0;i<5;i++){const p=((t*2+i*.2)%1); o+=`<circle cx="${725+i*6}" cy="${1180+p*110}" r="${14-p*6}" fill="#7fe7ff" stroke="${FK}" stroke-width="4"/>`;} }
   if(slurp){ const lv=ease(clamp((t-3.64)/2.2,0,1)); o+=`<g transform="translate(250 640)"><rect x="-60" y="-120" width="120" height="240" rx="20" fill="#fff" stroke="${FK}" stroke-width="7"/><rect x="-50" y="${110-220*lv}" width="100" height="${220*lv}" rx="12" fill="#e0483a" stroke="none"/><text x="0" y="170" font-family="M" font-weight="900" font-size="40" fill="${FK}" text-anchor="middle" stroke="none">TANQUE</text></g>`;
     o+=ono('SLURP!',800,700,t,3.9,'#ff4fa0',8,110); }
   // contador de ferramentas
-  const n=[2,4,5,6][step]; o+=`<g transform="translate(860 1760)"><rect x="-170" y="-50" width="340" height="100" rx="20" fill="#1b1420"/><text x="0" y="22" font-family="M" font-weight="900" font-size="60" fill="${FY}" text-anchor="middle" stroke="none">${n}/6</text></g>`;
-  return o+fPill('FATO 1/2',1);
+  const n=[2,4,5,6][step]; if(!clean) o+=`<g transform="translate(860 1760)">${[...Array(6)].map((_,k)=>`<path d="M${-125+k*50},-40 v80" stroke="${k<n?'#e0483a':'#ffffff55'}" stroke-width="14" stroke-linecap="round"/>`).join('')}</g>`;
+  return o+(clean?'':fPill('FATO 1/2',1));
 };
 function pessoa(x,y,s,{triste=false,choque=false}={}){
   return `<g transform="translate(${x} ${y}) scale(${s})" stroke="${FK}" stroke-width="8"><path d="M-150,400 Q-150,120 0,110 Q150,120 150,400 Z" fill="#2f6fb3"/><circle cx="0" cy="0" r="105" fill="#f1c49d"/><path d="M-100,-40 Q-80,-120 0,-120 Q80,-120 100,-40 Q60,-80 0,-80 Q-60,-80 -100,-40 Z" fill="#3b2a20"/><circle cx="-35" cy="0" r="10" fill="${FK}" stroke="none"/><circle cx="35" cy="0" r="10" fill="${FK}" stroke="none"/>${choque?'<ellipse cx="0" cy="55" rx="22" ry="28" fill="#3b1f1a"/><circle cx="-35" cy="0" r="18" fill="#fff"/><circle cx="35" cy="0" r="18" fill="#fff"/><circle cx="-35" cy="0" r="7" fill="#1b1420" stroke="none"/><circle cx="35" cy="0" r="7" fill="#1b1420" stroke="none"/><path d="M-60,-40 l40,-12 M60,-40 l-40,-12"/>':triste?'<path d="M-30,55 q30,-24 60,0" fill="none"/><path d="M48,14 q8,22 0,34" stroke="#7fc8f0" stroke-width="8" fill="none"/>':'<path d="M-30,45 q30,24 60,0" fill="none"/>'}</g>`; }
@@ -2703,7 +2701,6 @@ FP.mq_buffet=(t,dur)=>{
   // fila de mosquitos com guardanapo
   for(let i=0;i<6;i++){ const k=ease(clamp((t-0.2-i*.2)/1.0,0,1)); const a=-2.4+i*0.48, R=420; const tx=540+Math.cos(a)*R, ty=1180+Math.sin(a)*R*0.9; const sx=1300+i*80, sy=700; const xx=sx+(tx-sx)*k, yy=sy+(ty-sy)*k; o+=mosq(xx,yy+Math.sin(t*8+i)*14,.55,t+i,{look:'feliz',napkin:true,flip:xx>540}); }
   const n=Math.round(clamp((t-0.6)/1.8,0,1)*100); o+=`<g transform="translate(540 520)">${fTxt(0,0,'ATÉ '+n+'×',130,FY)}${fTxt(0,80,'MAIS MOSQUITO',60,'#fff')}</g>`;
-  if(sh) o+=fStamp(t,2.81,300,1000,'É O CHEIRO!','#2f9e6e',70,-8);
   return o+fPill('FATO 2/2',t);
 };
 // 4 · Não muda por anos + "sinto muito" (13,7 – 16,7) local: 0,14 anos; 1,99 sinto muito
@@ -2713,7 +2710,7 @@ FP.mq_sinto=(t,dur)=>{
   o+=`<g transform="translate(540 560) rotate(-3)"><rect x="-200" y="-150" width="400" height="300" rx="24" fill="#fffaf0" stroke="${FK}" stroke-width="10"/><rect x="-200" y="-150" width="400" height="80" rx="24" fill="#e0483a" stroke="${FK}" stroke-width="10"/><text x="0" y="70" font-family="M" font-weight="900" font-size="120" fill="${FK}" text-anchor="middle" stroke="none">${yr}</text></g>`;
   o+=fTxt(540,820,'CHEIRO: IGUAL',80,'#7fe08a');
   o+=pessoa(540,1250,1.3,{triste:t>1.99});
-  if(t>1.99){ const pat=Math.abs(Math.sin((t-1.99)*10))*20; o+=mosq(760,1080-pat,.75,t,{look:'triste'}); o+=fStamp(t,1.99,540,1620,'SINTO MUITO','#2f6fb3',96,-5); }
+  if(t>1.99){ const pat=Math.abs(Math.sin((t-1.99)*10))*20; o+=mosq(760,1080-pat,.75,t,{look:'triste'}); }
   return o+fPill('FATO 2/2',t);
 };
 // 5 · Fim ≤2 s com movimento + loop
