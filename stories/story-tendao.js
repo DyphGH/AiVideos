@@ -5,7 +5,7 @@ const frame=`function F(t){
   let o=tdDefs()+fBg(t,'#2a2470','#0b0a2a',950);
   o+='<defs><clipPath id="sC"><circle cx="540" cy="1080" r="430"/></clipPath><filter id="sw"><feTurbulence type="fractalNoise" baseFrequency="'+(0.011+0.003*Math.sin(t*2)).toFixed(4)+' 0.014" numOctaves="2" seed="'+(Math.floor(t*6)%40)+'"/><feDisplacementMap in="SourceGraphic" scale="'+(14+10*Math.sin(t*3))+'" xChannelSelector="R" yChannelSelector="G"/></filter></defs>';
   o+='<circle cx="548" cy="1092" r="438" fill="#000" opacity=".35"/><g clip-path="url(#sC)">'+espiral(540,1080,-t*3.2,650)+'</g><circle cx="540" cy="1080" r="430" fill="none" stroke="'+FK+'" stroke-width="14"/><circle cx="540" cy="1080" r="430" fill="none" stroke="'+FY+'" stroke-width="6"/>';
-  if(t>3.2){ const k=ease(Math.min(1,(t-3.2)/.4)); o+='<g clip-path="url(#sC)"><g opacity="'+k+'" filter="url(#sw)"><g transform="translate(540 1200) scale(.66) translate(-540 -1150)">'+maoPalma(t,{pinch:0,flex:0,tendao:false})+'</g></g></g>'; }
+  if(t>2.1){ const k=ease(Math.min(1,(t-2.1)/.4)); o+='<g clip-path="url(#sC)"><g opacity="'+k+'" filter="url(#sw)"><g transform="translate(540 1200) scale(.66) translate(-540 -1150)">'+maoPalma(t,{pinch:0,flex:0,tendao:false})+'</g></g></g>'; }
   else o+='<circle cx="540" cy="1080" r="40" fill="#fff" stroke="'+FK+'" stroke-width="8"/><circle cx="540" cy="1080" r="18" fill="#e0483a"/>';
   const k=1+.04*Math.sin(t*6);
   o+='<g transform="translate(540 220) scale('+k+')"><rect x="-230" y="-55" width="460" height="110" rx="55" fill="#e0483a" stroke="'+FK+'" stroke-width="8"/><text y="22" font-family="M" font-weight="900" font-size="64" fill="#fff" text-anchor="middle">VÍDEO NOVO!</text></g>';
