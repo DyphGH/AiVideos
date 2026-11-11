@@ -1,0 +1,16 @@
+const {chromium}=require('playwright');const fs=require('fs');
+const art=fs.readFileSync('/home/claude/oficina-remotion/src/art.js','utf8').replace(/export \{[^}]*\};?/,'');
+const font='data:font/woff2;base64,'+fs.readFileSync('/home/claude/oficina-remotion/public/fonts/mont900.woff2').toString('base64');
+const capa=`(()=>{let o=tdDefs()+fBg(1,'#2a2470','#0b0a2a',950);
+ o+='<defs><clipPath id="cS"><circle cx="540" cy="1060" r="470"/></clipPath></defs>';
+ o+='<circle cx="548" cy="1072" r="478" fill="#000" opacity=".35"/><g clip-path="url(#cS)">'+espiral(540,1060,0.6,700)+'</g><circle cx="540" cy="1060" r="470" fill="none" stroke="'+FK+'" stroke-width="14"/><circle cx="540" cy="1060" r="470" fill="none" stroke="'+FY+'" stroke-width="6"/>';
+ o+='<defs><filter id="cw"><feTurbulence type="fractalNoise" baseFrequency="0.012 0.015" numOctaves="2" seed="7"/><feDisplacementMap in="SourceGraphic" scale="26" xChannelSelector="R" yChannelSelector="G"/></filter></defs>';
+ o+='<g clip-path="url(#cS)"><g filter="url(#cw)"><g transform="translate(540 1200) scale(.72) translate(-540 -1150)">'+maoPalma(0,{pinch:0,flex:0,tendao:false})+'</g></g></g>';
+ o+=fTxt(540,330,'SUA MÃO VAI',112,'#fff')+fTxt(540,470,'DERRETER',150,FY,'middle',18);
+ o+=fStamp(9,0,790,1500,'NÃO PISCA!','#e0483a',70,-8);
+ o+=fPill('2 FATOS',9,1690);
+ return o;})()`;
+(async()=>{const b=await chromium.launch();const p=await b.newPage({viewport:{width:1080,height:1920}});
+await p.setContent(`<style>@font-face{font-family:M;src:url(${font});font-weight:900}body{margin:0}</style><svg id=s width=1080 height=1920 viewBox="0 0 1080 1920"></svg><script>window.window=window;${art}; document.getElementById('s').innerHTML=${capa};</script>`);
+await p.evaluate(()=>document.fonts.ready); await p.waitForTimeout(400);
+await p.screenshot({path:`${process.argv[2]}/capa-tendao.png`}); await b.close();})();
