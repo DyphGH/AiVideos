@@ -11,6 +11,7 @@ import {Ep7, EP7_FRAMES} from './Ep7';
 import {FactoPe, PE_FRAMES, FPS_PE} from './FactoPe';
 import {FactoOlho, OLHO_FRAMES, FPS_OLHO} from './FactoOlho';
 import {FactoLer, LER_FRAMES, FPS_LER} from './FactoLer';
+import {FactoMosq3, MQ3_FRAMES, FPS_MQ3} from './FactoMosq3';
 import {FactoLerBR, LERBR_FRAMES, FPS_LERBR} from './FactoLerBR';
 import {FactoBocejo, BOC_FRAMES, FPS_BOC} from './FactoBocejo';
 import {FactoBocejoB, BOCB_FRAMES, FPS_BOCB} from './FactoBocejoB';
@@ -43,6 +44,7 @@ export const Root: React.FC = () => (
     <Composition id="FactoBocejoB" component={FactoBocejoB} durationInFrames={BOCB_FRAMES} fps={FPS_BOCB} width={1080} height={1920} />
     <Composition id="FactoBocejoC" component={FactoBocejoC} durationInFrames={BOCC_FRAMES} fps={FPS_BOCC} width={1080} height={1920} />
     <Composition id="FactoLerBR" component={FactoLerBR} durationInFrames={LERBR_FRAMES} fps={FPS_LERBR} width={1080} height={1920} />
+    <Composition id="FactoMosq3" component={FactoMosq3} durationInFrames={MQ3_FRAMES} fps={FPS_MQ3} width={1080} height={1920} />
     <Composition id="FactoLer" component={FactoLer} durationInFrames={LER_FRAMES} fps={FPS_LER} width={1080} height={1920} />
   </>
 );
