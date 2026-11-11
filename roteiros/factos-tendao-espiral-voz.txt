@@ -1,17 +1,16 @@
 2 FATOS (BR) — Tendão do pulso + mão que derrete  (~24 s)
 Texto no topo desde o frame 0: "EM 20 SEGUNDOS SUA MÃO VAI DERRETER"
 
-VOZ DO GABRIEL (com tags ElevenLabs v3)
-[excited] Junta o polegar com o mindinho. Agora!
-[curious] Tá vendo um tendão saltando no pulso?
-[playful] Se não tem… parabéns. Você é um em cada sete. É um músculo que o ser humano tá perdendo.
-[serious] Agora olha bem no meio da espiral. Não pisca.
-[whispers] Continua olhando…
-[whispers] Só mais um pouco…
-[excited] Agora olha pra sua mão!
-[amazed] Ela tá derretendo.
-[laughs] Manda pra quem não acredita.
-Segue: amanhã tem mais dois.
+VOZ DO GABRIEL (estilo do vídeo do 1M: ordem direta → "viu?" → explicação curta)
+[curious] Junta o polegar com o mindinho e dobra um pouco o pulso.
+[excited] Viu? Um tendão saltou no meio do pulso.
+[playful] Se não saltou nada… você não tem esse músculo. Uma em cada sete pessoas nasce sem.
+[calm] Olha pro meio da espiral e não pisca.
+[whispers] Continua…
+[excited] Olha pra sua mão.
+[amazed] Tá se mexendo, né?
+[serious] É o seu cérebro que ainda acha que tá girando.
+[laughs] Manda pra quem não acredita. Segue: amanhã tem mais dois.
 
 NOTAS DE MONTAGEM
 - Entre "Não pisca" e "Agora olha pra sua mão" ficam ~12 s de espiral (eu meto o silêncio na montagem).
