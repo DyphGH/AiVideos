@@ -28,7 +28,7 @@ function defs(){ return '<defs>'+
  '<radialGradient id="ff" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#fff7a0"/><stop offset=".4" stop-color="#ffe14a" stop-opacity=".8"/><stop offset="1" stop-color="#ffe14a" stop-opacity="0"/></radialGradient>'+
  '<radialGradient id="pglow" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#ff9ec4" stop-opacity=".45"/><stop offset="1" stop-color="#ff9ec4" stop-opacity="0"/></radialGradient>'+
  '</defs>'; }
-function ceu(seed){ let o='<rect width="1080" height="1350" fill="url(#sky)"/>';
+function ceu(seed){ let o='<rect y="-60" width="1080" height="1520" fill="url(#sky)"/>';
  for(let k=0;k<18;k++){const a=k*0.349+seed*.1; o+='<path d="M540,700 L'+R(540+Math.cos(a)*1700)+','+R(700+Math.sin(a)*1700)+' L'+R(540+Math.cos(a+0.17)*1700)+','+R(700+Math.sin(a+0.17)*1700)+' Z" fill="#fff" opacity=".028"/>';}
  for(let i=0;i<60;i++){const x=(i*173+seed*61)%1080, y=(i*97+seed*37)%820; o+='<circle cx="'+x+'" cy="'+y+'" r="'+(1+i%3*.8)+'" fill="#fff" opacity="'+(.25+(i%5)*.12)+'"/>';}
  for(let i=0;i<7;i++){const x=(i*157+seed*83+90)%1000+40, y=(i*113+seed*29)%600+120; o+=brilho(x,y,.35+(i%3)*.15,i%2?'#fff':'#ffe9a0');}
@@ -38,8 +38,8 @@ function brilho(x,y,s,c){ return '<path transform="translate('+x+' '+y+') scale(
 function lua(x,y,r){ return '<circle cx="'+x+'" cy="'+y+'" r="'+(r*2.4)+'" fill="#fff4c0" opacity=".18" filter="url(#b25)"/><circle cx="'+x+'" cy="'+y+'" r="'+r+'" fill="url(#moon)" stroke="'+OL+'" stroke-width="6"/><circle cx="'+R(x+r*.35)+'" cy="'+R(y-r*.3)+'" r="'+R(r*.16)+'" fill="#f0d68a" opacity=".8"/><circle cx="'+R(x-r*.4)+'" cy="'+R(y+r*.42)+'" r="'+R(r*.1)+'" fill="#f0d68a" opacity=".8"/><path d="M'+R(x-r*.42)+','+R(y-r*.05)+' q'+R(r*.14)+','+R(-r*.14)+' '+R(r*.28)+',0 M'+R(x+r*.08)+','+R(y-r*.05)+' q'+R(r*.14)+','+R(-r*.14)+' '+R(r*.28)+',0" fill="none" stroke="'+OL+'" stroke-width="5" stroke-linecap="round"/><path d="M'+R(x-r*.15)+','+R(y+r*.2)+' q'+R(r*.15)+','+R(r*.14)+' '+R(r*.3)+',0" fill="none" stroke="'+OL+'" stroke-width="5" stroke-linecap="round"/><ellipse cx="'+R(x-r*.55)+'" cy="'+R(y+r*.15)+'" rx="'+R(r*.14)+'" ry="'+R(r*.08)+'" fill="#ffb3cf" opacity=".8"/><ellipse cx="'+R(x+r*.55)+'" cy="'+R(y+r*.15)+'" rx="'+R(r*.14)+'" ry="'+R(r*.08)+'" fill="#ffb3cf" opacity=".8"/>'; }
 function arvore(x,y,s){ return '<g transform="translate('+x+' '+y+') scale('+s+')" stroke="'+OL+'" stroke-width="5"><path d="M-8,0 L-6,-60 L6,-60 L8,0 Z" fill="#7a4e32"/><circle cx="-26" cy="-80" r="34" fill="url(#tree)"/><circle cx="26" cy="-82" r="32" fill="url(#tree)"/><circle cx="0" cy="-110" r="38" fill="url(#tree)"/><path d="M-30,-120 q10,-14 24,-12" fill="none" stroke="#9be0a8" stroke-width="6" opacity=".8"/></g>'; }
 function vagalumes(seed,n=12,y0=760,y1=1200){ let o=''; for(let i=0;i<n;i++){const x=(i*211+seed*97)%1040+20, y=y0+((i*137+seed*53)%(y1-y0)); o+='<circle cx="'+x+'" cy="'+y+'" r="22" fill="url(#ff)"/><circle cx="'+x+'" cy="'+y+'" r="4" fill="#fffbd0"/>';} return o; }
-function montes(){ let o='<path d="M-20,880 Q140,770 300,840 Q460,760 640,830 Q820,750 1100,840 V1360 H-20 Z" fill="url(#hFar)" stroke="'+OL+'" stroke-width="6"/>';
- o+='<path d="M-20,930 Q200,840 420,910 Q640,850 860,905 Q980,880 1100,900 V1360 H-20 Z" fill="url(#hMid)" stroke="'+OL+'" stroke-width="6"/>';
+function montes(){ let o='<path d="M-20,880 Q140,770 300,840 Q460,760 640,830 Q820,750 1100,840 V1420 H-20 Z" fill="url(#hFar)" stroke="'+OL+'" stroke-width="6"/>';
+ o+='<path d="M-20,930 Q200,840 420,910 Q640,850 860,905 Q980,880 1100,900 V1420 H-20 Z" fill="url(#hMid)" stroke="'+OL+'" stroke-width="6"/>';
  o+=arvore(120,905,.75)+arvore(205,890,.55)+arvore(890,905,.7)+arvore(970,895,.5)+arvore(560,880,.45);
  return o; }
 function relva(path){ return '<path d="'+path+'" fill="url(#hNear)" stroke="'+OL+'" stroke-width="7"/>'; }
@@ -138,8 +138,8 @@ function caixa(l1,l2){ return '<rect x="96" y="1076" width="900" height="140" rx
 `;
 const S=[];
 S.push(`(()=>{let o=defs()+ceu(0)+lua(880,640,58)+montes();
- o+=relva('M-20,975 Q260,900 600,950 Q760,975 860,1010 L720,1360 H-20 Z');
- o+=rio('M610,925 Q760,940 830,975 Q950,1025 1100,1010 V1360 H520 Q660,1210 720,1110 Q752,1040 680,975 Z');
+ o+=relva('M-20,975 Q260,900 600,950 Q760,975 860,1010 L720,1420 H-20 Z');
+ o+=rio('M610,925 Q760,940 830,975 Q950,1025 1100,1010 V1420 H520 Q660,1210 720,1110 Q752,1040 680,975 Z');
  o+=ondas(700,1060,1040,1250,9,1)+reflexo(900,1040)+nenufar(1010,1210,.7,'#ff9ec4')+nenufar(760,1240,.55,null);
  o+=folhas(10,640,1000,1300,70,1)+junco(640,1010,.6)+junco(560,1180,.7)+pedra(690,1240,.8)+pedra(600,1300,.6);
  for(let i=0;i<8;i++) o+=flor((i*79+30)%560,1050+(i*57)%220,.8,['#ff9ec4','#ffffff','#bfe0ff','#ffe9a0'][i%4]);
@@ -153,7 +153,7 @@ S.push(`(()=>{let o=defs()+ceu(0)+lua(880,640,58)+montes();
  return o;})()`);
 S.push(`(()=>{let o=defs()+ceu(1)+lua(150,640,50)+montes();
  o+='<g stroke="'+OL+'" stroke-width="6">'; for(let x=10;x<1080;x+=125) o+='<rect x="'+x+'" y="880" width="30" height="120" rx="8" fill="url(#wood)"/><path d="M'+(x+8)+',900 v80" stroke="#8a5a2c" stroke-width="3"/>'; o+='<rect x="-10" y="900" width="1100" height="22" rx="8" fill="url(#wood)"/><rect x="-10" y="950" width="1100" height="22" rx="8" fill="url(#wood)"/></g>';
- o+=relva('M-20,985 Q540,940 1100,985 V1360 H-20 Z')+folhas(0,1080,1000,1300,90,2);
+ o+=relva('M-20,985 Q540,940 1100,985 V1420 H-20 Z')+folhas(0,1080,1000,1300,90,2);
  for(let i=0;i<10;i++) o+=flor((i*109+40)%1040,1020+(i*41)%110,.8,['#ff9ec4','#ffffff','#bfe0ff','#ffe9a0'][i%4]);
  o+='<circle cx="540" cy="830" r="330" fill="url(#pglow)"/>';
  o+=vaca(380,780,.68,1,{hr:10,lenco:'#ffd21f'})+vaca(700,780,.68,-1,{hr:10,lenco:'#7fd3ff',coroa:true});
@@ -164,7 +164,7 @@ S.push(`(()=>{let o=defs()+ceu(1)+lua(150,640,50)+montes();
  return o;})()`);
 S.push(`(()=>{let o=defs()+ceu(2)+lua(880,620,54)+montes();
  o+=relva('M-20,880 Q200,850 380,880 L320,920 Q160,930 -20,920 Z')+junco(80,905,.7)+junco(300,900,.55);
- o+=rio('M-20,900 Q540,860 1100,900 V1360 H-20 Z')+reflexo(880,930)+ondas(20,1060,940,1300,16,3);
+ o+=rio('M-20,900 Q540,860 1100,900 V1420 H-20 Z')+reflexo(880,930)+ondas(20,1060,940,1300,16,3);
  o+=nenufar(140,1050,.8,'#ff9ec4')+nenufar(960,1080,.7,'#fff')+nenufar(220,1240,.6,null)+nenufar(880,1270,.6,'#ff9ec4');
  o+=lontra(374,1005,.62,-1)+lontra(706,1005,.62,1)+maos(540,1021,.62)+coracao(540,920,1.2,PK);
  o+='<text x="190" y="800" font-family="M" font-weight="900" font-size="58" fill="#bfe9ff" opacity=".85">z</text><text x="235" y="750" font-family="M" font-weight="900" font-size="42" fill="#bfe9ff" opacity=".65">z</text><text x="860" y="800" font-family="M" font-weight="900" font-size="58" fill="#bfe9ff" opacity=".85">z</text>';
@@ -174,8 +174,8 @@ S.push(`(()=>{let o=defs()+ceu(2)+lua(880,620,54)+montes();
  o+=caixa('Pra corrente não separar','uma da <tspan fill="#e8649a">outra</tspan>')+progresso(3);
  return o;})()`);
 S.push(`(()=>{let o=defs()+ceu(3)+lua(900,640,50)+montes();
- o+=relva('M-20,960 Q280,900 560,950 Q640,970 700,1000 L560,1360 H-20 Z');
- o+=rio('M560,930 Q720,940 800,975 Q940,1020 1100,1000 V1360 H420 Q540,1200 600,1100 Q620,1030 560,975 Z')+ondas(600,1060,1040,1200,7,4)+nenufar(990,1200,.6,'#ff9ec4');
+ o+=relva('M-20,960 Q280,900 560,950 Q640,970 700,1000 L560,1420 H-20 Z');
+ o+=rio('M560,930 Q720,940 800,975 Q940,1020 1100,1000 V1420 H420 Q540,1200 600,1100 Q620,1030 560,975 Z')+ondas(600,1060,1040,1200,7,4)+nenufar(990,1200,.6,'#ff9ec4');
  o+=folhas(10,540,990,1110,50,4);
  for(let i=0;i<6;i++) o+=flor((i*83+30)%480,1000+(i*37)%90,.75,['#ff9ec4','#ffffff','#bfe0ff'][i%3]);
  o+='<circle cx="290" cy="820" r="280" fill="url(#pglow)"/>'+vaca(210,760,.5,1,{hr:10,lenco:PK})+vaca(400,760,.5,-1,{hr:10,lenco:YL,coroa:true});
@@ -187,8 +187,8 @@ S.push(`(()=>{let o=defs()+ceu(3)+lua(900,640,50)+montes();
  o+=progresso(4);
  return o;})()`);
 (async()=>{const b=await chromium.launch();
-for(let i=0;i<S.length;i++){const p=await b.newPage({viewport:{width:1080,height:1350}});
-await p.setContent(`<style>@font-face{font-family:M;src:url(${font});font-weight:900}body{margin:0}</style><svg id=s width=1080 height=1350 viewBox="0 0 1080 1350"></svg><script>window.window=window;${art};${lib}; try{document.getElementById('s').innerHTML=${S[i]};}catch(e){document.title='ERR '+e.message}</script>`);
+for(let i=0;i<S.length;i++){const p=await b.newPage({viewport:{width:1080,height:1440}});
+await p.setContent(`<style>@font-face{font-family:M;src:url(${font});font-weight:900}body{margin:0}</style><svg id=s width=1080 height=1440 viewBox="0 0 1080 1440"></svg><script>window.window=window;${art};${lib}; try{document.getElementById('s').innerHTML='<g transform="translate(0 45)">'+${S[i]}+'</g>';}catch(e){document.title='ERR '+e.message}</script>`);
 await p.evaluate(()=>document.fonts.ready); await p.waitForTimeout(400);
 const t=await p.title(); if(t.startsWith('ERR')) console.log('slide',i+1,t);
 await p.screenshot({path:`${process.argv[2]}/car01b/slide${i+1}.png`}); await p.close();}
