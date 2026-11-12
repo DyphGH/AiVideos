@@ -169,3 +169,124 @@ function drift(t,H){ const P=4.2, c=t%P; let o='';
   o+=carTop(x,y,a,'url(#gCar)',{lights:c<1.3||c>3.2,brake:c>1.2&&c<2.4,sq});
   if(c>2.3&&c<3.2){ const k=pop(c,2.35,.18); o+=`<g transform="translate(540 ${H+20}) scale(${k}) rotate(-6)"><rect x="-150" y="-40" width="300" height="80" rx="18" fill="#fffaf0" stroke="#2f9e5a" stroke-width="8"/><text y="16" font-family="M" font-weight="900" font-size="46" fill="#2f9e5a" text-anchor="middle">PERFEITO!</text></g>`; }
   return o; }
+
+// ===== v2 · PARQUE DE ESTACIONAMENTO — drift contínuo (satisfatório) =====
+const GP=5.4125; // 4 voltas em 21,65 s
+function gPos(u){const a=u*2*Math.PI;return [540+330*Math.sin(2*a),1290+430*Math.sin(a)];}
+function gCar(u){const e=.004;const A=gPos(u-e),O=gPos(u),B=gPos(u+e);
+ const vx=(B[0]-A[0])/(2*e),vy=(B[1]-A[1])/(2*e),ax=(B[0]-2*O[0]+A[0])/(e*e),ay=(B[1]-2*O[1]+A[1])/(e*e);
+ const sp=Math.hypot(vx,vy)||1;const k=(vx*ay-vy*ax)/(sp*sp*sp);
+ const sl=Math.max(-38,Math.min(38,k*9500));
+ return [O[0],O[1],Math.atan2(vy,vx)*180/Math.PI+sl,sl];}
+function gRear(u,side){const c=gCar(u);const r=c[2]*Math.PI/180;const rx=-88,ry=side*52;
+ return [c[0]+rx*Math.cos(r)-ry*Math.sin(r),c[1]+rx*Math.sin(r)+ry*Math.cos(r)];}
+function gIsla(x,y){let o=`<g transform="translate(${x} ${y})"><rect x="-80" y="-80" width="160" height="160" rx="24" fill="#150a26" stroke="#ffd21f" stroke-width="5" stroke-dasharray="26 14"/>`;
+ for(let k=-2;k<=2;k++)o+=`<path d="M${-64+k*34},72 L${-30+k*34},-72" stroke="#ffd21f" stroke-width="5" opacity=".3"/>`;
+ o+=`<circle r="18" fill="#0c0518" stroke="#3a2a55" stroke-width="5"/><circle r="8" fill="#ffe9a0"/></g>`;return o;}
+function gCone(x,y,r,s,op){return `<g transform="translate(${x.toFixed(1)} ${y.toFixed(1)}) rotate(${r.toFixed(0)}) scale(${s.toFixed(2)})" opacity="${op.toFixed(2)}"><rect x="-26" y="-26" width="52" height="52" rx="8" fill="#c2430c" stroke="#0c0518" stroke-width="4"/><circle r="16" fill="#ff8a2a" stroke="#0c0518" stroke-width="4"/><circle r="6" fill="#ffd9b0"/></g>`;}
+function gWorld(tg){
+ const u=tg/GP;
+ let o=`<defs><radialGradient id="gUG" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#ff3fa4" stop-opacity=".5"/><stop offset="1" stop-color="#ff3fa4" stop-opacity="0"/></radialGradient><radialGradient id="gLmp" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#ffd98a" stop-opacity=".15"/><stop offset="1" stop-color="#ffd98a" stop-opacity="0"/></radialGradient><linearGradient id="gAsf" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#231337"/><stop offset="1" stop-color="#150a26"/></linearGradient></defs>`;
+ o+=`<rect width="1080" height="1920" fill="url(#gAsf)"/>`;
+ for(let i=0;i<46;i++){o+=`<circle cx="${(i*167)%1080}" cy="${(i*293)%1920}" r="${1+i%3}" fill="#fff" opacity=".035"/>`;}
+ o+=`<ellipse cx="250" cy="830" rx="90" ry="38" fill="#0c0518" opacity=".5"/><ellipse cx="295" cy="852" rx="38" ry="16" fill="#0c0518" opacity=".5"/><ellipse cx="850" cy="1770" rx="70" ry="28" fill="#0c0518" opacity=".45"/>`;
+ o+=`<g transform="translate(150 1800)"><rect x="-55" y="-30" width="110" height="60" rx="8" fill="#0c0518" stroke="#3a2a55" stroke-width="4"/>${[...Array(5)].map((_,k)=>`<path d="M${-40+k*20},-22 V22" stroke="#3a2a55" stroke-width="5"/>`).join('')}</g>`;
+ // lugares nas bermas + linhas
+ for(let k=0;k<5;k++){o+=`<path d="M0,${790+k*248} H150" stroke="#fff" stroke-width="6" opacity=".28"/><path d="M1080,${790+k*248} h-150" stroke="#fff" stroke-width="6" opacity=".28"/>`;}
+ o+=`<path d="M150,790 V1782" stroke="#fff" stroke-width="4" opacity=".12"/><path d="M930,790 V1782" stroke="#fff" stroke-width="4" opacity=".12"/>`;
+ for(const s of [[540,880,180],[310,1290,90],[770,1290,-90]]) o+=`<g transform="translate(${s[0]} ${s[1]}) rotate(${s[2]})" opacity=".18"><path d="M0,30 V-14 M0,-30 L-20,-6 M0,-30 L20,-6" stroke="#fff" stroke-width="10" fill="none" stroke-linecap="round"/></g>`;
+ o+=`<text x="952" y="1878" font-family="M" font-weight="900" font-size="130" fill="#fff" opacity=".08" text-anchor="middle">P</text>`;
+ // ilhas + candeeiros nos centros dos dois lacos
+ o+=`<circle cx="540" cy="1035" r="340" fill="url(#gLmp)"/><circle cx="540" cy="1545" r="340" fill="url(#gLmp)"/>`;
+ o+=gIsla(540,1035)+gIsla(540,1545);
+ // carros estacionados
+ o+=carTop(58,1040,90,'#2fa3ff',{})+carTop(58,1530,90,'#7fe08a',{})+carTop(1022,912,-90,'#ffd21f',{})+carTop(1022,1655,-90,'#ff8a5c',{});
+ // marcas de pneu persistentes (voltas anteriores)
+ for(const sd of [-1,1]){let p=[];for(let i=0;i<=150;i++)p.push(gRear(i/150,sd).map(v=>v.toFixed(0)).join(','));
+  o+=`<path d="M${p.join(' L')}" fill="none" stroke="#0a0514" stroke-width="13" opacity=".5" stroke-linejoin="round"/>`;}
+ // rasto fresco atras do carro
+ for(const sd of [-1,1]){let p=[];for(let i=0;i<=26;i++)p.push(gRear(u-(1.2/GP)*(i/26),sd).map(v=>v.toFixed(0)).join(','));
+  o+=`<path d="M${p.join(' L')}" fill="none" stroke="#040209" stroke-width="15" opacity=".8" stroke-linecap="round" stroke-linejoin="round"/>`;}
+ // rasto neon
+ {let p=[];for(let i=0;i<=16;i++){const c=gCar(u-(0.55/GP)*(i/16));p.push(c[0].toFixed(0)+','+c[1].toFixed(0));}
+  o+=`<path d="M${p.join(' L')}" fill="none" stroke="#ff3fa4" stroke-width="56" opacity=".12" stroke-linecap="round"/>`;}
+ // cones que o carro derruba
+ const cones=[{u0:.17,fx:50,fy:30,dx:210,dy:130},{u0:.67,fx:44,fy:-32,dx:190,dy:-150}];
+ for(const cn of cones){const P=gPos(cn.u0);const bx=P[0]+cn.fx,by=P[1]+cn.fy;
+  const tS=(((u-cn.u0)%1)+1)%1*GP;
+  if(tS<0.85){const k=ease(tS/.85);o+=gCone(bx+cn.dx*k,by+cn.dy*k,k*660,1,Math.max(0,1-Math.max(0,(tS-.55)/.3)));}
+  else if(tS>1.6){const f=Math.min(1,(tS-1.6)/.5);o+=gCone(bx,by,0,.6+.4*f,f);}}
+ // moedas que o carro apanha
+ const CU=[.08,.3,.45,.58,.82];
+ CU.forEach((cu,i)=>{const P=gPos(cu);const tS=(((u-cu)%1)+1)%1*GP;
+  if(tS<0.5){const k=tS/.5;o+=`<circle cx="${P[0].toFixed(0)}" cy="${P[1].toFixed(0)}" r="${(20+k*110).toFixed(0)}" fill="none" stroke="#ffd21f" stroke-width="${(7*(1-k)).toFixed(1)}" opacity="${(1-k).toFixed(2)}"/>`+fTxt(P[0],P[1]-50-k*90,'+R$',52,'#ffd21f','middle',10);}
+  else if(tS>1.4){const f=Math.min(1,(tS-1.4)/.4);const w=Math.abs(Math.cos(tg*3+i));
+   o+=`<g opacity="${f.toFixed(2)}" transform="translate(${P[0].toFixed(0)} ${P[1].toFixed(0)})"><ellipse rx="${(10+24*w).toFixed(1)}" ry="32" fill="url(#gCoin)" stroke="#8a5a00" stroke-width="5"/><path d="M${(20+12*w).toFixed(0)},-28 l10,-10" stroke="#fff6c0" stroke-width="5" opacity="${(.4+.5*Math.abs(Math.sin(tg*5+i))).toFixed(2)}"/></g>`;}});
+ // fumo dos pneus
+ for(let i=0;i<16;i++){const age=i*.06;const ut=u-age/GP;const c2=gCar(ut);const inten=Math.min(1,Math.abs(c2[3])/26);
+  if(inten<.12)continue;
+  for(const sd of [-1,1]){const w=gRear(ut,sd);
+   o+=`<circle cx="${(w[0]+Math.sin(i*2.7+sd*3)*age*55).toFixed(0)}" cy="${(w[1]-age*30).toFixed(0)}" r="${(15+age*100).toFixed(0)}" fill="#d8cfe8" opacity="${Math.max(0,(.5-age*.52)*inten).toFixed(2)}"/>`;}}
+ // carro com neon por baixo
+ const c=gCar(u);
+ o+=`<g transform="translate(${c[0].toFixed(1)} ${c[1].toFixed(1)}) rotate(${c[2].toFixed(1)})"><ellipse rx="190" ry="120" fill="url(#gUG)"/></g>`;
+ o+=carTop(c[0],c[1],c[2],'url(#gCar)',{lights:true,brake:Math.abs(c[3])>16});
+ return o;}
+function gCam(tg,inner){const z=1.03+.035*Math.sin(tg*.5);const r=.8*Math.sin(tg*.3);
+ return `<g transform="translate(540 1200) scale(${z.toFixed(3)}) rotate(${r.toFixed(2)}) translate(-540 -1200)">${inner}</g>`;}
+
+// --- cenas v2 (sobrepoem as anteriores) ---
+FP.gta_hype=(t,dur,tw)=>{const g=tw===undefined?t:tw;
+ let o=gDefs()+gCam(g,gWorld(g));
+ const secs=Math.max(0,59-Math.floor(t*6)%60);
+ const k=(0.7+0.3*ease(clamp(t/.3,0,1)))*(1+.03*Math.sin(t*8));
+ o+=`<g transform="translate(540 610) scale(${k})"><rect x="-380" y="-130" width="760" height="260" rx="34" fill="#0c0518" opacity=".8" stroke="${NP}" stroke-width="8"/>`;
+ const dig=['6D','23H','59M',String(secs).padStart(2,'0')+'S'];
+ dig.forEach((d,i)=>{o+=`<g transform="translate(${-270+i*180} 0)"><rect x="-80" y="-90" width="160" height="150" rx="16" fill="#1d0c33" stroke="${NC}" stroke-width="4"/><path d="M-80,-15 H80" stroke="#0c0518" stroke-width="4"/><text y="22" font-family="M" font-weight="900" font-size="${d.length>2?54:64}" fill="#fff" text-anchor="middle">${d}</text></g>`;});
+ o+=`<text y="110" font-family="M" font-weight="900" font-size="34" fill="${NC}" text-anchor="middle" letter-spacing="6">LANÇAMENTO 19/11</text></g>`;
+ o+=`<rect width="1080" height="1920" fill="url(#gVig)"/>`;
+ return o+gHook(t,2.52);};
+FP.gta_espera=(t,dur)=>{let o=gDefs()+gCam(t+2.52,gWorld(t+2.52));
+ const yr=2013+Math.min(13,Math.floor(clamp(t/2.2,0,1)*13));
+ o+=`<g transform="translate(540 540) rotate(-3)" stroke="${FK}"><rect x="-216" y="-156" width="432" height="316" rx="26" fill="#000" opacity=".4" stroke="none"/><rect x="-210" y="-160" width="420" height="320" rx="24" fill="#fffaf0" stroke-width="10"/><rect x="-210" y="-160" width="420" height="80" rx="24" fill="${NP}" stroke-width="10"/><text y="-104" font-family="M" font-weight="900" font-size="38" fill="#fff" text-anchor="middle" stroke="none">ESPERANDO DESDE</text><text y="80" font-family="M" font-weight="900" font-size="140" fill="${FK}" text-anchor="middle" stroke="none">${yr}</text>`;
+ for(const rx of [-110,110]) o+=`<rect x="${rx-14}" y="-190" width="28" height="64" rx="14" fill="#c9d1d6" stroke-width="6"/>`;
+ o+=`</g>`;
+ if(t>=2.57) o+=fStamp(t,2.57,540,880,'13 ANOS ESPERANDO','#e0483a',64,-4);
+ return o+`<rect width="1080" height="1920" fill="url(#gVig)"/>`;};
+FP.gta_pergunta=(t,dur)=>{let o=gDefs()+gCam(t+6.25,gWorld(t+6.25));
+ const k=pop(t,0,.25); o+=`<g transform="translate(540 300) scale(${k})">${neonTxt(0,0,'QUANTOS ANOS',96,NP)}${neonTxt(0,115,'VOCÊ TINHA?',110,NC)}</g>`;
+ const C=['eu tinha 9','nem tinha nascido','15 kkkk','tinha 21','6 anos','12 e jogava escondido'];
+ C.forEach((c,i)=>{const t0=0.5+i*0.62; if(t<t0) return; const p=ease(clamp((t-t0)/.35,0,1)); const y=1210-(t-t0)*180; if(y<540) return; const x=i%2?620:460;
+  o+=`<g transform="translate(${x} ${y}) scale(${p})" opacity="${Math.min(1,(y-540)/120).toFixed(2)}"><rect x="-350" y="-46" width="700" height="92" rx="46" fill="#fff" stroke="${FK}" stroke-width="5"/><circle cx="-296" cy="0" r="28" fill="${['#ff8a5c','#2fe6ff','#ff3fa4','#7fe08a'][i%4]}" stroke="${FK}" stroke-width="4"/><text x="-252" y="14" font-family="M" font-weight="900" font-size="40" fill="${FK}">${c}</text></g>`;});
+ return o+`<rect width="1080" height="1920" fill="url(#gVig)"/>`;};
+FP.gta_custo=(t,dur)=>{let o=gDefs()+gCam(t+11.26,gWorld(t+11.26));
+ o+=chuvaNotas(t,10,.3);
+ const v=(ease(clamp(t/2.6,0,1))*5).toFixed(1).replace('.',',');
+ o+=`<g transform="translate(540 480)">${fTxt(0,-80,'CUSTOU',80,'#fff')}${fTxt(0,70,'R$ '+v+' BI',150,'#e0483a','middle',18)}</g>`;
+ if(t>2.2) o+=fStamp(t,2.2,540,760,'O JOGO MAIS CARO','#e0483a',58,-5);
+ return o+`<rect width="1080" height="1920" fill="url(#gVig)"/>`;};
+FP.gta_pre=(t,dur)=>{let o=gDefs()+gCam(t+14.72,gWorld(t+14.72));
+ const k=ease(clamp(t/1.8,0,1)); const ang=(1-k)*-16+Math.sin(t*6)*(1-k)*2;
+ let b=`<g stroke="${FK}" stroke-width="10"><path d="M540,1560 V820" stroke="#c9d1d6" stroke-width="22"/><path d="M420,1570 H660" stroke="#c9d1d6" stroke-width="26" stroke-linecap="round"/><circle cx="540" cy="800" r="26" fill="${NY}"/></g>`;
+ b+=`<g transform="rotate(${ang.toFixed(2)} 540 800)"><path d="M180,800 H900" stroke="#c9d1d6" stroke-width="20"/>`;
+ for(const pc of [[220,'CUSTO','#e0483a'],[860,'PRÉ-VENDA','#2f9e5a']]){const px=pc[0],lab=pc[1],col=pc[2];const yy=800;
+  b+=`<g transform="rotate(${(-ang).toFixed(2)} ${px} ${yy})"><path d="M${px},${yy} L${px-120},${yy+260} M${px},${yy} L${px+120},${yy+260}" stroke="#c9d1d6" stroke-width="6"/><path d="M${px-150},${yy+260} Q${px},${yy+360} ${px+150},${yy+260} Z" fill="#c9d1d6" stroke="${FK}" stroke-width="8"/>`;
+  const m=px<540?10:Math.floor(k*10); for(let i=0;i<m;i++) b+=nota(px+((i%2)?-12:12),yy+236-i*16,(i%3-1)*4,1);
+  b+=`<g transform="translate(${px} ${yy+420})"><rect x="-150" y="-46" width="300" height="92" rx="20" fill="${col}" stroke="${FK}" stroke-width="7"/><text y="16" font-family="M" font-weight="900" font-size="44" fill="#fff" text-anchor="middle">${lab}</text></g></g>`;}
+ b+=`</g>`;
+ o+=`<g transform="translate(540 430) scale(.62) translate(-540 -800)">${b}</g>`;
+ if(t>1.8) o+=fStamp(t,1.8,540,1060,'QUASE EMPATOU!','#2f9e5a',80,-6);
+ else o+=`<g transform="translate(540 230)">${fTxt(0,0,'SÓ NA PRÉ-VENDA',80,'#fff')}</g>`;
+ return o+`<rect width="1080" height="1920" fill="url(#gVig)"/>`;};
+FP.gta_semana=(t,dur)=>{
+ if(t>dur-.2) return FP.gta_hype(0.05,2.52,t+17.56);
+ let o=gDefs()+gCam(t+17.56,gWorld(t+17.56));
+ for(let i=0;i<4;i++){const t0=1.2+i*.7; if(t>t0){const p=clamp((t-t0)/1.2,0,1); const fx=200+i*230, fy=520+(i%2)*150; for(let j=0;j<14;j++){const a=j*Math.PI/7; o+=`<circle cx="${(fx+Math.cos(a)*p*170).toFixed(0)}" cy="${(fy+Math.sin(a)*p*170+p*p*60).toFixed(0)}" r="${(8*(1-p)+2).toFixed(1)}" fill="${[NP,NC,NY][j%3]}" opacity="${(1-p).toFixed(2)}"/>`;}}}
+ o+=chuvaNotas(t,14,.6);
+ const v=Math.min(25,Math.floor(ease(clamp(t/2.4,0,1))*25)+5*(t<0.2?1:0));
+ const sh=t<2.4?Math.sin(t*50)*4:0;
+ o+=`<g transform="translate(${(540+sh).toFixed(1)} 470)">${fTxt(0,-90,'1ª SEMANA',80,'#fff')}${neonTxt(0,90,'R$ '+v+' BI',180,'#2f9e5a')}</g>`;
+ o+=`<g transform="translate(540 720)">${estrelas(0,0,5,t,0.3)}</g>`;
+ if(t>2.5) o+=fStamp(t,2.5,540,900,'5× O QUE CUSTOU','#e0483a',70,-5);
+ if(t>2.9){const p=pop(t,2.9,.2); o+=`<g transform="translate(540 1090) scale(${(p*.8).toFixed(2)})"><rect x="-420" y="-75" width="840" height="150" rx="75" fill="${NY}" stroke="${FK}" stroke-width="8"/><text x="0" y="-8" font-family="M" font-weight="900" font-size="54" fill="${FK}" text-anchor="middle">SEGUE · AMANHÃ</text><text x="0" y="52" font-family="M" font-weight="900" font-size="46" fill="#e0483a" text-anchor="middle">TEM MAIS 2 FATOS</text></g>`;}
+ return o+`<rect width="1080" height="1920" fill="url(#gVig)"/>`;};
