@@ -1,14 +1,14 @@
 2 FATOS (BR) — GTA 6 (sai a 19/11/2026)
 Texto no topo desde o frame 0: "GTA 6 SAI EM 7 DIAS"
 
-VOZ DO GABRIEL
+VOZ DO GABRIEL (ordem final do Daniel)
 [excited] O GTA 6 sai daqui a uma semana… e quem nasceu no dia do GTA 5 já tem treze anos.
 [playful] Treze anos esperando.
+[curious] Quantos anos você tinha quando saiu o GTA 5? Comenta aí.
 [serious] Estimam que ele custou mais de cinco bilhões de reais.
 [playful] Só na pré-venda, já faturou praticamente isso.
 [amazed] E na primeira semana, ele pode faturar uns vinte e cinco bilhões.
-[curious] Quantos anos você tinha quando saiu o GTA 5? Comenta aí.
-Segue: amanhã tem mais dois.
+(fim seco no R$25 BI; "Segue · amanhã tem mais 2 fatos" só em texto no último ~1,5 s, depois loop)
 
 FONTES
 - 1.ª semana: Newzoo (jul/2026) ~51 milhões de cópias, ~4,5 bi USD ≈ R$25 bi
