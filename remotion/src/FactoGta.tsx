@@ -13,10 +13,9 @@ const SEGS: Seg[] = [
   {name: 'gta_pergunta', start: 6.25, end: 11.26, capY: 1470},
   {name: 'gta_custo', start: 11.26, end: 14.72, capY: 1470},
   {name: 'gta_pre', start: 14.72, end: 17.56, capY: 1470},
-  {name: 'gta_semana', start: 17.56, end: 21.7, capY: 1470},
-  {name: 'gta_fim', start: 21.7, end: 23.3, capY: 1470},
+  {name: 'gta_semana', start: 17.56, end: 21.65, capY: 1470},
 ];
-export const DUR_GTA = 23.3;
+export const DUR_GTA = 21.65;
 type Line = {start: number; end: number; chunks: string[]};
 const LINES: Line[] = [
   {start: 0.0, end: 2.33, chunks: ['O *GTA 6*', 'SAI DAQUI A', 'UMA SEMANA']},

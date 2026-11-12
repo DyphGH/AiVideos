@@ -3112,6 +3112,7 @@ FP.gta_pre=(t,dur)=>{
   return o+`<rect width="1080" height="1920" fill="url(#gVig)"/>`; };
 // 6 · 1.ª semana: R$25 bi (17,56 – 21,63)
 FP.gta_semana=(t,dur)=>{
+  if(t>dur-.2) return FP.gta_hype(0.05,2.52);
   let o=gDefs()+cidade(t,{car:true});
   o+=`<rect width="1080" height="1920" fill="#0c0518" opacity=".45"/>`;
   for(let i=0;i<4;i++){ const t0=1.2+i*.7; if(t>t0){ const p=clamp((t-t0)/1.2,0,1); const fx=200+i*230, fy=600+(i%2)*160; for(let j=0;j<14;j++){ const a=j*Math.PI/7; o+=`<circle cx="${fx+Math.cos(a)*p*170}" cy="${fy+Math.sin(a)*p*170+p*p*60}" r="${8*(1-p)+2}" fill="${[NP,NC,NY][j%3]}" opacity="${1-p}"/>`; } } }
@@ -3121,6 +3122,7 @@ FP.gta_semana=(t,dur)=>{
   o+=`<g transform="translate(${540+sh} 560)">${fTxt(0,-90,'1ª SEMANA',80,'#fff')}${neonTxt(0,90,'R$ '+v+' BI',180,'#2f9e5a')}</g>`;
   o+=`<g transform="translate(540 820)">${estrelas(0,0,5,t,0.3)}</g>`;
   if(t>2.5) o+=fStamp(t,2.5,540,1010,'5× O QUE CUSTOU','#e0483a',70,-5);
+  if(t>2.9){ const p=pop(t,2.9,.2); o+=`<g transform="translate(540 1200) scale(${p*.8})"><rect x="-420" y="-75" width="840" height="150" rx="75" fill="${NY}" stroke="${FK}" stroke-width="8"/><text x="0" y="-8" font-family="M" font-weight="900" font-size="54" fill="${FK}" text-anchor="middle">SEGUE · AMANHÃ</text><text x="0" y="52" font-family="M" font-weight="900" font-size="46" fill="#e0483a" text-anchor="middle">TEM MAIS 2 FATOS</text></g>`; }
   return o+`<rect width="1080" height="1920" fill="url(#gVig)"/>`; };
 // 7 · Fim (só texto) + loop
 FP.gta_fim=(t,dur)=>{
