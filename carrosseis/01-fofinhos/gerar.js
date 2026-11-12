@@ -122,7 +122,19 @@ function reflexo(x,y){ let o='<g filter="url(#b4)" opacity=".55">'; for(let i=0;
 function marca(){ return '<g transform="translate(130 92)"><rect x="-92" y="-36" width="184" height="72" rx="36" fill="#0a1633" stroke="'+YL+'" stroke-width="5"/><text y="15" font-family="M" font-weight="900" font-size="34" fill="'+YL+'" text-anchor="middle">2 FATOS</text></g>'; }
 function canto(n){ return '<g transform="translate(985 92)"><rect x="-64" y="-36" width="128" height="72" rx="36" fill="'+YL+'" stroke="#0a1633" stroke-width="6"/><text y="15" font-family="M" font-weight="900" font-size="40" fill="#0a1633" text-anchor="middle">#'+n+'</text></g>'; }
 function pill(x,y,txt,bg,fg,sz,w){ w=w||txt.length*sz*.66+70; return '<g transform="translate('+x+' '+y+')"><rect x="'+(-w/2+6)+'" y="-32" width="'+w+'" height="80" rx="40" fill="#000" opacity=".3"/><rect x="'+(-w/2)+'" y="-40" width="'+w+'" height="80" rx="40" fill="'+bg+'" stroke="#0a1633" stroke-width="6"/><text y="'+R(sz*.36)+'" font-family="M" font-weight="900" font-size="'+sz+'" fill="'+fg+'" text-anchor="middle">'+txt+'</text></g>'; }
-function caixa(l1,l2){ return '<rect x="96" y="1136" width="900" height="150" rx="36" fill="#000" opacity=".3"/><rect x="90" y="1128" width="900" height="150" rx="36" fill="#fffaf0" stroke="#0a1633" stroke-width="7"/><text x="540" y="1193" font-family="M" font-weight="900" font-size="44" fill="#0a1633" text-anchor="middle">'+l1+'</text><text x="540" y="1248" font-family="M" font-weight="900" font-size="44" fill="#0a1633" text-anchor="middle">'+l2+'</text>'+coracao(940,1140,.7,PK); }
+
+function progresso(i,n=4){ const x0=90,x1=990,y=1308,w=x1-x0, f=w*i/n; let o='';
+ o+='<rect x="'+(x0-14)+'" y="1236" width="'+(w+28)+'" height="104" rx="34" fill="#0a1633" opacity=".72"/>';
+ o+='<text x="'+x0+'" y="1284" font-family="M" font-weight="900" font-size="34" fill="#fff" opacity=".85">'+i+'/'+n+'</text>';
+ if(i<n){ o+='<text x="'+(x1-74)+'" y="1286" font-family="M" font-weight="900" font-size="46" fill="'+YL+'" text-anchor="end">DESLIZA</text><path d="M'+(x1-60)+',1270 h48 m-20,-20 l20,20 l-20,20" fill="none" stroke="'+YL+'" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>'; }
+ else { o+='<text x="'+x1+'" y="1286" font-family="M" font-weight="900" font-size="40" fill="'+YL+'" text-anchor="end">SEGUE: TODO DIA MAIS 2</text>'; }
+ o+='<rect x="'+x0+'" y="'+y+'" width="'+w+'" height="18" rx="9" fill="#ffffff" opacity=".2"/>';
+ o+='<rect x="'+x0+'" y="'+y+'" width="'+f+'" height="18" rx="9" fill="'+YL+'"/>';
+ for(let k=1;k<n;k++){ const cx=x0+w*k/n; o+='<circle cx="'+cx+'" cy="'+(y+9)+'" r="6" fill="'+(k<=i?'#0a1633':'#ffffff')+'" opacity="'+(k<=i?.6:.45)+'"/>'; }
+ o+=coracao(x0+f,y+8,.62,PK);
+ return o; }
+
+function caixa(l1,l2){ return '<rect x="96" y="1076" width="900" height="140" rx="36" fill="#000" opacity=".3"/><rect x="90" y="1068" width="900" height="140" rx="36" fill="#fffaf0" stroke="#0a1633" stroke-width="7"/><text x="540" y="1128" font-family="M" font-weight="900" font-size="44" fill="#0a1633" text-anchor="middle">'+l1+'</text><text x="540" y="1183" font-family="M" font-weight="900" font-size="44" fill="#0a1633" text-anchor="middle">'+l2+'</text>'+coracao(940,1080,.7,PK); }
 `;
 const S=[];
 S.push(`(()=>{let o=defs()+ceu(0)+lua(880,640,58)+montes();
@@ -137,7 +149,7 @@ S.push(`(()=>{let o=defs()+ceu(0)+lua(880,640,58)+montes();
  o+=marca()+canto('01');
  o+=fTxt(540,280,'2 FATOS',92,'#fff')+fTxt(540,410,'FOFINHOS',150,PK,'middle',18);
  o+=pill(540,515,'QUE VÃO TE DERRETER',YL,'#0a1633',44);
- o+='<g transform="translate(540 1262)"><rect x="-300" y="-50" width="612" height="116" rx="58" fill="#000" opacity=".35"/><rect x="-306" y="-58" width="612" height="116" rx="58" fill="'+YL+'" stroke="#0a1633" stroke-width="8"/><text x="-40" y="24" font-family="M" font-weight="900" font-size="72" fill="#0a1633" text-anchor="middle">DESLIZA</text><path d="M150,0 h100 m-36,-36 l36,36 l-36,36" fill="none" stroke="#0a1633" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/></g>';
+ o+=progresso(1);
  return o;})()`);
 S.push(`(()=>{let o=defs()+ceu(1)+lua(150,640,50)+montes();
  o+='<g stroke="'+OL+'" stroke-width="6">'; for(let x=10;x<1080;x+=125) o+='<rect x="'+x+'" y="880" width="30" height="120" rx="8" fill="url(#wood)"/><path d="M'+(x+8)+',900 v80" stroke="#8a5a2c" stroke-width="3"/>'; o+='<rect x="-10" y="900" width="1100" height="22" rx="8" fill="url(#wood)"/><rect x="-10" y="950" width="1100" height="22" rx="8" fill="url(#wood)"/></g>';
@@ -148,7 +160,7 @@ S.push(`(()=>{let o=defs()+ceu(1)+lua(150,640,50)+montes();
  o+=coracao(540,600,1.5,PK)+coracao(455,545,.7,YL)+coracao(625,530,.6,PK)+vagalumes(2,9,700,1100);
  o+=marca()+canto('02')+pill(540,210,'FATO 1',YL,'#0a1633',44,240);
  o+=fTxt(540,350,'VACAS TÊM',96,'#fff')+fTxt(540,465,'MELHOR AMIGA',104,PK,'middle',16);
- o+=caixa('Juntas, elas ficam bem','menos <tspan fill="#e8649a">estressadas</tspan>');
+ o+=caixa('Juntas, elas ficam bem','menos <tspan fill="#e8649a">estressadas</tspan>')+progresso(2);
  return o;})()`);
 S.push(`(()=>{let o=defs()+ceu(2)+lua(880,620,54)+montes();
  o+=relva('M-20,880 Q200,850 380,880 L320,920 Q160,930 -20,920 Z')+junco(80,905,.7)+junco(300,900,.55);
@@ -159,7 +171,7 @@ S.push(`(()=>{let o=defs()+ceu(2)+lua(880,620,54)+montes();
  o+=vagalumes(3,8,700,900);
  o+=marca()+canto('03')+pill(540,210,'FATO 2',YL,'#0a1633',44,240);
  o+=fTxt(540,350,'LONTRAS DORMEM',90,'#fff')+fTxt(540,465,'DE MÃOS DADAS',104,PK,'middle',16);
- o+=caixa('Pra corrente não separar','uma da <tspan fill="#e8649a">outra</tspan>');
+ o+=caixa('Pra corrente não separar','uma da <tspan fill="#e8649a">outra</tspan>')+progresso(3);
  return o;})()`);
 S.push(`(()=>{let o=defs()+ceu(3)+lua(900,640,50)+montes();
  o+=relva('M-20,960 Q280,900 560,950 Q640,970 700,1000 L560,1360 H-20 Z');
@@ -167,12 +179,12 @@ S.push(`(()=>{let o=defs()+ceu(3)+lua(900,640,50)+montes();
  o+=folhas(10,540,990,1110,50,4);
  for(let i=0;i<6;i++) o+=flor((i*83+30)%480,1000+(i*37)%90,.75,['#ff9ec4','#ffffff','#bfe0ff'][i%3]);
  o+='<circle cx="290" cy="820" r="280" fill="url(#pglow)"/>'+vaca(210,760,.5,1,{hr:10,lenco:PK})+vaca(400,760,.5,-1,{hr:10,lenco:YL,coroa:true});
- o+=lontra(700,1060,.42,-1)+lontra(934,1060,.42,1)+maos(817,1071,.42);
- o+=coracao(305,620,1,PK)+coracao(817,990,.8,PK)+vagalumes(4,8,700,1050);
+ o+=lontra(700,1025,.42,-1)+lontra(934,1025,.42,1)+maos(817,1036,.42);
+ o+=coracao(305,620,1,PK)+coracao(817,955,.8,PK)+vagalumes(4,8,700,1050);
  o+=marca()+canto('04');
  o+=fTxt(540,280,'MANDA PRA SUA',96,'#fff')+fTxt(540,410,'MELHOR AMIGA',120,PK,'middle',18);
- o+='<g transform="translate(540 1135)"><rect x="-294" y="-42" width="600" height="100" rx="50" fill="#000" opacity=".35"/><rect x="-300" y="-50" width="600" height="100" rx="50" fill="'+YL+'" stroke="#0a1633" stroke-width="7"/><path d="M-230,-14 L-180,0 L-230,14 Z M-180,0 L-235,-30 L-215,0 L-235,30 Z" fill="#0a1633"/><text x="30" y="16" font-family="M" font-weight="900" font-size="46" fill="#0a1633" text-anchor="middle">ENVIA AGORA</text></g>';
- o+=pill(540,1265,'SEGUE: TODO DIA MAIS 2 FATOS','#0a1633','#fff',32,640);
+ o+='<g transform="translate(540 1158)"><rect x="-294" y="-42" width="600" height="100" rx="50" fill="#000" opacity=".35"/><rect x="-300" y="-50" width="600" height="100" rx="50" fill="'+YL+'" stroke="#0a1633" stroke-width="7"/><path d="M-230,-14 L-180,0 L-230,14 Z M-180,0 L-235,-30 L-215,0 L-235,30 Z" fill="#0a1633"/><text x="30" y="16" font-family="M" font-weight="900" font-size="46" fill="#0a1633" text-anchor="middle">ENVIA AGORA</text></g>';
+ o+=progresso(4);
  return o;})()`);
 (async()=>{const b=await chromium.launch();
 for(let i=0;i<S.length;i++){const p=await b.newPage({viewport:{width:1080,height:1350}});
