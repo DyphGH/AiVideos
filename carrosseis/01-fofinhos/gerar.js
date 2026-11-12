@@ -81,16 +81,30 @@ function agua(y,t){ let o='<path d="M0,'+y+' Q135,'+(y-30)+' 270,'+y+' T540,'+y+
   return o; }
 `;
 const S=[];
-// 1 · CAPA
+// 1 · CAPA — vale com a vaca + rio com as lontras
 S.push(`(()=>{let o=fundo(0)+marca()+canto('01');
- o+=fTxt(540,300,'2 FATOS',92,'#fff')+fTxt(540,430,'FOFINHOS',150,'#ff9ec4','middle',18);
- o+=pill(540,540,'QUE VÃO TE DERRETER','#ffd21f','#0a1633',44);
- o+=lua(880,690,60)+brilho(140,640,1,'#ffd21f')+brilho(960,860,.7,'#fff');
- o+=grama(1040)+'<path d="M600,1110 Q840,1060 1100,1100 V1360 H600 Z" fill="url(#gWater)" stroke="#0a1633" stroke-width="7"/>';
- o+='<circle cx="540" cy="920" r="320" fill="url(#gGlow)"/>';
- o+=vaca(340,880,.82,1,'feliz','#ff9ec4')+lontra(830,1090,.68,-1,30);
- o+=coracao(560,700,1.6,'#ff9ec4')+coracao(470,640,.9,'#ffd21f')+coracao(650,610,.7,'#ff9ec4');
- o+=seta(890,1250);
+ o+=fTxt(540,280,'2 FATOS',92,'#fff')+fTxt(540,410,'FOFINHOS',150,'#ff9ec4','middle',18);
+ o+=pill(540,515,'QUE VÃO TE DERRETER','#ffd21f','#0a1633',44);
+ o+=lua(880,640,56)+brilho(140,620,1,'#ffd21f')+brilho(700,600,.6,'#fff');
+ // montes ao fundo
+ o+='<path d="M-20,900 Q160,760 360,860 Q520,740 720,850 Q900,760 1100,860 V1360 H-20 Z" fill="#2f7a5a" stroke="#0a1633" stroke-width="7"/>';
+ o+='<g stroke="#0a1633" stroke-width="6"><rect x="168" y="800" width="16" height="50" fill="#7a4e32"/><circle cx="176" cy="790" r="40" fill="#3fae6a"/><rect x="928" y="805" width="16" height="45" fill="#7a4e32"/><circle cx="936" cy="795" r="36" fill="#3fae6a"/></g>';
+ // vale
+ o+='<path d="M-20,960 Q300,880 640,940 Q800,970 900,1000 L760,1360 H-20 Z" fill="url(#gGrass)" stroke="#0a1633" stroke-width="7"/>';
+ for(let i=0;i<26;i++){const x=(i*61)%720, yy=1000+(i*47)%300; o+='<path d="M'+x+','+yy+' l6,-22 l6,22" fill="none" stroke="#2a7a48" stroke-width="5" stroke-linecap="round"/>';}
+ for(let i=0;i<7;i++) o+=flor((i*97+30)%660,1040+(i*61)%230,.9,['#ff9ec4','#ffffff','#bfe0ff'][i%3]);
+ // rio
+ o+='<path d="M640,900 Q760,930 820,960 Q930,1010 1100,1000 V1360 H560 Q700,1200 760,1100 Q790,1030 700,960 Z" fill="url(#gWater)" stroke="#0a1633" stroke-width="7"/>';
+ for(let i=0;i<7;i++) o+='<path d="M'+(700+i*55)+','+(1010+(i%3)*70)+' q18,-10 36,0" fill="none" stroke="#bfe9ff" stroke-width="6" stroke-linecap="round" opacity=".8"/>';
+ o+='<ellipse cx="900" cy="1060" rx="46" ry="8" fill="#fffbe0" opacity=".35"/>';
+ // vaca no vale
+ o+='<circle cx="320" cy="920" r="260" fill="url(#gGlow)"/>'+vaca(320,860,.72,1,'feliz','#ff9ec4');
+ // lontras no rio de mãos dadas
+ o+=lontra(790,1120,.5,-1,-999)+lontra(1058,1120,.5,1,-999);
+ o+='<ellipse cx="924" cy="1170" rx="26" ry="17" fill="#9b6a48" stroke="#0a1633" stroke-width="5"/>';
+ o+=coracao(924,1050,.8,'#ff9ec4')+coracao(470,660,1.1,'#ff9ec4')+coracao(560,620,.6,'#ffd21f');
+ // DESLIZA grande
+ o+='<g transform="translate(540 1262)"><rect x="-306" y="-58" width="612" height="116" rx="58" fill="#000" opacity=".3" transform="translate(6 8)"/><rect x="-306" y="-58" width="612" height="116" rx="58" fill="#ffd21f" stroke="#0a1633" stroke-width="8"/><text x="-40" y="24" font-family="M" font-weight="900" font-size="72" fill="#0a1633" text-anchor="middle">DESLIZA</text><path d="M150,0 h100 m-36,-36 l36,36 l-36,36" fill="none" stroke="#0a1633" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/></g>';
  return o;})()`);
 // 2 · FATO 1 — vacas
 S.push(`(()=>{let o=fundo(1)+marca()+canto('02');
