@@ -1,0 +1,16 @@
+const {chromium}=require('playwright');const fs=require('fs');
+const art=fs.readFileSync('/home/claude/oficina-remotion/src/art.js','utf8').replace(/export \{[^}]*\};?/,'');
+const font='data:font/woff2;base64,'+fs.readFileSync('/home/claude/oficina-remotion/public/fonts/mont900.woff2').toString('base64');
+const capa=`(()=>{let o=gDefs()+cidade(2.2,{car:true});
+ o+='<rect width="1080" height="1920" fill="#0c0518" opacity=".35"/>'+chuvaNotas(2.1,14,.2);
+ o+=neonTxt(540,400,'GTA 6',190,'${'#ff3fa4'}');
+ o+=fTxt(540,560,'VAI FATURAR',90,'#fff');
+ o+='<g transform="translate(540 760)">'+neonTxt(0,0,'R$ 25 BI',170,'#2f9e5a')+'</g>';
+ o+=fTxt(540,880,'NA 1ª SEMANA',80,'#ffd21f');
+ o+='<g transform="translate(540 1010)">'+estrelas(0,0,5,9,0)+'</g>';
+ o+=fPill('2 FATOS',9,1660);
+ return o+'<rect width="1080" height="1920" fill="url(#gVig)"/>';})()`;
+(async()=>{const b=await chromium.launch();const p=await b.newPage({viewport:{width:1080,height:1920}});
+await p.setContent(`<style>@font-face{font-family:M;src:url(${font});font-weight:900}body{margin:0}</style><svg id=s width=1080 height=1920 viewBox="0 0 1080 1920"></svg><script>window.window=window;${art}; document.getElementById('s').innerHTML=${capa};</script>`);
+await p.evaluate(()=>document.fonts.ready); await p.waitForTimeout(400);
+await p.screenshot({path:`${process.argv[2]}/capa-gta6.png`}); await b.close();})();
