@@ -3021,10 +3021,11 @@ function cidade(t,{car=true,horizon=1160}={}){
     if(i%3===1) o+=`<rect x="${bx+4}" y="${top+4}" width="${w-8}" height="${h}" fill="none" stroke="${i%2?NP:NC}" stroke-width="5" opacity=".85"/>`; });
   // estrada
   o+=`<rect x="0" y="${horizon}" width="1080" height="${1920-horizon}" fill="url(#gRoad)"/><path d="M0,${horizon} H1080" stroke="${NP}" stroke-width="6"/>`;
-  for(let i=0;i<9;i++){ const x=((i*160-t*900)%1440+1440)%1440-200; o+=`<rect x="${x}" y="${horizon+450}" width="90" height="14" rx="7" fill="#ffd98a" opacity=".8"/>`; }
-  for(let i=0;i<8;i++){ const x=((i*150-t*400)%1200+1200)%1200-60; o+=`<path d="M${x},${horizon+40} L${x+70},${horizon+40}" stroke="${NC}" stroke-width="3" opacity=".5"/>`; }
+  if(!car){ for(let i=0;i<9;i++){ const x=((i*160-t*900)%1440+1440)%1440-200; o+=`<rect x="${x}" y="${horizon+450}" width="90" height="14" rx="7" fill="#ffd98a" opacity=".8"/>`; }
+  for(let i=0;i<8;i++){ const x=((i*150-t*400)%1200+1200)%1200-60; o+=`<path d="M${x},${horizon+40} L${x+70},${horizon+40}" stroke="${NC}" stroke-width="3" opacity=".5"/>`; } }
+  else o+=ruaBase(horizon);
   o+=palmeira(90,horizon+40,1.0,t,0)+palmeira(1000,horizon+60,1.1,t,1.3)+palmeira(250,horizon+20,.7,t,2.1)+palmeira(840,horizon+20,.75,t,.7);
-  if(car){ const cx=((t*520+700)%1700)-300; o+=carro(cx,horizon+400,1,t); }
+  if(car) o+=drift(t,horizon);
   return o; }
 function carro(x,y,s,t){ let o=`<g transform="translate(${x} ${y}) scale(${s})" stroke="#0c0518" stroke-width="6" stroke-linejoin="round">`;
   for(let k=0;k<4;k++) o+=`<path d="M${-200-k*60},${-40+k*18} h-${80+k*20}" stroke="${NC}" stroke-width="5" opacity="${.7-k*.15}"/>`;
@@ -3131,4 +3132,43 @@ FP.gta_fim=(t,dur)=>{
   o+=`<rect width="1080" height="1920" fill="#0c0518" opacity=".35"/>`;
   const p=pop(t,0,.2); o+=`<g transform="translate(540 760) scale(${p})"><rect x="-414" y="-67" width="840" height="150" rx="75" fill="#000" opacity=".3"/><rect x="-420" y="-75" width="840" height="150" rx="75" fill="${NY}" stroke="${FK}" stroke-width="8"/><text x="0" y="-8" font-family="M" font-weight="900" font-size="54" fill="${FK}" text-anchor="middle">SEGUE · AMANHÃ</text><text x="0" y="52" font-family="M" font-weight="900" font-size="46" fill="#e0483a" text-anchor="middle">TEM MAIS 2 FATOS</text></g>`;
   return o; };
+
+// ---- rua vista de cima + carro a estacionar em drift (loop 4,2 s) ----
+function ruaBase(H){ let o=`<rect x="0" y="${H}" width="1080" height="70" fill="#3a1f55"/>`;
+  for(let x=0;x<1080;x+=60) o+=`<path d="M${x},${H} v70" stroke="#2a1240" stroke-width="3"/>`;
+  o+=`<path d="M0,${H+70} H1080" stroke="#c9d1d6" stroke-width="10"/>`;
+  for(let x=60;x<1080;x+=240) o+=`<path d="M${x},${H+80} v150" stroke="#fff" stroke-width="5" opacity=".35"/>`;
+  o+=`<path d="M0,${H+240} H1080" stroke="#fff" stroke-width="4" opacity=".25" stroke-dasharray="30 20"/>`;
+  for(let x=-20;x<1100;x+=140) o+=`<rect x="${x}" y="${H+415}" width="80" height="12" rx="6" fill="#ffd98a" opacity=".8"/>`;
+  return o; }
+function carTop(x,y,ang,col,{lights=false,brake=false,sq=1}={}){
+  let o=`<g transform="translate(${x.toFixed(1)} ${y.toFixed(1)}) rotate(${ang.toFixed(1)}) scale(1 ${sq})">`;
+  if(lights) o+=`<path d="M110,-40 L360,-110 L360,110 L110,40 Z" fill="#fff6a0" opacity=".14"/>`;
+  o+=`<rect x="-112" y="-50" width="236" height="114" rx="34" fill="#000" opacity=".35" transform="translate(8 10)"/>`;
+  for(const [wx,wy] of [[-70,-58],[70,-58],[-70,58],[70,58]]) o+=`<rect x="${wx-22}" y="${wy-9}" width="44" height="18" rx="5" fill="#0c0518"/>`;
+  o+=`<rect x="-115" y="-55" width="230" height="110" rx="34" fill="${col}" stroke="#0c0518" stroke-width="6"/>`;
+  o+=`<path d="M40,-42 L72,-36 L72,36 L40,42 Z" fill="#2fe6ff" stroke="#0c0518" stroke-width="5"/><path d="M-62,-38 L-82,-32 L-82,32 L-62,38 Z" fill="#2fe6ff" stroke="#0c0518" stroke-width="5"/>`;
+  o+=`<rect x="-62" y="-40" width="102" height="80" rx="14" fill="#000" opacity=".22"/><path d="M80,-30 Q100,0 80,30" fill="none" stroke="#fff" stroke-width="3" opacity=".4"/>`;
+  o+=`<rect x="-118" y="-46" width="14" height="92" rx="5" fill="#0c0518"/>`;
+  o+=`<rect x="104" y="-46" width="12" height="20" rx="5" fill="#fff6a0"/><rect x="104" y="26" width="12" height="20" rx="5" fill="#fff6a0"/>`;
+  o+=`<rect x="-114" y="-48" width="10" height="20" rx="4" fill="${brake?'#ff2a2a':'#a01818'}"/><rect x="-114" y="28" width="10" height="20" rx="4" fill="${brake?'#ff2a2a':'#a01818'}"/>`;
+  return o+`</g>`; }
+function driftPos(c,H){ const yP=H+165, yD=H+545;
+  if(c<1.3){ const k=c/1.3; return [-280+k*1040, yD, 0]; }
+  if(c<2.3){ const k=(c-1.3)/1.0, e=ease(k), ea=Math.pow(ease(k),0.75); return [760-e*220, yD-(yD-yP)*e, ea*180]; }
+  if(c<3.2) return [540, yP, 180];
+  const k=ease((c-3.2)/1.0), kk=Math.min(1,k*2.2); return [540-k*900, yP+(yD-yP)*kk, 180-18*Math.sin(Math.PI*kk)]; }
+function rearPt(x,y,a,side){ const r=a*Math.PI/180; const rx=-80, ry=side*48; return [x+rx*Math.cos(r)-ry*Math.sin(r), y+rx*Math.sin(r)+ry*Math.cos(r)]; }
+function drift(t,H){ const P=4.2, c=t%P; let o='';
+  // carros estacionados
+  o+=carTop(300,H+165,0,'#2fa3ff')+carTop(780,H+165,0,'#ffd21f')+carTop(-40,H+165,0,'#7fe08a')+carTop(1130,H+165,0,'#ff8a5c');
+  // marcas de pneu
+  const fade=c<3.2?1:Math.max(0,1-(c-3.2)/0.8);
+  if(c>1.3){ for(const sd of [-1,1]){ let pts=[]; for(let i=0;i<=24;i++){ const tc=1.3+Math.min(c-1.3,1.0)*i/24; const [x,y,a]=driftPos(tc,H); pts.push(rearPt(x,y,a,sd).map(v=>v.toFixed(1)).join(',')); } o+=`<path d="M${pts.join(' L')}" fill="none" stroke="#000" stroke-width="12" stroke-linecap="round" opacity="${.45*fade}"/>`; } }
+  // fumo
+  for(let i=0;i<14;i++){ const tc=c-i*0.05; if(tc<1.3||tc>2.5) continue; const age=c-tc; const [x,y,a]=driftPos(Math.min(tc,2.3),H); for(const sd of [-1,1]){ const [px,py]=rearPt(x,y,a,sd); o+=`<circle cx="${(px+Math.sin(i*3+sd)*age*40).toFixed(1)}" cy="${(py-age*60).toFixed(1)}" r="${(18+age*90).toFixed(1)}" fill="#e9e4f0" opacity="${Math.max(0,.55-age*.8).toFixed(2)}"/>`; } }
+  const [x,y,a]=driftPos(c,H); const sq=(c>2.3&&c<2.5)?1-0.06*Math.sin((c-2.3)/0.2*Math.PI):1;
+  o+=carTop(x,y,a,'url(#gCar)',{lights:c<1.3||c>3.2,brake:c>1.2&&c<2.4,sq});
+  if(c>2.3&&c<3.2){ const k=pop(c,2.35,.18); o+=`<g transform="translate(540 ${H+20}) scale(${k}) rotate(-6)"><rect x="-150" y="-40" width="300" height="80" rx="18" fill="#fffaf0" stroke="#2f9e5a" stroke-width="8"/><text y="16" font-family="M" font-weight="900" font-size="46" fill="#2f9e5a" text-anchor="middle">PERFEITO!</text></g>`; }
+  return o; }
 export {buildShot, buildFacto};
