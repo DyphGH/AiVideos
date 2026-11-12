@@ -19,14 +19,14 @@ function cidade(t,{car=true,horizon=1160}={}){
     if(i%3===1) o+=`<rect x="${bx+4}" y="${top+4}" width="${w-8}" height="${h}" fill="none" stroke="${i%2?NP:NC}" stroke-width="5" opacity=".85"/>`; });
   // estrada
   o+=`<rect x="0" y="${horizon}" width="1080" height="${1920-horizon}" fill="url(#gRoad)"/><path d="M0,${horizon} H1080" stroke="${NP}" stroke-width="6"/>`;
-  for(let i=0;i<9;i++){ const x=((i*160-t*900)%1440+1440)%1440-200; o+=`<rect x="${x}" y="${horizon+300}" width="90" height="14" rx="7" fill="#ffd98a" opacity=".8"/>`; }
+  for(let i=0;i<9;i++){ const x=((i*160-t*900)%1440+1440)%1440-200; o+=`<rect x="${x}" y="${horizon+450}" width="90" height="14" rx="7" fill="#ffd98a" opacity=".8"/>`; }
   for(let i=0;i<8;i++){ const x=((i*150-t*400)%1200+1200)%1200-60; o+=`<path d="M${x},${horizon+40} L${x+70},${horizon+40}" stroke="${NC}" stroke-width="3" opacity=".5"/>`; }
   o+=palmeira(90,horizon+40,1.0,t,0)+palmeira(1000,horizon+60,1.1,t,1.3)+palmeira(250,horizon+20,.7,t,2.1)+palmeira(840,horizon+20,.75,t,.7);
-  if(car){ const cx=((t*520+700)%1700)-300; o+=carro(cx,horizon+270,1,t); }
+  if(car){ const cx=((t*520+700)%1700)-300; o+=carro(cx,horizon+400,1,t); }
   return o; }
 function carro(x,y,s,t){ let o=`<g transform="translate(${x} ${y}) scale(${s})" stroke="#0c0518" stroke-width="6" stroke-linejoin="round">`;
   for(let k=0;k<4;k++) o+=`<path d="M${-200-k*60},${-40+k*18} h-${80+k*20}" stroke="${NC}" stroke-width="5" opacity="${.7-k*.15}"/>`;
-  o+=`<ellipse cx="0" cy="40" rx="190" ry="16" fill="#000" opacity=".4" stroke="none"/><path d="M-190,20 L-180,-20 Q-120,-34 -70,-40 L-20,-90 Q60,-96 120,-60 L180,-34 Q205,-26 200,20 Z" fill="url(#gCar)"/><path d="M-50,-40 L-10,-80 Q50,-84 95,-56 L95,-40 Z" fill="#2fe6ff" opacity=".85"/><path d="M190,-18 h18" stroke="#fff6a0" stroke-width="10" stroke-linecap="round"/><path d="M200,-18 L420,-60 L420,30 Z" fill="#fff6a0" opacity=".18" stroke="none"/>`;
+  o+=`<ellipse cx="0" cy="40" rx="190" ry="16" fill="#000" opacity=".4" stroke="none"/><g transform="scale(-1 1)"><path d="M-190,20 L-180,-20 Q-120,-34 -70,-40 L-20,-90 Q60,-96 120,-60 L180,-34 Q205,-26 200,20 Z" fill="url(#gCar)"/><path d="M-50,-40 L-10,-80 Q50,-84 95,-56 L95,-40 Z" fill="#2fe6ff" opacity=".85"/></g><path d="M-196,-22 v20" stroke="#ff2a2a" stroke-width="10" stroke-linecap="round"/><path d="M182,-6 h16" stroke="#fff6a0" stroke-width="12" stroke-linecap="round"/><path d="M196,-6 L420,-50 L420,40 Z" fill="#fff6a0" opacity=".18" stroke="none"/>`;
   const r=t*30; for(const wx of [-120,120]) o+=`<g transform="translate(${wx} 22) rotate(${r*57})"><circle r="36" fill="#1a0a2c"/><circle r="18" fill="#c9d1d6"/><path d="M-18,0 H18 M0,-18 V18" stroke="#1a0a2c" stroke-width="4"/></g>`;
   return o+`</g>`; }
 function gHook(t,end){ if(t>end) return ''; const op=t>end-.25?(end-t)/.25:1;
