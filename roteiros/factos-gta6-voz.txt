@@ -4,13 +4,14 @@ Texto no topo desde o frame 0: "GTA 6 SAI EM 7 DIAS"
 VOZ DO GABRIEL
 [excited] O GTA 6 sai daqui a uma semana… e quem nasceu no dia do GTA 5 já tem treze anos.
 [playful] Treze anos esperando.
-[serious] E tem mais: estimam que ele custou mais de um bilhão de dólares.
-[amazed] É o jogo mais caro da história.
+[serious] Estimam que ele custou mais de cinco bilhões de reais.
+[amazed] E antes de sair, já vendeu dez milhões de cópias. Ele já se pagou.
 [curious] Quantos anos você tinha quando saiu o GTA 5? Comenta aí.
 Segue: amanhã tem mais dois.
 
 FONTES
 - Data 19/11/2026 (Rockstar, trailer de lançamento): fox10tv.com 16/10/2026
-- Custo >1 bilhão USD = estimativa de analistas (dizer "estimam")
+- Custo >1 bilhão USD (analistas) ≈ R$5,5 bi (dólar a R$5,51 em 9/11/2026)
+- Pré-vendas ~10,3 milhões de cópias / ~1 bilhão USD (Sensor Tower, estimativa, 11/11/2026)
 - GTA 5 saiu em setembro de 2013
 NOTA: arte original — sem logótipo, personagens ou arte da Rockstar.
