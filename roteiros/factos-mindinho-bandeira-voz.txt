@@ -1,21 +1,20 @@
-2 FATOS (BR) — Ponta do mindinho + bandeira que aparece no branco  (~23 s, LOOP)
+2 FATOS (BR) — Ponta do mindinho + bandeira que aparece no branco  (~22 s, LOOP)
 Texto no topo desde o frame 0: "DOBRA SÓ A PONTA DO MINDINHO"
 
-VOZ DO GABRIEL (ordem direta → "viu?" → explicação curta; o fim liga ao início)
+VOZ DO GABRIEL (ordem direta → "viu?" → explicação curta; acaba na pergunta da bandeira)
 [urgent] Dobra só a ponta do mindinho. Só a pontinha!
 [mischievously] Não dá sem dobrar o resto, né?
 [curious] O músculo que dobra essa ponta é o mesmo que puxa os outros dedos.
 [calm] Agora olha pro ponto no meio da bandeira e não pisca.
 [whispers] Continua…            (≈11 s de silêncio por baixo, com contador)
 [excited] Agora olha pro branco.
-[amazed] Viu a bandeira do Brasil de verdade?
-[playful] Agora tenta de novo:   ← corta seco aqui e o vídeo volta ao início ("Dobra só a ponta do mindinho")
+[amazed] Viu a bandeira do Brasil de verdade?   ← corta seco aqui (branco → mão = parece cena nova, loop)
 
 NOTAS DE MONTAGEM
 - 0–6 s (facto 1): frame 0 já com a mão desenhada a tentar dobrar só a ponta do mindinho (a ponta treme, o anelar mexe junto). Nada de ecrã parado.
 - 6–19 s (facto 2): bandeira com as cores trocadas (fundo magenta, losango azul, círculo amarelo-laranja, faixa escura), ponto preto fixo no centro, contador 10→1 discreto. Pelo menos ~12 s de olhar fixo para a pós-imagem funcionar.
 - 19–22 s: corte para ecrã BRANCO só com o ponto (o cérebro "pinta" verde/amarelo/azul). Nada mais no ecrã.
-- 22–23 s: "Agora tenta de novo:" e corte seco para o frame 0 (mesma mão, mesma posição) → loop sem se notar.
+- Fim: acaba na pergunta "Viu a bandeira do Brasil de verdade?" (pico + puxa comentários). Sem "tenta de novo" (levava de volta à parte mais fraca e irritava).
 - Sem ecrã final e sem "Segue" na voz: o vídeo acaba quando a voz acaba (regra do retenção). "Manda pra quem não viu a bandeira 👀" só na legenda.
 - Legendas na zona segura (y≈1450), mas NÃO por cima do ponto da bandeira durante o olhar fixo.
 
