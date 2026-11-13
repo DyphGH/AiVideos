@@ -13,6 +13,7 @@ import {FactoOlho, OLHO_FRAMES, FPS_OLHO} from './FactoOlho';
 import {FactoLer, LER_FRAMES, FPS_LER} from './FactoLer';
 import {FactoMosq3, MQ3_FRAMES, FPS_MQ3} from './FactoMosq3';
 import {FactoTendao, TD_FRAMES, FPS_TD} from './FactoTendao';
+import {FactoMindinho, MB_FRAMES, FPS_MB} from './FactoMindinho';
 import {FactoGta, GTA_FRAMES, FPS_GTA} from './FactoGta';
 import {FactoLerBR, LERBR_FRAMES, FPS_LERBR} from './FactoLerBR';
 import {FactoBocejo, BOC_FRAMES, FPS_BOC} from './FactoBocejo';
@@ -48,6 +49,7 @@ export const Root: React.FC = () => (
     <Composition id="FactoLerBR" component={FactoLerBR} durationInFrames={LERBR_FRAMES} fps={FPS_LERBR} width={1080} height={1920} />
     <Composition id="FactoMosq3" component={FactoMosq3} durationInFrames={MQ3_FRAMES} fps={FPS_MQ3} width={1080} height={1920} />
     <Composition id="FactoTendao" component={FactoTendao} durationInFrames={TD_FRAMES} fps={FPS_TD} width={1080} height={1920} />
+    <Composition id="FactoMindinho" component={FactoMindinho} durationInFrames={MB_FRAMES} fps={FPS_MB} width={1080} height={1920} />
     <Composition id="FactoGta" component={FactoGta} durationInFrames={GTA_FRAMES} fps={FPS_GTA} width={1080} height={1920} />
     <Composition id="FactoLer" component={FactoLer} durationInFrames={LER_FRAMES} fps={FPS_LER} width={1080} height={1920} />
   </>
