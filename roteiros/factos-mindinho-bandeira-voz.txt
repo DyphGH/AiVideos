@@ -8,7 +8,7 @@ VOZ DO GABRIEL (ordem direta → "viu?" → explicação curta; acaba na pergunt
 [calm] Agora olha pro ponto no meio da bandeira e não pisca.
 [whispers] Continua…            (≈11 s de silêncio por baixo, com contador)
 [excited] Agora olha pro branco.
-[amazed] Viu a bandeira do Brasil de verdade?   ← corta seco aqui (branco → mão = parece cena nova, loop)
+[amazed] Viu a bandeira do Brasil? (no vídeo cortámos o "de verdade")   ← corta seco aqui (branco → mão = parece cena nova, loop)
 
 NOTAS DE MONTAGEM
 - 0–6 s (facto 1): frame 0 já com a mão desenhada a tentar dobrar só a ponta do mindinho (a ponta treme, o anelar mexe junto). Nada de ecrã parado.

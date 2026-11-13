@@ -50,7 +50,7 @@ function grain(seed){let s=seed*9301+49297;const a=gi.data;for(let i=0;i<a.lengt
 const LINES=[{s:0,e:1.63,w:['DOBRA','SÓ','A','PONTA','DO','MINDINHO'],hl:[5]},{s:1.84,e:2.85,w:['SÓ','A','PONTINHA!'],hl:[2]},{s:3.08,e:4.7,w:['NÃO','DÁ','SEM','DOBRAR','O','RESTO,','NÉ?'],hl:[5]},
 {s:5.03,e:8.35,w:['O','MÚSCULO','QUE','DOBRA','A','PONTA','É','O','MESMO','QUE','PUXA','OS','OUTROS','DEDOS'],hl:[8]},
 {s:8.64,e:11.8,w:['OLHA','PRO','PONTO','NO','MEIO','DA','BANDEIRA','E','NÃO','PISCA'],hl:[2,8,9]},{s:12.16,e:13.1,w:['CONTINUA...'],hl:[]},
-{s:21.98,e:23.1,w:['AGORA','OLHA','PRO','BRANCO'],hl:[3]},{s:23.36,e:25.43,w:['VIU','A','BANDEIRA','DO','BRASIL','DE','VERDADE?'],hl:[2,6]}];
+{s:21.98,e:23.1,w:['AGORA','OLHA','PRO','BRANCO'],hl:[3]},{s:23.36,e:24.62,w:['VIU','A','BANDEIRA','DO','BRASIL?'],hl:[2,4]}];
 function caption(t){const L=LINES.find(l=>t>=l.s&&t<l.e);const el=document.getElementById('cap');if(!L){el.innerHTML='';return;}
   const n=L.w.length,per=(L.e-L.s)/n,i=Math.min(n-1,Math.floor((t-L.s)/per));
   // mostra blocos de até 3 palavras
@@ -94,5 +94,5 @@ window.F_=function(t){
 const p=await b.newPage({viewport:{width:W,height:H}});p.on('console',m=>console.log('PAGE',m.text()));p.on('pageerror',e=>console.log('ERR',e.message));
 await p.setContent(page);await p.evaluate(()=>document.fonts.ready);
 const out=process.argv[2], N=+process.argv[3]||150, step=+process.argv[4]||1; fs.mkdirSync(out,{recursive:true});
-for(let i=0;i<N;i+=step){await p.evaluate(t=>window.F_(t),i/30);await p.screenshot({path:`${out}/f${String(i).padStart(4,'0')}.png`});}
+for(let i=+process.argv[5]||0;i<N;i+=step){await p.evaluate(t=>window.F_(t),i/30);await p.screenshot({path:`${out}/f${String(i).padStart(4,'0')}.png`});}
 await b.close();})();
