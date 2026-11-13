@@ -68,7 +68,7 @@ function mbHook(t,end,l1,l2){ if(t>end) return ''; const op=t>end-.2?(end-t)/.2:
   return `<g opacity="${op}"><rect x="48" y="162" width="1000" height="200" rx="26" fill="#000" opacity=".25"/><rect x="40" y="150" width="1000" height="200" rx="26" fill="${FY}" stroke="${FK}" stroke-width="10"/><text x="540" y="235" font-family="M" font-weight="900" font-size="68" fill="${FK}" text-anchor="middle">${l1}</text><text x="540" y="318" font-family="M" font-weight="900" font-size="68" fill="#e0483a" text-anchor="middle">${l2}</text></g>`; }
 
 // tempos (provisórios até chegar a voz): L2 "não dá" 2,5 · L3 "o músculo" 4,4
-const MB={nao:2.5, mus:4.4, flag:7.9, branco:21.3, fim:25.6};
+const MB={nao:3.08, mus:5.03, flag:8.6, branco:21.95, fim:25.43};
 // 1 · Mindinho (0 – 7,9)
 FP.mb_mindinho=(t,dur)=>{
   let o=mbDefs()+fBg(t,'#2a2470','#0b0a2a',1100);

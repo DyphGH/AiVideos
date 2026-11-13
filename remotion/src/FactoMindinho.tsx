@@ -4,26 +4,26 @@ import {AbsoluteFill, Audio, continueRender, delayRender, staticFile, useCurrent
 import {buildFacto} from './art';
 
 export const FPS_MB = 30;
-const HAS_VOZ = false;
+const HAS_VOZ = true;
 type Seg = {name: string; start: number; end: number; capY: number};
 // tempos acertados à voz (voz-pe.mp3, 30,3 s)
 // voz nova (eleven v4) + 3,6 s de silêncio depois de "foca bem nele"
 const SEGS: Seg[] = [
-  {name: 'mb_mindinho', start: 0, end: 7.9, capY: 1470},
-  {name: 'mb_bandeira', start: 7.9, end: 21.3, capY: 1470},
-  {name: 'mb_branco', start: 21.3, end: 25.6, capY: 1470},
+  {name: 'mb_mindinho', start: 0, end: 8.6, capY: 1470},
+  {name: 'mb_bandeira', start: 8.6, end: 21.95, capY: 1470},
+  {name: 'mb_branco', start: 21.95, end: 25.43, capY: 1470},
 ];
-export const DUR_MB = 25.6;
+export const DUR_MB = 25.43;
 type Line = {start: number; end: number; chunks: string[]};
 const LINES: Line[] = [
-  {start: 0.0, end: 2.3, chunks: ['DOBRA SÓ A', 'PONTA DO', '*MINDINHO*']},
-  {start: 2.5, end: 4.2, chunks: ['NÃO DÁ SEM', 'DOBRAR O *RESTO*,', 'NÉ?']},
-  {start: 4.4, end: 7.6, chunks: ['O MÚSCULO QUE', 'DOBRA A PONTA', 'É O *MESMO*', 'QUE PUXA OS', 'OUTROS DEDOS']},
-  {start: 7.9, end: 10.6, chunks: ['OLHA PRO', '*PONTO*', 'E *NÃO PISCA*']},
-  {start: 13.5, end: 14.3, chunks: ['CONTINUA...']},
-  {start: 21.3, end: 22.4, chunks: ['AGORA OLHA', 'PRO *BRANCO*']},
-  {start: 22.6, end: 24.3, chunks: ['VIU A *BANDEIRA*', 'DE VERDADE?']},
-  {start: 24.5, end: 25.6, chunks: ['AGORA TENTA', '*DE NOVO*']},
+  {start: 0.0, end: 1.63, chunks: ['DOBRA SÓ A', 'PONTA DO *MINDINHO*']},
+  {start: 1.84, end: 2.85, chunks: ['SÓ A *PONTINHA!*']},
+  {start: 3.08, end: 4.7, chunks: ['NÃO DÁ SEM', 'DOBRAR O *RESTO*,', 'NÉ?']},
+  {start: 5.03, end: 8.35, chunks: ['O MÚSCULO QUE', 'DOBRA A PONTA', 'É O *MESMO*', 'QUE PUXA OS', 'OUTROS DEDOS']},
+  {start: 8.64, end: 11.8, chunks: ['OLHA PRO PONTO', 'NO MEIO DA', '*BANDEIRA*', 'E *NÃO PISCA*']},
+  {start: 12.16, end: 13.1, chunks: ['CONTINUA...']},
+  {start: 21.98, end: 23.1, chunks: ['AGORA OLHA', 'PRO *BRANCO*']},
+  {start: 23.36, end: 25.43, chunks: ['VIU A *BANDEIRA*', 'DO BRASIL', 'DE *VERDADE?*']},
 ];
 function useFonts() {
   const [h] = useState(() => delayRender('fonte'));
