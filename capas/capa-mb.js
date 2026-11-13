@@ -1,0 +1,15 @@
+const {chromium}=require('playwright');const fs=require('fs');
+const art=fs.readFileSync('/home/claude/oficina-remotion/src/art.js','utf8').replace(/export \{[^}]*\};?/,'');
+const font='data:font/woff2;base64,'+fs.readFileSync('/home/claude/oficina-remotion/public/fonts/mont900.woff2').toString('base64');
+const capa=`(()=>{let o=mbDefs()+fBg(1,'#2a2470','#0b0a2a',1000);
+ o+='<g transform="translate(330 1250) scale(1.25) translate(-600 -1150)">'+mbMao(0.75)+'</g>';
+ o+='<g transform="translate(800 1090) rotate(8)"><rect x="-235" y="-170" width="470" height="340" rx="20" fill="#000" opacity=".35" transform="translate(10 12)"/><rect x="-235" y="-170" width="470" height="340" rx="20" fill="#fff" stroke="'+FK+'" stroke-width="10"/><g transform="translate(-540 -960)">'+mbBandeira(540,960,430).replace(/mbC/g,'cC')+'</g><circle r="9" fill="#000"/></g>';
+ o+=fStamp(9,0,800,1320,'NO BRANCO?','#e0483a',56,8);
+ o+=fTxt(540,360,'DOBRA SÓ A PONTA',86,'#fff')+fTxt(540,490,'DO MINDINHO',130,FY,'middle',18);
+ o+=fStamp(9,0,770,720,'IMPOSSÍVEL?','#e0483a',62,-6);
+ o+=fPill('2 FATOS',9,1620);
+ return o;})()`;
+(async()=>{const b=await chromium.launch();const p=await b.newPage({viewport:{width:1080,height:1920}});
+await p.setContent(`<style>@font-face{font-family:M;src:url(${font});font-weight:900}body{margin:0}</style><svg id=s width=1080 height=1920 viewBox="0 0 1080 1920"></svg><script>window.window=window;${art}; document.getElementById('s').innerHTML=${capa};</script>`);
+await p.evaluate(()=>document.fonts.ready); await p.waitForTimeout(400);
+await p.screenshot({path:`${process.argv[2]}/capa-mindinho.png`}); await b.close();})();
