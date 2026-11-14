@@ -1,0 +1,12 @@
+const {chromium}=require('playwright');const fs=require('fs');
+const art=fs.readFileSync('/home/claude/oficina-remotion/src/art.js','utf8').replace(/export \{[^}]*\};?/,'');
+const font='data:font/woff2;base64,'+fs.readFileSync('/home/claude/oficina-remotion/public/fonts/mont900.woff2').toString('base64');
+const capa=`(()=>{let o=fBg(1,'#2a2470','#0b0a2a',1000)+'<g transform="translate(540 1120) scale(1.12) translate(-540 -1000)">'+FP.lg_scene(1.2).s+'</g>';
+ o+=fTxt(540,330,'ENCOSTA A LÍNGUA',92,'#fff')+fTxt(540,460,'NO NARIZ',140,FY,'middle',18);
+ o+=fStamp(9,0,540,620,'SÓ 1 EM 10 CONSEGUE','#e0483a',62,-4);
+ o+=fPill('2 FATOS',9,1650);
+ return o;})()`;
+(async()=>{const b=await chromium.launch();const p=await b.newPage({viewport:{width:1080,height:1920}});
+await p.setContent(`<style>@font-face{font-family:M;src:url(${font});font-weight:900}body{margin:0}</style><svg id=s width=1080 height=1920 viewBox="0 0 1080 1920"></svg><script>window.window=window;${art}; document.getElementById('s').innerHTML=${capa};</script>`);
+await p.evaluate(()=>document.fonts.ready); await p.waitForTimeout(400);
+await p.screenshot({path:`${process.argv[2]}/capa-lingua.png`}); await b.close();})();
