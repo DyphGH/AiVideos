@@ -3572,9 +3572,7 @@ FP.an_scene=(t)=>{ let s='', o='';
     o+=`<circle cx="540" cy="900" r="40" fill="#fff" stroke="${FK}" stroke-width="8"/><circle cx="540" cy="900" r="18" fill="#e0483a"/>`;
     const k=pop(t,ANT.tunel,.25); o+=`<g transform="translate(540 250) scale(${k})"><rect x="-300" y="-62" width="600" height="124" rx="62" fill="#e0483a" stroke="${FK}" stroke-width="8"/><text y="24" font-family="M" font-weight="900" font-size="70" fill="#fff" text-anchor="middle">NÃO PISCA</text></g>`;
     const pr=clamp((t-ANT.tunel)/(ANT.cara-ANT.tunel),0,1); o+=`<g transform="translate(540 380)"><rect x="-300" y="-16" width="600" height="32" rx="16" fill="${FK}" stroke="#fff" stroke-width="5"/><rect x="-294" y="-10" width="${588*pr}" height="20" rx="10" fill="#fff"/></g>`;
-  } else { const u=t-ANT.cara, sc=(40*(1-ease(clamp(u/4,0,1)))+10).toFixed(1), bf=(0.011+0.003*Math.sin(t*2.2)).toFixed(4), bf2=(0.014+0.003*Math.cos(t*1.7)).toFixed(4);
-    o+=`<rect width="1080" height="1920" fill="#fbe9d6"/><defs><filter id="anW" x="-20%" y="-20%" width="140%" height="140%"><feTurbulence type="fractalNoise" baseFrequency="${bf} ${bf2}" numOctaves="2" seed="${Math.floor(t*6)%50}" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="${sc}" xChannelSelector="R" yChannelSelector="G"/></filter></defs>`;
-    o+=`<g filter="url(#anW)"><g transform="translate(540 1050) scale(1.15) translate(-540 -1000)">${lgDefs()}${lgFace(t,'feliz')}</g></g>`;
-    if(u>1.2) o+=fStamp(t,ANT.cara+1.2,540,420,'DERRETENDO!','#e0483a',90,-4); }
+  } else { // cara PARADA: o "derreter" é a ilusão no olho de quem vê (nada se mexe)
+    o+=`<rect width="1080" height="1920" fill="#fbe9d6"/><g transform="translate(540 1050) scale(1.15) translate(-540 -1000)">${lgDefs()}${lgFace(0,'feliz')}</g>`; }
   return {s,o}; };
 export {buildShot, buildFacto};

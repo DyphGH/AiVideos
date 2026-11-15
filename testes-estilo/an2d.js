@@ -66,11 +66,11 @@ function maoScene(t){
   const SC=FP.an_scene(t), z=1+.06*pz+.015*Math.sin(t*1.3), rot=Math.sin(t*1.1)*.8;
   o+='<g transform="translate(540 1000) rotate('+rot+') scale('+z+') translate(-540 -1000)"><g filter="url(#ds)"><g filter="url(#lit)">'+SC.s+'</g></g></g>'+SC.o;
   // primeiro plano desfocado (profundidade)
-  o+='<circle cx="'+(90-pz*60)+'" cy="1650" r="120" fill="#7fe3ff" opacity=".25" filter="url(#blur30)"/><circle cx="'+(1010-pz*90)+'" cy="560" r="90" fill="#ff7ab8" opacity=".25" filter="url(#blur30)"/>';
+  if(t<ANT.cara) o+='<circle cx="'+(90-pz*60)+'" cy="1650" r="120" fill="#7fe3ff" opacity=".25" filter="url(#blur30)"/><circle cx="'+(1010-pz*90)+'" cy="560" r="90" fill="#ff7ab8" opacity=".25" filter="url(#blur30)"/>';
   document.getElementById('c').innerHTML=o;
   return pz;}
 window.F_=function(t){
-  const pz=maoScene(t);BK.forEach((b,i)=>{b.d.style.transform='translate('+(b.x+Math.sin(t*.5+i)*30*b.s - pz*120*b.s)+'px,'+(b.y-t*20*b.s)+'px)';});grain(Math.floor(t*30));
+  const pz=maoScene(t);BK.forEach((b,i)=>{b.d.style.transform='translate('+(b.x+Math.sin(t*.5+i)*30*b.s - pz*120*b.s)+'px,'+(b.y-t*20*b.s)+'px)';});if(t<ANT.cara) grain(Math.floor(t*30)); ['grain','bks','vig'].forEach(id=>{const e=document.getElementById(id);if(e)e.style.display=t<ANT.cara?'':'none';});
   document.getElementById('hook').style.display=t<ANT.tunel?'':'none';
   caption(t);document.getElementById('stamp').style.display='none';
 };
