@@ -47,14 +47,14 @@ const bks=document.getElementById('bks');const BK=[];for(let i=0;i<14;i++){const
 const gc=document.getElementById('grain').getContext('2d');const gi=gc.createImageData(${W+100},${H+100});
 function grain(seed){let s=seed*9301+49297;const a=gi.data;for(let i=0;i<a.length;i+=4){s=(s*1103515245+12345)&0x7fffffff;const v=(s>>16)&255;a[i]=a[i+1]=a[i+2]=v;a[i+3]=255;}gc.putImageData(gi,0,0);}
 // legendas palavra a palavra
-const DUR=28.2;
+const DUR=29.3;
 const LINES=[{s:0,e:2.01,w:['ESSA','BANDEIRA','É','UMA','FOTO','DO','CÉU'],hl:[4,6]},
 {s:2.41,e:5.09,w:['AS','ESTRELAS','MOSTRAM','O','CÉU','DO','RIO','DE','JANEIRO'],hl:[6,8]},{s:5.24,e:7.92,w:['NA','MANHÃ','DE','15','DE','NOVEMBRO','DE','1889...'],hl:[3,5,7]},
 {s:8.15,e:9.66,w:['O','DIA','EM','QUE','NASCEU','A','REPÚBLICA'],hl:[6]},{s:9.98,e:10.43,w:['OU','SEJA:'],hl:[]},{s:10.78,e:12.14,w:['HOJE','ELA','FAZ','ANIVERSÁRIO!'],hl:[3]},
 {s:12.67,e:14.0,w:['E','CADA','ESTRELA','É','UM','ESTADO'],hl:[5]},{s:14.33,e:17.08,w:['AQUELA','SOZINHA','LÁ','EM','CIMA','DA','FAIXA,','SEPARADA','DE','TODO','MUNDO?'],hl:[1]},
 {s:17.42,e:17.92,w:['É','O','PARÁ'],hl:[2]},{s:18.28,e:19.62,w:['PARECE','QUE','TÁ','DE','CASTIGO,','NÉ?'],hl:[4]},
 {s:19.97,e:22.38,w:['E','O','MAIS','DOIDO:','O','CÉU','TÁ','AO','CONTRÁRIO...'],hl:[8]},{s:22.63,e:25.58,w:['COMO','SE','ALGUÉM','OLHASSE','LÁ','DE','FORA','DO','UNIVERSO'],hl:[6,8]},
-{s:26.0,e:28.19,w:['ACHA','A','ESTRELA','DO','SEU','ESTADO','E','COMENTA','AQUI'],hl:[5,7]}];
+{s:26.0,e:26.8,w:['PAUSA','O','VÍDEO'],hl:[0]},{s:26.9,e:29.3,w:['ACHA','A','ESTRELA','DO','SEU','ESTADO','E','COMENTA','AQUI!'],hl:[5,7]}];
 function caption(t){const L=LINES.find(l=>t>=l.s&&t<l.e);const el=document.getElementById('cap');if(!L){el.innerHTML='';return;}
   const n=L.w.length,per=(L.e-L.s)/n,i=Math.min(n-1,Math.floor((t-L.s)/per));
   // mostra blocos de até 3 palavras
