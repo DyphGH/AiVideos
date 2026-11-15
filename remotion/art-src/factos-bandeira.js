@@ -21,16 +21,16 @@ function bdRio(y,s=1){ // silhueta: Pão de Açúcar + Corcovado com Cristo
   <g transform="translate(896 -118)"><rect x="-4" y="0" width="8" height="40" fill="#071233"/><rect x="-26" y="8" width="52" height="7" fill="#071233"/><circle cy="-5" r="6" fill="#071233"/></g>
   ${[...Array(26)].map((_,i)=>`<circle cx="${(i*41+13)%1080}" cy="${200+(i*17)%50}" r="3" fill="#ffd27a" opacity=".8"/>`).join('')}</g>`; }
 function bdBolo(x,y,s,t){ const f=1+.15*Math.sin(t*20); return `<g transform="translate(${x} ${y}) scale(${s})" stroke="${FK}" stroke-width="6" stroke-linejoin="round"><path d="M-110,0 h220 v80 q-110,24 -220,0 Z" fill="#ff9ec4"/><path d="M-110,0 q20,26 40,0 q20,26 40,0 q20,26 40,0 q20,26 40,0 q20,26 40,0 q20,26 30,0" fill="#fff"/><path d="M-80,-70 h160 v70 h-160 Z" fill="#ffd3e4"/><rect x="-6" y="-120" width="12" height="50" fill="#7fe3ff"/><path d="M0,${-150*f} q14,16 0,28 q-14,-12 0,-28 Z" fill="${FY}" stroke="#ff8a1f" stroke-width="4"/><text y="56" font-family="M" font-weight="900" font-size="36" fill="${FK}" stroke="none" text-anchor="middle">137</text></g>`; }
-function bdMapa(t,n,{cx=540,cy=860,R=420,para=0}={}){ let o=`<circle cx="${cx}" cy="${cy}" r="${R+14}" fill="${BD.y}" stroke="${FK}" stroke-width="8"/><circle cx="${cx}" cy="${cy}" r="${R}" fill="${BD.b}"/>`;
+function bdMapa(t,n,{cx=540,cy=860,R=420,para=0,q=false}={}){ let o=`<circle cx="${cx}" cy="${cy}" r="${R+14}" fill="${BD.y}" stroke="${FK}" stroke-width="8"/><circle cx="${cx}" cy="${cy}" r="${R}" fill="${BD.b}"/>`;
   o+=`<path d="M${cx-R*.98},${cy-R*.12} Q${cx},${cy-R*.72} ${cx+R*.98},${cy+R*.1}" fill="none" stroke="#fff" stroke-width="${R*.16}" opacity=".9"/>`;
   BDS.forEach(([a,b,sz,lb,dd],i)=>{ const x=cx+a*R, y=cy+b*R, r=sz*7*(1+.15*Math.sin(t*4+i)); o+=bdStar(x,y,r);
-    if(i<n){ const dir=dd||(a<0?-1:1), lx=x+dir*(r+8), ly=y; const w=lb.length*22+16;
+    if(i<n){ const dir=dd||(a<0?-1:1), lx=x+dir*(r+8), ly=y; if(q) lb='?'; const w=lb.length*22+16;
       o+=`<path d="M${x+dir*r*.8},${y} l${dir*10},0" stroke="${FY}" stroke-width="4"/><g transform="translate(${lx+dir*(w/2+10)} ${ly})"><path d="M${-dir*(w/2)},0 l${-dir*10},-8 v16 Z" fill="${FY}"/><rect x="${-w/2}" y="-17" width="${w}" height="34" rx="10" fill="${FY}" stroke="${FK}" stroke-width="3"/><text y="11" font-family="M" font-weight="900" font-size="26" fill="${FK}" text-anchor="middle">${lb}</text></g>`; } });
   const [pa,pb,ps]=BDPARA, px=cx+pa*R, py=cy+pb*R; o+=bdStar(px,py,ps*8*(1+para*.4*Math.sin(t*10)),para?BD.y:'#fff');
   if(n>=27){ o+=`<path d="M${px+22},${py-14} L${px+52},${py-40}" stroke="${FY}" stroke-width="4"/><g transform="translate(${px+86} ${py-48})"><rect x="-34" y="-20" width="68" height="40" rx="12" fill="${FY}" stroke="${FK}" stroke-width="4"/><text y="13" font-family="M" font-weight="900" font-size="30" fill="${FK}" text-anchor="middle">PA</text></g>`; }
   return o; }
 // tempos (acertar à voz)
-const BDT={ceu:2.41, hoje:10.78, estados:12.67, para:14.33, paraN:17.42, cast:18.28, avesso:19.97, fim:26.0};
+const BDT={ceu:2.41, hoje:10.78, estados:12.67, para:19.49, paraN:22.58, cast:23.44, avesso:25.13, fim:31.16};
 FP.bd_scene=(t)=>{ let s='', o='';
   if(t<BDT.ceu){ // a bandeira vira foto (polaroid + flash)
     const k=ease(clamp(t/.6,0,1)); s+=`<g transform="translate(540 980) rotate(${-4+2*Math.sin(t*2)})"><rect x="-430" y="-360" width="860" height="760" rx="16" fill="#fffdf6" stroke="${FK}" stroke-width="8"/><g transform="translate(-540 -1020)">${bdFlag(540,980,780,{tw:t})}</g><text y="350" font-family="M" font-weight="900" font-size="44" fill="${FK}" text-anchor="middle">CÉU DO RIO · 1889</text></g>`;
@@ -46,7 +46,7 @@ FP.bd_scene=(t)=>{ let s='', o='';
   } else if(t<BDT.avesso){ // estados + Pará de castigo
     const z=t<BDT.para?1:1+.35*ease(clamp((t-BDT.para)/.6,0,1));
     s+=`<g transform="translate(540 980) scale(${z}) translate(${-540+ (t<BDT.para?0:60*ease(clamp((t-BDT.para)/.6,0,1)))} -980)">${bdFlag(540,980,1000,{tw:t,para:t>=BDT.para?1:0})}</g>`;
-    if(t<BDT.para){ const n=Math.min(27,Math.floor((t-BDT.estados)*20)); s=bdMapa(t,n); o+=fStamp(t,BDT.estados+.1,540,330,'CADA ESTRELA = 1 ESTADO','#e0483a',56,-3); if(false) o+=`<g transform="translate(540 560)">${fTxt(0,0,'27 ESTRELAS',90,'#fff')}${fTxt(0,100,'= 26 ESTADOS + DF',56,FY)}</g>`; }
+    if(t<BDT.para){ const n=Math.min(27,Math.floor((t-BDT.estados)*20)); s=bdMapa(t,n,{q:true}); o+=fStamp(t,BDT.estados+.1,540,460,'CADA ESTRELA = 1 ESTADO','#e0483a',56,-3); if(false) o+=`<g transform="translate(540 560)">${fTxt(0,0,'27 ESTRELAS',90,'#fff')}${fTxt(0,100,'= 26 ESTADOS + DF',56,FY)}</g>`; }
     else { const px=540+(BDPARA[0]*175)*z+60, py=980+BDPARA[1]*175*z; const b=Math.sin(t*3)*4;
       if(t>BDT.cast) o+=`<g transform="translate(${px+20} ${py-70+b})"><path d="M-34,0 L0,-90 L34,0 Z" fill="#fff" stroke="${FK}" stroke-width="6"/><text y="-14" font-family="M" font-weight="900" font-size="26" fill="${FK}" text-anchor="middle">CASTIGO</text></g>`;
       if(t>=BDT.paraN) o+=fStamp(t,BDT.paraN,540,560,'PARÁ','#2e86d0',110,-4); else o+=`<g transform="translate(540 560)">${fTxt(0,0,'A SOZINHA',90,'#fff')}${fTxt(0,100,'LÁ EM CIMA',70,FY)}</g>`; if(t>BDT.cast) o+=`<g transform="translate(540 420)">${fTxt(0,0,'TÁ DE CASTIGO? 😅'.replace(' 😅',''),64,'#fff')}</g>`; }

@@ -12,7 +12,7 @@ canvas,svg#c{position:absolute;inset:0}
 #vig{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,transparent 55%,rgba(0,0,0,.55) 100%);pointer-events:none}
 #grain{position:absolute;inset:-50px;opacity:.10;mix-blend-mode:overlay;pointer-events:none}
 #hook{position:absolute;left:40px;top:150px;width:1000px;height:200px;border-radius:28px;background:#ffd21f;border:10px solid #0a1633;box-sizing:border-box;box-shadow:0 14px 0 rgba(0,0,0,.25);font-family:M;font-weight:900;text-align:center;line-height:1}
-#hook div:first-child{font-size:66px;color:#0a1633;margin-top:28px}#hook div:last-child{font-size:66px;color:#e0483a;margin-top:12px}
+#hook.bd div{font-size:50px!important}#hook div:first-child{font-size:66px;color:#0a1633;margin-top:28px}#hook div:last-child{font-size:66px;color:#e0483a;margin-top:12px}
 #cap{position:absolute;left:0;right:0;top:1400px;text-align:center;font-family:M;font-weight:900;font-size:84px;line-height:1.15}
 #cap span{display:inline-block;margin:0 10px;color:#fff;-webkit-text-stroke:16px #0a1633;paint-order:stroke fill;transition:none}
 #cap span.on{color:#0a1633;-webkit-text-stroke:0;background:#ffd21f;border-radius:18px;padding:0 18px;box-shadow:0 8px 0 #0a1633}
@@ -20,7 +20,7 @@ canvas,svg#c{position:absolute;inset:0}
 #stamp{position:absolute;left:540px;top:1170px;font-family:M;font-weight:900;font-size:120px;color:#e0483a;background:#fff;border:12px solid #e0483a;border-radius:26px;padding:10px 40px;transform-origin:center;white-space:nowrap;box-shadow:0 14px 0 rgba(0,0,0,.3)}
 </style></head><body>
 <div id=bg></div><div id=bks></div><svg id=c width=${W} height=${H} viewBox="0 0 ${W} ${H}"></svg><div id=vig></div><canvas id=grain width=${W+100} height=${H+100}></canvas>
-<div id=hook><div>A BANDEIRA DO BRASIL</div><div>É UMA FOTO DO CÉU</div></div>
+<div id=hook class=bd><div>ESTADO DE CADA ESTRELA NO FIM</div><div>COMENTA QUAL É A SUA ESTRELA</div></div>
 <div id=stamp style="display:none">NÃO DÁ!</div>
 <div id=cap></div>
 <script>window.window=window;${art}</script>
@@ -47,14 +47,15 @@ const bks=document.getElementById('bks');const BK=[];for(let i=0;i<14;i++){const
 const gc=document.getElementById('grain').getContext('2d');const gi=gc.createImageData(${W+100},${H+100});
 function grain(seed){let s=seed*9301+49297;const a=gi.data;for(let i=0;i<a.length;i+=4){s=(s*1103515245+12345)&0x7fffffff;const v=(s>>16)&255;a[i]=a[i+1]=a[i+2]=v;a[i+3]=255;}gc.putImageData(gi,0,0);}
 // legendas palavra a palavra
-const DUR=29.3;
+const DUR=34.46;
 const LINES=[{s:0,e:2.01,w:['ESSA','BANDEIRA','É','UMA','FOTO','DO','CÉU'],hl:[4,6]},
 {s:2.41,e:5.09,w:['AS','ESTRELAS','MOSTRAM','O','CÉU','DO','RIO','DE','JANEIRO'],hl:[6,8]},{s:5.24,e:7.92,w:['NA','MANHÃ','DE','15','DE','NOVEMBRO','DE','1889...'],hl:[3,5,7]},
 {s:8.15,e:9.66,w:['O','DIA','EM','QUE','NASCEU','A','REPÚBLICA'],hl:[6]},{s:9.98,e:10.43,w:['OU','SEJA:'],hl:[]},{s:10.78,e:12.14,w:['HOJE','ELA','FAZ','ANIVERSÁRIO!'],hl:[3]},
-{s:12.67,e:14.0,w:['E','CADA','ESTRELA','É','UM','ESTADO'],hl:[5]},{s:14.33,e:17.08,w:['AQUELA','SOZINHA','LÁ','EM','CIMA','DA','FAIXA,','SEPARADA','DE','TODO','MUNDO?'],hl:[1]},
-{s:17.42,e:17.92,w:['É','O','PARÁ'],hl:[2]},{s:18.28,e:19.62,w:['PARECE','QUE','TÁ','DE','CASTIGO,','NÉ?'],hl:[4]},
-{s:19.97,e:22.38,w:['E','O','MAIS','DOIDO:','O','CÉU','TÁ','AO','CONTRÁRIO...'],hl:[8]},{s:22.63,e:25.58,w:['COMO','SE','ALGUÉM','OLHASSE','LÁ','DE','FORA','DO','UNIVERSO'],hl:[6,8]},
-{s:26.0,e:26.8,w:['PAUSA','O','VÍDEO'],hl:[0]},{s:26.9,e:29.3,w:['ACHA','A','ESTRELA','DO','SEU','ESTADO','E','COMENTA','AQUI!'],hl:[5,7]}];
+{s:12.67,e:14.0,w:['E','CADA','ESTRELA','É','UM','ESTADO'],hl:[5]},{s:14.17,e:17.89,w:['NO','FINAL','DO','VÍDEO','EU','TE','MOSTRO','QUAL','ESTADO','É','CADA','ESTRELA...'],hl:[1,8]},{s:18.37,e:19.12,w:['QUAL','SERÁ','O','SEU?'],hl:[3]},
+{s:19.49,e:22.24,w:['AQUELA','SOZINHA','LÁ','EM','CIMA','DA','FAIXA,','SEPARADA','DE','TODO','MUNDO?'],hl:[1]},
+{s:22.58,e:23.08,w:['É','O','PARÁ'],hl:[2]},{s:23.44,e:24.78,w:['PARECE','QUE','TÁ','DE','CASTIGO,','NÉ?'],hl:[4]},
+{s:25.13,e:27.54,w:['E','O','MAIS','DOIDO:','O','CÉU','TÁ','AO','CONTRÁRIO...'],hl:[8]},{s:27.79,e:30.74,w:['COMO','SE','ALGUÉM','OLHASSE','LÁ','DE','FORA','DO','UNIVERSO'],hl:[6,8]},
+{s:31.16,e:31.96,w:['PAUSA','O','VÍDEO'],hl:[0]},{s:32.06,e:34.46,w:['ACHA','A','ESTRELA','DO','SEU','ESTADO','E','COMENTA','AQUI!'],hl:[5,7]}];
 function caption(t){const L=LINES.find(l=>t>=l.s&&t<l.e);const el=document.getElementById('cap');if(!L){el.innerHTML='';return;}
   const n=L.w.length,per=(L.e-L.s)/n,i=Math.min(n-1,Math.floor((t-L.s)/per));
   // mostra blocos de até 3 palavras
@@ -76,7 +77,7 @@ function maoScene(t){
   return pz;}
 window.F_=function(t){
   const pz=maoScene(t);BK.forEach((b,i)=>{b.d.style.transform='translate('+(b.x+Math.sin(t*.5+i)*30*b.s - pz*120*b.s)+'px,'+(b.y-t*20*b.s)+'px)';});grain(Math.floor(t*30));
-  document.getElementById('hook').style.display=t<BDT.ceu?'':'none';
+  document.getElementById('hook').style.display=t<BDT.fim?'':'none';
   caption(t);document.getElementById('stamp').style.display='none';
 };
 </script></body></html>`;
