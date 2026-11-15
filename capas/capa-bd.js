@@ -1,0 +1,14 @@
+const {chromium}=require('playwright');const fs=require('fs');
+const art=fs.readFileSync('/home/claude/oficina-remotion/src/art.js','utf8').replace(/export \{[^}]*\};?/,'');
+const font='data:font/woff2;base64,'+fs.readFileSync('/home/claude/oficina-remotion/public/fonts/mont900.woff2').toString('base64');
+const capa=`(()=>{let o=fBg(1,'#10245e','#040a24',1000);
+ for(let i=0;i<60;i++) o+='<circle cx="'+((i*233)%1080)+'" cy="'+((i*397)%1900)+'" r="'+(1+i%3)+'" fill="#fff" opacity=".6"/>';
+ o+='<g transform="translate(540 1050) rotate(-4)"><rect x="-480" y="-380" width="960" height="830" rx="18" fill="#fffdf6" stroke="'+FK+'" stroke-width="9"/><g transform="translate(-540 -1000)">'+bdFlag(540,970,880,{tw:0,para:1})+'</g><text y="400" font-family="M" font-weight="900" font-size="48" fill="'+FK+'" text-anchor="middle">CÉU DO RIO · 15/11/1889</text></g>';
+ o+=fTxt(540,300,'A BANDEIRA DO BRASIL',80,'#fff')+fTxt(540,430,'É UMA FOTO',120,FY,'middle',18)+fTxt(540,560,'DO CÉU',120,FY,'middle',18);
+ o+=fStamp(9,0,800,1560,'HOJE FAZ 137 ANOS','#e0483a',50,-6);
+ o+=fPill('2 FATOS',9,1700);
+ return o;})()`;
+(async()=>{const b=await chromium.launch();const p=await b.newPage({viewport:{width:1080,height:1920}});
+await p.setContent(`<style>@font-face{font-family:M;src:url(${font});font-weight:900}body{margin:0}</style><svg id=s width=1080 height=1920 viewBox="0 0 1080 1920"></svg><script>window.window=window;${art}; document.getElementById('s').innerHTML=${capa};</script>`);
+await p.evaluate(()=>document.fonts.ready); await p.waitForTimeout(400);
+await p.screenshot({path:`${process.argv[2]}/capa-bandeira-ceu.png`}); await b.close();})();
