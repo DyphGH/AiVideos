@@ -1,0 +1,55 @@
+{
+ "fps": 30,
+ "attempts": [
+  {
+   "level": 1,
+   "speed": 0.4,
+   "start": 0,
+   "release": 19,
+   "impact": 46,
+   "hold": 14,
+   "rw": 8,
+   "obj": "car",
+   "word": "VROOM",
+   "end": 68
+  },
+  {
+   "level": 2,
+   "speed": 0.6,
+   "start": 68,
+   "release": 87,
+   "impact": 105,
+   "hold": 14,
+   "rw": 8,
+   "obj": "house",
+   "word": "HOME",
+   "end": 127
+  },
+  {
+   "level": 3,
+   "speed": 0.8,
+   "start": 127,
+   "release": 148,
+   "impact": 161,
+   "hold": 14,
+   "rw": 8,
+   "obj": "rocket",
+   "word": "LIFTOFF",
+   "end": 183
+  },
+  {
+   "level": 4,
+   "speed": 1.0,
+   "start": 183,
+   "release": 200,
+   "impact": 211,
+   "hold": 21,
+   "rw": 8,
+   "obj": "dino",
+   "word": "RAWR",
+   "end": 240
+  }
+ ],
+ "total": 240,
+ "offset": 215
+}
