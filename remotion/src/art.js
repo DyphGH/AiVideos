@@ -3568,11 +3568,11 @@ FP.an_scene=(t)=>{ let s='', o='';
     s+=`<g transform="translate(540 1060) scale(1.45) translate(-540 -1000)">${anMaos(t,g)}</g>`; o+=`<g transform="translate(540 ${1060+(890-1000)*1.45})"><path d="M90,-10 L40,0" stroke="${FY}" stroke-width="8"/><rect x="90" y="-36" width="190" height="56" rx="16" fill="${FY}" stroke="${FK}" stroke-width="5"/><text x="185" y="4" font-family="M" font-weight="900" font-size="36" fill="${FK}" text-anchor="middle">ANELAR</text></g>`;
     if(t>=ANT.nao&&t<ANT.tend) o+=fStamp(t,ANT.nao+.2,540,560,'ANELAR PRESO!','#e0483a',84,-4);
     if(t>=ANT.tend){ o+=`<g opacity="${clamp((t-ANT.tend)/.3,0,1)}"><path d="M540,890 L540,1300" stroke="#ff7ab8" stroke-width="10" stroke-dasharray="18 12"/></g>`; o+=fStamp(t,ANT.tend+.2,540,560,'TENDÃO LIGADO','#2e86d0',80,-4); }
-  } else if(t<ANT.cara){ o+=anTunel(t);
+  } else if(t<ANT.cara){ o+=`<g>${espiral(540,900,-(t-ANT.tunel)*3.2,1500,6,0.0068,FY,FK)}</g>`;
     o+=`<circle cx="540" cy="900" r="40" fill="#fff" stroke="${FK}" stroke-width="8"/><circle cx="540" cy="900" r="18" fill="#e0483a"/>`;
     const k=pop(t,ANT.tunel,.25); o+=`<g transform="translate(540 250) scale(${k})"><rect x="-300" y="-62" width="600" height="124" rx="62" fill="#e0483a" stroke="${FK}" stroke-width="8"/><text y="24" font-family="M" font-weight="900" font-size="70" fill="#fff" text-anchor="middle">NÃO PISCA</text></g>`;
     const pr=clamp((t-ANT.tunel)/(ANT.cara-ANT.tunel),0,1); o+=`<g transform="translate(540 380)"><rect x="-300" y="-16" width="600" height="32" rx="16" fill="${FK}" stroke="#fff" stroke-width="5"/><rect x="-294" y="-10" width="${588*pr}" height="20" rx="10" fill="#fff"/></g>`;
   } else { // cara PARADA: o "derreter" é a ilusão no olho de quem vê (nada se mexe)
-    o+=`<rect width="1080" height="1920" fill="#fbe9d6"/><g transform="translate(540 1050) scale(1.15) translate(-540 -1000)">${lgDefs()}${lgFace(0,'feliz')}</g>`; }
+    o+=`<rect width="1080" height="1920" fill="#fbe9d6"/><g transform="translate(540 900) scale(1.55) translate(-540 -1040)">${lgDefs()}${lgFace(0,'feliz')}</g><circle cx="540" cy="900" r="9" fill="#e0483a"/>`; }
   return {s,o}; };
 export {buildShot, buildFacto};
