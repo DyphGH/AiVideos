@@ -1,0 +1,14 @@
+const {chromium}=require('playwright');const fs=require('fs');
+const art=fs.readFileSync('/home/claude/oficina-remotion/src/art.js','utf8').replace(/export \{[^}]*\};?/,'');
+const font='data:font/woff2;base64,'+fs.readFileSync('/home/claude/oficina-remotion/public/fonts/mont900.woff2').toString('base64');
+const capa=`(()=>{let o=fBg(1,'#2a2470','#0b0a2a',1000);
+ o+='<rect x="0" y="0" width="540" height="1920" fill="#2fa860" opacity=".35"/><rect x="540" y="0" width="540" height="1920" fill="#e0483a" opacity=".35"/>';
+ o+=mrCubo(270,1000,170,'#6fcf5a','#7a5230','#5e3e22')+mrBoneco(810,1330,3.6,'#e0483a',0);
+ o+='<path d="M560,720 L500,1080 L580,1080 L520,1440 L640,1000 L560,1000 L620,720 Z" fill="'+FY+'" stroke="'+FK+'" stroke-width="8"/><g transform="translate(540 1120)"><circle r="100" fill="'+FK+'" stroke="'+FY+'" stroke-width="8"/><text y="34" font-family="M" font-weight="900" font-size="90" fill="'+FY+'" text-anchor="middle">VS</text></g>';
+ o+=fTxt(540,330,'MINECRAFT',120,'#7be08a','middle',18)+fTxt(540,430,'OU',80,'#fff')+fTxt(540,550,'ROBLOX?',130,'#ff8a8a','middle',18);
+ o+=fPill('2 FATOS',9,1700);
+ return o;})()`;
+(async()=>{const b=await chromium.launch();const p=await b.newPage({viewport:{width:1080,height:1920}});
+await p.setContent(`<style>@font-face{font-family:M;src:url(${font});font-weight:900}body{margin:0}</style><svg id=s width=1080 height=1920 viewBox="0 0 1080 1920"></svg><script>window.window=window;${art}; document.getElementById('s').innerHTML=${capa};</script>`);
+await p.evaluate(()=>document.fonts.ready); await p.waitForTimeout(400);
+await p.screenshot({path:`${process.argv[2]}/capa-minecraft-roblox.png`}); await b.close();})();
