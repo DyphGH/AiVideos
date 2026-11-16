@@ -1,0 +1,55 @@
+{
+ "fps": 30,
+ "attempts": [
+  {
+   "level": 1,
+   "speed": 0.4,
+   "start": 0,
+   "release": 19,
+   "impact": 46,
+   "hold": 14,
+   "rw": 8,
+   "obj": "pineapple",
+   "word": "ALOHA",
+   "end": 68
+  },
+  {
+   "level": 2,
+   "speed": 0.6,
+   "start": 68,
+   "release": 86,
+   "impact": 104,
+   "hold": 14,
+   "rw": 8,
+   "obj": "chocolate",
+   "word": "CHOCO",
+   "end": 126
+  },
+  {
+   "level": 3,
+   "speed": 0.8,
+   "start": 126,
+   "release": 145,
+   "impact": 158,
+   "hold": 14,
+   "rw": 8,
+   "obj": "gummies",
+   "word": "GUMMY",
+   "end": 180
+  },
+  {
+   "level": 4,
+   "speed": 1.0,
+   "start": 180,
+   "release": 198,
+   "impact": 209,
+   "hold": 23,
+   "rw": 8,
+   "obj": "ketchup",
+   "word": "KETCHUP",
+   "end": 240
+  }
+ ],
+ "total": 240,
+ "offset": 213
+}
