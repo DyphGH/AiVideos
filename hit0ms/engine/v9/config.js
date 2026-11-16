@@ -8,11 +8,20 @@ const berry=()=>{c.beginPath();c.moveTo(0,52);c.bezierCurveTo(-58,20,-56,-40,0,-
   ell(-16,-14,9,5,-0.6);c.fillStyle='rgba(255,255,255,.45)';c.fill();};
 const berryBit=()=>{ell(0,0,14,11);shape('#e8304a',3,'#6a0a14');ell(-3,-2,5,3);c.fillStyle='#ffb3bd';c.fill();};
 // banana
-const banana=()=>{c.beginPath();c.moveTo(-95,-20);c.quadraticCurveTo(0,60,95,-20);c.quadraticCurveTo(100,-28,92,-30);c.quadraticCurveTo(0,30,-90,-32);c.closePath();shape(lin(0,-30,0,30,[[0,'#fff08a'],[1,'#f2c200']]),5,'#7a5a00');
-  c.beginPath();c.roundRect(-104,-38,16,12,4);shape('#5a4220',3,'#2a1e0a');ell(96,-25,6,6);c.fillStyle='#3a2a10';c.fill();
-  c.strokeStyle='rgba(160,120,0,.5)';c.lineWidth=3;c.beginPath();c.moveTo(-70,-14);c.quadraticCurveTo(0,30,70,-14);c.stroke();};
-const peel=()=>{c.beginPath();c.moveTo(-40,0);c.quadraticCurveTo(-20,-30,0,-10);c.quadraticCurveTo(20,-30,40,0);c.quadraticCurveTo(0,10,-40,0);shape('#f5cf1f',4,'#7a5a00');};
-const mush=()=>{ell(0,0,26,12);shape('#fff3c4',3,'#b89a40');};
+const banana=()=>{
+  // crescent body
+  c.beginPath();c.moveTo(-112,-34);c.bezierCurveTo(-90,52,82,58,108,-46);c.bezierCurveTo(92,-6,-60,2,-112,-34);c.closePath();
+  shape(lin(0,-40,0,50,[[0,'#fff6a3'],[.45,'#ffd93b'],[1,'#e0a800']]),5,'#6b4a00');
+  // facets (ridges along the length)
+  c.strokeStyle='rgba(170,120,0,.45)';c.lineWidth=3;c.beginPath();c.moveTo(-100,-22);c.bezierCurveTo(-60,34,60,38,100,-34);c.stroke();
+  c.strokeStyle='rgba(255,255,255,.55)';c.lineWidth=5;c.beginPath();c.moveTo(-84,-20);c.bezierCurveTo(-50,4,40,6,80,-24);c.stroke();
+  // speckles
+  c.fillStyle='rgba(120,80,10,.55)';for(const [x,y,r] of [[-40,20,3],[-10,28,2.5],[25,24,3.5],[52,12,2.5],[-62,8,2]]){ell(x,y,r,r*0.8);c.fill();}
+  // stem (right) and dark tip (left)
+  c.save();c.translate(108,-46);c.rotate(-0.7);c.beginPath();c.roundRect(-6,-26,13,30,4);shape(lin(-6,0,7,0,[[0,'#8a9a3a'],[1,'#5a6420']]),3,'#2e3410');ell(0,-26,7,4);c.fillStyle='#3a2a10';c.fill();c.restore();
+  ell(-112,-34,8,6,0.5);c.fillStyle='#3a2a10';c.fill();};
+const peel=()=>{c.beginPath();c.moveTo(-50,4);c.quadraticCurveTo(-30,-34,-8,-6);c.quadraticCurveTo(0,-40,10,-6);c.quadraticCurveTo(32,-34,50,4);c.quadraticCurveTo(0,16,-50,4);shape(lin(0,-30,0,10,[[0,'#ffe066'],[1,'#e0a800']]),4,'#6b4a00');c.beginPath();c.moveTo(-20,4);c.quadraticCurveTo(0,-8,20,4);c.lineWidth=6;c.strokeStyle='#fff3c4';c.stroke();};
+const mush=()=>{c.beginPath();c.moveTo(-30,6);c.quadraticCurveTo(-28,-14,0,-12);c.quadraticCurveTo(28,-14,30,6);c.closePath();shape(lin(0,-12,0,6,[[0,'#fffbe6'],[1,'#f1dc9a']]),3,'#b89a40');c.fillStyle='rgba(120,90,30,.5)';for(let i=-2;i<=2;i++){ell(i*9,-2,1.6,1.2);c.fill();}};
 // kiwi
 const kiwi=()=>{ell(0,0,56,46);shape(rad(-16,-16,4,60,[[0,'#a07a4a'],[1,'#6b4a26']]),5,'#3a2410');c.strokeStyle='rgba(60,40,20,.35)';c.lineWidth=1.5;for(let i=0;i<40;i++){const a=i*2.4,r=20+(i*7%30);c.beginPath();c.moveTo(Math.cos(a)*r,Math.sin(a)*r*0.8);c.lineTo(Math.cos(a)*(r+5),Math.sin(a)*(r+5)*0.8);c.stroke();}};
 const kiwiHalf=()=>{ell(0,0,44,36);shape('#6b4a26',4,'#3a2410');ell(0,0,38,30);c.fillStyle=rad(0,0,4,38,[[0,'#f4ffd6'],[.35,'#9bd84a'],[1,'#4f9a1e']]);c.fill();

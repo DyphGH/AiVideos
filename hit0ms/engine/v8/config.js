@@ -1,8 +1,21 @@
 // Video #8 — polemic pizza toppings (original illustrations)
 export default (H)=>{const {c,lin,rad,shape,ell}=H;const O='#3a1c0c';
-function base(){c.beginPath();c.moveTo(-100,-58);c.quadraticCurveTo(0,-84,100,-58);c.lineTo(0,78);c.closePath();shape(lin(0,-60,0,78,[[0,'#ffd65a'],[1,'#f4a92a']]),5,'#8a4a00');
-  c.beginPath();c.moveTo(-104,-59);c.quadraticCurveTo(0,-88,104,-59);c.lineTo(97,-46);c.quadraticCurveTo(0,-73,-97,-46);c.closePath();shape(lin(0,-84,0,-46,[[0,'#e8a45a'],[1,'#b8702c']]),5,O);
-  c.strokeStyle='rgba(255,240,180,.8)';c.lineWidth=3;c.beginPath();c.moveTo(-60,-38);c.quadraticCurveTo(-30,-8,-50,12);c.stroke();}
+function base(){
+  // sauce layer peeking under cheese
+  c.beginPath();c.moveTo(-100,-58);c.quadraticCurveTo(0,-84,100,-58);c.lineTo(0,78);c.closePath();shape(lin(0,-60,0,78,[[0,'#d9481f'],[1,'#a82a12']]),5,'#5a1404');
+  // melted cheese with wavy edge + drip at the tip
+  c.beginPath();c.moveTo(-90,-52);c.quadraticCurveTo(0,-76,90,-52);for(let i=0;i<=8;i++){const t=i/8;const x=90-t*90,y=-52+t*122;c.lineTo(x+Math.sin(i*1.7)*5,y);}c.lineTo(4,92);c.quadraticCurveTo(-4,104,-8,84);
+  for(let i=8;i>=0;i--){const t=i/8;const x=-90+t*90,y=-52+t*122;c.lineTo(x+Math.sin(i*2.3)*5,y);}c.closePath();
+  shape(lin(0,-60,0,90,[[0,'#ffe27a'],[.6,'#ffc93c'],[1,'#f2a51a']]),4,'#a86a00');
+  // cheese bubbles / browned spots + shine
+  for(const [x,y,r] of [[-52,-36,9],[44,-38,7],[10,-18,6],[-20,12,7],[20,40,5],[-30,-50,5]]){ell(x,y,r,r*0.7);c.fillStyle='rgba(214,140,30,.55)';c.fill();}
+  c.strokeStyle='rgba(255,255,255,.6)';c.lineWidth=4;c.lineCap='round';c.beginPath();c.moveTo(-62,-44);c.quadraticCurveTo(-34,-14,-44,10);c.stroke();
+  // oregano flecks
+  c.fillStyle='#3f7a2a';for(let i=0;i<16;i++){const x=-60+((i*37)%120),y=-44+((i*53)%100);if(Math.abs(x)<(78-(y+52)*0.62)){ell(x,y,2.4,1.4,i);c.fill();}}
+  // crust with bubbles and char
+  c.beginPath();c.moveTo(-106,-60);c.quadraticCurveTo(0,-92,106,-60);c.quadraticCurveTo(110,-50,99,-44);c.quadraticCurveTo(0,-72,-99,-44);c.quadraticCurveTo(-110,-50,-106,-60);c.closePath();
+  shape(lin(0,-90,0,-44,[[0,'#f0b56c'],[.5,'#d08a42'],[1,'#a8642a']]),5,'#4a2408');
+  for(const [x,y,r] of [[-70,-62,7],[-30,-72,6],[10,-75,8],[50,-70,6],[82,-60,5]]){ell(x,y,r,r*0.7);c.fillStyle='rgba(255,220,160,.6)';c.fill();ell(x+2,y+2,r*0.5,r*0.3);c.fillStyle='rgba(90,40,10,.5)';c.fill();}}
 const SP=[[-48,-30],[28,-30],[-4,4],[-14,38],[30,10]];
 const T={
  pineapple:{col:'#ffd43b',piece(){c.beginPath();c.moveTo(-14,-10);c.lineTo(14,-10);c.lineTo(10,10);c.lineTo(-10,10);c.closePath();shape(lin(0,-10,0,10,[[0,'#fff3a0'],[1,'#f5c400']]),3,'#9a7400');c.strokeStyle='rgba(180,140,0,.6)';c.lineWidth=2;c.beginPath();c.moveTo(-6,-8);c.lineTo(-4,8);c.moveTo(4,-8);c.lineTo(5,8);c.stroke();}},

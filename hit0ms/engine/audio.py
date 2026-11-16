@@ -12,6 +12,25 @@ def add(sig,t,g=1.0):
 tt=lambda d:np.arange(int(d*SR))/SR
 noise=lambda d:rng.standard_normal(int(d*SR))
 def ping(t0,f0,d,g):w=tt(d);add(np.sin(2*np.pi*f0*w)*np.exp(-w*(6/d)),t0,g)
+
+def sweep_bp(sig,f0,f1,q=3.0):
+    out=np.zeros_like(sig);n=len(sig);ch=240;zi=None
+    for i in range(0,n,ch):
+        t=i/max(1,n-1);fc=f0*(f1/f0)**t;bw=fc/q
+        sos=butter(2,[max(40,fc-bw/2),min(SR/2-100,fc+bw/2)],'band',fs=SR,output='sos')
+        if zi is None or zi.shape!=(sos.shape[0],2):zi=np.zeros((sos.shape[0],2))
+        out[i:i+ch],zi=sosfilt(sos,sig[i:i+ch],zi=zi)
+    return out
+def smash(t0,size=1.0,wet=1.0,crack=0.0,lo=350):
+    w=tt(.22);add(np.sin(2*np.pi*np.cumsum(75*size**-0.3*np.exp(-w*6)+35)/SR)*np.exp(-w*14),t0,1.1*size)       # thump
+    if crack:add(hp(noise(.035),2500)*np.exp(-tt(.035)*160),t0,crack)                                              # crack
+    d=0.42*size**0.5;w=tt(d);am=0.55+0.45*np.sin(2*np.pi*32*w)*np.sin(2*np.pi*7*w)
+    sq=sweep_bp(noise(d)*am,2400,lo)*np.minimum(1,w/0.004)*np.exp(-w*(6.5/size**0.5))
+    add(sq/np.max(np.abs(sq)+1e-9),t0+0.005,0.9*wet)                                                             # squelch
+    for _ in range(int(8*wet*size)):                                                                               # wet splats
+        dd=rng.uniform(.02,.05);add(lp(noise(dd),rng.uniform(900,1800))*np.exp(-tt(dd)*90),t0+rng.uniform(.02,.45*size),rng.uniform(.2,.45)*wet)
+    for _ in range(int(5*wet)):                                                                                    # drips/bubbles
+        dd=.03;w=tt(dd);f=np.linspace(rng.uniform(450,700),rng.uniform(1000,1500),len(w));add(np.sin(2*np.pi*np.cumsum(f)/SR)*np.exp(-w*70),t0+rng.uniform(.15,.6),0.12)
 def click(t0,g):w=tt(.025);add(bp(noise(.025),2500,7000)*np.exp(-w*260),t0,g);ping(t0,rng.uniform(1800,3200),.04,g*0.5)
 T=N/SR;beat=0.5
 for k in range(int(T/beat)):
@@ -25,6 +44,12 @@ for a in TL['attempts']:
     if k=='bricks':   # big plastic crash + cascade of clicks settling
         add(bp(noise(.12),1500,6000)*np.exp(-tt(.12)*35),ri,0.9);add(np.sin(2*np.pi*120*tt(.12))*np.exp(-tt(.12)*30),ri,0.5)
         ts=np.sort(ri+np.abs(rng.normal(0,.18,45)));[click(t,rng.uniform(.15,.4)) for t in ts]
+    if k=='squash':smash(ri,0.8,1.0)
+    if k=='squash_big':smash(ri,1.6,1.3,crack=0.9,lo=250)
+    if k=='pizza_squash':smash(ri,1.0,0.9,crack=0.25,lo=300)
+    if k=='gummy_squash':
+        smash(ri,0.9,0.7,lo=300)
+        for dt in (.05,.18,.3):w=tt(.15);f=320*(1+0.4*np.exp(-w*20));add(np.sin(2*np.pi*np.cumsum(f)/SR)*np.exp(-w*16),ri+dt,0.25)
     if k=='squish':   # soft food thud + wet squish
         add(lp(noise(.3),900)*np.exp(-tt(.3)*14),ri,1.0);add(np.sin(2*np.pi*(90-40*tt(.2))*tt(.2))*np.exp(-tt(.2)*16),ri,0.7)
         for _ in range(5):add(bp(noise(.05),600,2000)*np.exp(-tt(.05)*60),ri+rng.uniform(.03,.25),0.25)
