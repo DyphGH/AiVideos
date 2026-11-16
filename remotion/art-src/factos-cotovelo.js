@@ -28,7 +28,7 @@ function cvBraco(t){ const w=Math.sin(t*2.6)*10; const E=[745+w*.4,1300+w]; let 
   o+=`<ellipse cx="866" cy="742" rx="62" ry="56" fill="${LG.sk}" stroke="${FK}" stroke-width="8"/>`;
   return {o,E}; }
 // tempos (acertar à voz)
-const CVT={nao:3.7, sob:9.36, ore:11.52, fim:14.86};
+const CVT={nao:2.7, sob:6.95, ore:10.32, fim:13.3};
 FP.cv_scene=(t)=>{ let s=lgDefs(), o='';
   if(t<CVT.sob){ const tilt=-8+Math.sin(t*3)*2;
     s+=cvFace(t,{mouth:'lingua',look:[[30,26],[18,26]],tilt,browL:6,browR:6}); const B=cvBraco(t); s+=B.o;

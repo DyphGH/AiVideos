@@ -48,10 +48,10 @@ const gc=document.getElementById('grain').getContext('2d');const gi=gc.createIma
 function grain(seed){let s=seed*9301+49297;const a=gi.data;for(let i=0;i<a.length;i+=4){s=(s*1103515245+12345)&0x7fffffff;const v=(s>>16)&255;a[i]=a[i+1]=a[i+2]=v;a[i+3]=255;}gc.putImageData(gi,0,0);}
 // legendas palavra a palavra
 const DUR=16.85;
-const LINES=[{s:0,e:2.28,w:['TENTA','LAMBER','O','SEU','PRÓPRIO','COTOVELO'],hl:[5]},{s:2.7,e:3.48,w:['AGORA!'],hl:[0]},
-{s:3.7,e:4.94,w:['NÃO','DÁ,','NÉ?'],hl:[1]},{s:5.29,e:6.55,w:['QUASE','NINGUÉM','CONSEGUE...'],hl:[1]},{s:6.95,e:8.99,w:['MAS','TODO','MUNDO','TENTA'],hl:[3]},
-{s:9.36,e:11.23,w:['AGORA','LEVANTA','SÓ','UMA','SOBRANCELHA'],hl:[3,4]},{s:11.52,e:12.98,w:['CONSEGUIU?','E','MEXER','AS','ORELHAS?'],hl:[4]},
-{s:13.3,e:14.69,w:['POUQUÍSSIMA','GENTE','CONSEGUE'],hl:[0]},{s:14.86,e:16.76,w:['COMENTA','QUANTOS','CONSEGUIU:','0,','1,','2','OU','3!'],hl:[0]}];
+const LINES=[{s:0,e:2.28,w:['TENTA','LAMBER','O','SEU','PRÓPRIO','COTOVELO.','AGORA!'],hl:[5,6]},
+{s:2.7,e:3.48,w:['NÃO','DÁ,','NÉ?'],hl:[1]},{s:3.7,e:4.94,w:['QUASE','NINGUÉM','CONSEGUE...'],hl:[1]},{s:5.29,e:6.55,w:['MAS','TODO','MUNDO','TENTA'],hl:[3]},
+{s:6.95,e:8.99,w:['AGORA','LEVANTA','SÓ','UMA','SOBRANCELHA'],hl:[3,4]},{s:9.36,e:9.93,w:['CONSEGUIU?'],hl:[0]},{s:10.32,e:11.23,w:['E','MEXER','AS','ORELHAS?'],hl:[3]},
+{s:11.52,e:12.98,w:['POUQUÍSSIMA','GENTE','CONSEGUE'],hl:[0]},{s:13.3,e:16.76,w:['COMENTA','QUANTOS','CONSEGUIU:','0,','1,','2','OU','3!'],hl:[0]}];
 function caption(t){const L=LINES.find(l=>t>=l.s&&t<l.e);const el=document.getElementById('cap');if(!L){el.innerHTML='';return;}
   const n=L.w.length,per=(L.e-L.s)/n,i=Math.min(n-1,Math.floor((t-L.s)/per));
   // mostra blocos de até 3 palavras
