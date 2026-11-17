@@ -94,6 +94,6 @@ for a in TL['attempts']:
         for _ in range(12):ping(ri+rng.uniform(0,.4),rng.uniform(3000,6000),.05,0.05)
     r0=(a['impact']+a['hold'])/fps;dd=a['rw']/fps;w=tt(dd)
     fr=2400-1800*w/dd;ph=2*np.cumsum(np.pi*fr)/SR;ch=np.sign(np.sin(ph))*0.5*(np.sin(2*np.pi*14*w)>0)
-    add(lp(ch,5000)*np.minimum(1,w*30)*np.minimum(1,(dd-w)*30),r0,0.1)
+    add(lp(ch,3500)*np.minimum(1,w/dd*2.5)*np.minimum(1,(dd-w)*30),r0,0.035)
 out=np.roll(out,-int(TL['offset']/fps*SR));out/=np.max(np.abs(out))*1.12
 wavfile.write(d+'/audio.wav',SR,np.stack([out,out],1).astype(np.float32));print('ok',N/SR)
