@@ -1,0 +1,55 @@
+{
+ "fps": 30,
+ "attempts": [
+  {
+   "level": 1,
+   "speed": 0.4,
+   "start": 0,
+   "release": 18,
+   "impact": 45,
+   "hold": 14,
+   "rw": 8,
+   "obj": "jello",
+   "word": "WOBBLE",
+   "end": 67
+  },
+  {
+   "level": 2,
+   "speed": 0.6,
+   "start": 67,
+   "release": 86,
+   "impact": 104,
+   "hold": 14,
+   "rw": 8,
+   "obj": "slime",
+   "word": "SLIME",
+   "end": 126
+  },
+  {
+   "level": 3,
+   "speed": 0.8,
+   "start": 126,
+   "release": 148,
+   "impact": 161,
+   "hold": 14,
+   "rw": 8,
+   "obj": "bear",
+   "word": "GUMMY",
+   "end": 183
+  },
+  {
+   "level": 4,
+   "speed": 1.0,
+   "start": 183,
+   "release": 201,
+   "impact": 212,
+   "hold": 20,
+   "rw": 8,
+   "obj": "marshmallow",
+   "word": "FLUFF",
+   "end": 240
+  }
+ ],
+ "total": 240,
+ "offset": 216
+}

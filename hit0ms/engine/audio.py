@@ -42,6 +42,10 @@ def pops(t0,n=10,g=0.22):
         w=tt(.035);f=np.linspace(rng.uniform(900,1300),rng.uniform(2200,3200),len(w));add(np.sin(2*np.pi*np.cumsum(f)/SR)*np.exp(-w*90),t,g)
 def crackle(t0,n=25,g=0.3):
     for t in t0+np.abs(rng.normal(0,.05,n)):add(hp(noise(.02),1800)*np.exp(-tt(.02)*220),t,rng.uniform(.3,1)*g)
+
+def wobble(t0,f=150,d=.7,g=.6):
+    w=tt(d);fr=f*(1+0.35*np.sin(2*np.pi*9*w)*np.exp(-w*4));add(np.tanh(2*np.sin(2*np.pi*np.cumsum(fr)/SR))*np.exp(-w*5),t0,g);add(lp(noise(d),500)*np.exp(-w*6)*(0.5+0.5*np.sin(2*np.pi*9*w)),t0,g*0.6)
+def puff(t0,g=.6):w=tt(.15);add(lp(noise(.15),700)*np.exp(-w*25),t0,g);add(np.sin(2*np.pi*(110-50*w)*w)*np.exp(-w*30),t0,g*0.6)
 def click(t0,g):w=tt(.025);add(bp(noise(.025),2500,7000)*np.exp(-w*260),t0,g);ping(t0,rng.uniform(1800,3200),.04,g*0.5)
 T=N/SR;beat=0.5
 for k in range(int(T/beat)):
@@ -67,6 +71,14 @@ for a in TL['attempts']:
         smash(ri,0.7,0.8,lo=300);patter(ri+.05,40)
     if k=='temaki':crackle(ri,28,0.35);smash(ri,0.9,1.0,lo=300);pops(ri+.03,14);patter(ri+.05,30)
     if k=='dragon':slap(ri,1.2,120);smash(ri,1.5,1.3,crack=0.3,lo=240);patter(ri+.04,60,.6)
+    if k=='jello':slap(ri,0.7,160);smash(ri,0.9,1.0,lo=280);wobble(ri+.02,140,.8,.5);pops(ri+.05,6,.15)
+    if k=='slime':smash(ri,1.4,1.5,lo=200);smash(ri+.12,0.7,1.0,lo=350);pops(ri+.1,16,.2)
+    if k=='bear':
+        slap(ri,0.9,130);smash(ri,0.9,0.7,lo=300)
+        for dt,gg in ((.0,.55),(.22,.35),(.38,.2)):wobble(ri+dt,260+dt*200,.3,gg)
+    if k=='marshmallow':
+        for j,dt in enumerate((0,.08,.17,.3,.42)):puff(ri+dt,.7-j*.1)
+        patter(ri+.05,12,.4,.08)
     if k=='squish':   # soft food thud + wet squish
         add(lp(noise(.3),900)*np.exp(-tt(.3)*14),ri,1.0);add(np.sin(2*np.pi*(90-40*tt(.2))*tt(.2))*np.exp(-tt(.2)*16),ri,0.7)
         for _ in range(5):add(bp(noise(.05),600,2000)*np.exp(-tt(.05)*60),ri+rng.uniform(.03,.25),0.25)
