@@ -1,0 +1,55 @@
+{
+ "fps": 30,
+ "attempts": [
+  {
+   "level": 1,
+   "speed": 0.4,
+   "start": 0,
+   "release": 36,
+   "impact": 82,
+   "hold": 26,
+   "rw": 10,
+   "obj": "flop",
+   "word": "FLOP",
+   "end": 118
+  },
+  {
+   "level": 2,
+   "speed": 0.6,
+   "start": 118,
+   "release": 154,
+   "impact": 185,
+   "hold": 26,
+   "rw": 10,
+   "obj": "bomb",
+   "word": "BOMB",
+   "end": 221
+  },
+  {
+   "level": 3,
+   "speed": 0.8,
+   "start": 221,
+   "release": 257,
+   "impact": 280,
+   "hold": 26,
+   "rw": 10,
+   "obj": "perfect",
+   "word": "PERFECT",
+   "end": 316
+  },
+  {
+   "level": 4,
+   "speed": 1.0,
+   "start": 316,
+   "release": 352,
+   "impact": 371,
+   "hold": 39,
+   "rw": 10,
+   "obj": "flip",
+   "word": "FLIP",
+   "end": 420
+  }
+ ],
+ "total": 420,
+ "offset": 375
+}
