@@ -1,8 +1,8 @@
 {"y":1520,"lines":[
-{"start":0.0,"end":3.24,"chunks":["*DESAFIO*!","FALA A *COR*","DE CADA","PALAVRA…"]},
-{"start":3.57,"end":5.25,"chunks":["NÃO O QUE","ESTÁ *ESCRITO*"]},
-{"start":5.56,"end":6.66,"chunks":["VALENDO…"]},
-{"start":6.93,"end":7.77,"chunks":["*AGORA*!"]},
-{"start":16.12,"end":17.66,"chunks":["CONSEGUIU","SEM *ERRAR*","NENHUMA?"]},
-{"start":18.05,"end":19.64,"chunks":["É O SEU *CÉREBRO*","BRIGANDO","COM ELE MESMO"]},
-{"start":19.97,"end":23.57,"chunks":["COMENTA","QUANTAS","VOCÊ *ERROU*…","E MANDA","PRA QUEM","ACHA QUE *CONSEGUE*"]}]}
+{"start":0.0,"end":0.8,"chunks":["*DESAFIO*!"]},
+{"start":1.07,"end":4.16,"chunks":["FALA A *COR*","DE CADA PALAVRA…","NÃO O QUE","ESTÁ *ESCRITO*"]},
+{"start":4.54,"end":5.01,"chunks":["VALENDO…"]},
+{"start":5.36,"end":5.85,"chunks":["*AGORA*!"]},
+{"start":14.15,"end":15.46,"chunks":["CONSEGUIU","SEM *ERRAR*?"]},
+{"start":15.78,"end":17.82,"chunks":["É O SEU *CÉREBRO*","BRIGANDO","COM ELE MESMO"]},
+{"start":18.12,"end":21.4,"chunks":["COMENTA","QUANTAS","VOCÊ *ERROU*…","E MANDA","PRA QUEM","ACHA QUE *CONSEGUE*"]}]}
