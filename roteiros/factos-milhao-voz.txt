@@ -1,0 +1,8 @@
+2 FATOS (BR) — Milhão ou centavo?
+[excited] Você prefere ganhar um milhão de reais agora… ou um centavo que dobra todo dia durante trinta dias?
+[curious] Pensa rápido e comenta: MILHÃO ou CENTAVO.
+[playful] No dia dez, o centavo vale só cinco reais.
+[serious] No dia vinte… cinco mil.
+[amazed] Mas no dia trinta… vira mais de CINCO MILHÕES de reais!
+[playful] Manda pra quem escolheu o milhão.
+Contas: 0,01 x 2^(d-1): dia 10 = R$5,12; dia 20 = R$5.242,88; dia 30 = R$5.368.709,12
