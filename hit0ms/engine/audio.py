@@ -31,6 +31,17 @@ def smash(t0,size=1.0,wet=1.0,crack=0.0,lo=350):
         dd=rng.uniform(.02,.05);add(lp(noise(dd),rng.uniform(900,1800))*np.exp(-tt(dd)*90),t0+rng.uniform(.02,.45*size),rng.uniform(.2,.45)*wet)
     for _ in range(int(5*wet)):                                                                                    # drips/bubbles
         dd=.03;w=tt(dd);f=np.linspace(rng.uniform(450,700),rng.uniform(1000,1500),len(w));add(np.sin(2*np.pi*np.cumsum(f)/SR)*np.exp(-w*70),t0+rng.uniform(.15,.6),0.12)
+
+def slap(t0,g=1.0,body=170):
+    w=tt(.09);add(lp(noise(.09),3200)*np.exp(-w*55),t0,1.0*g);w=tt(.18);add(np.sin(2*np.pi*body*w*(1-0.25*w/0.18))*np.exp(-w*28),t0,0.55*g)
+def patter(t0,n=40,spread=.45,g=0.18):
+    for t in np.sort(t0+np.abs(rng.normal(0,spread/2.5,n))):
+        dd=.012;add(bp(noise(dd),rng.uniform(2500,4500),rng.uniform(5500,8000))*np.exp(-tt(dd)*350),t,rng.uniform(.4,1)*g)
+def pops(t0,n=10,g=0.22):
+    for t in t0+rng.uniform(.02,.35,n):
+        w=tt(.035);f=np.linspace(rng.uniform(900,1300),rng.uniform(2200,3200),len(w));add(np.sin(2*np.pi*np.cumsum(f)/SR)*np.exp(-w*90),t,g)
+def crackle(t0,n=25,g=0.3):
+    for t in t0+np.abs(rng.normal(0,.05,n)):add(hp(noise(.02),1800)*np.exp(-tt(.02)*220),t,rng.uniform(.3,1)*g)
 def click(t0,g):w=tt(.025);add(bp(noise(.025),2500,7000)*np.exp(-w*260),t0,g);ping(t0,rng.uniform(1800,3200),.04,g*0.5)
 T=N/SR;beat=0.5
 for k in range(int(T/beat)):
@@ -50,6 +61,12 @@ for a in TL['attempts']:
     if k=='gummy_squash':
         smash(ri,0.9,0.7,lo=300)
         for dt in (.05,.18,.3):w=tt(.15);f=320*(1+0.4*np.exp(-w*20));add(np.sin(2*np.pi*np.cumsum(f)/SR)*np.exp(-w*16),ri+dt,0.25)
+    if k=='nigiri':slap(ri,1.0,190);smash(ri+.01,0.9,1.0,lo=320);patter(ri+.03,45)
+    if k=='maki':
+        for dt in (0,.07,.15):slap(ri+dt,0.6,140+dt*300)
+        smash(ri,0.7,0.8,lo=300);patter(ri+.05,40)
+    if k=='temaki':crackle(ri,28,0.35);smash(ri,0.9,1.0,lo=300);pops(ri+.03,14);patter(ri+.05,30)
+    if k=='dragon':slap(ri,1.2,120);smash(ri,1.5,1.3,crack=0.3,lo=240);patter(ri+.04,60,.6)
     if k=='squish':   # soft food thud + wet squish
         add(lp(noise(.3),900)*np.exp(-tt(.3)*14),ri,1.0);add(np.sin(2*np.pi*(90-40*tt(.2))*tt(.2))*np.exp(-tt(.2)*16),ri,0.7)
         for _ in range(5):add(bp(noise(.05),600,2000)*np.exp(-tt(.05)*60),ri+rng.uniform(.03,.25),0.25)
