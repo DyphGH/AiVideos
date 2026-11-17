@@ -46,6 +46,14 @@ def crackle(t0,n=25,g=0.3):
 def wobble(t0,f=150,d=.7,g=.6):
     w=tt(d);fr=f*(1+0.35*np.sin(2*np.pi*9*w)*np.exp(-w*4));add(np.tanh(2*np.sin(2*np.pi*np.cumsum(fr)/SR))*np.exp(-w*5),t0,g);add(lp(noise(d),500)*np.exp(-w*6)*(0.5+0.5*np.sin(2*np.pi*9*w)),t0,g*0.6)
 def puff(t0,g=.6):w=tt(.15);add(lp(noise(.15),700)*np.exp(-w*25),t0,g);add(np.sin(2*np.pi*(110-50*w)*w)*np.exp(-w*30),t0,g*0.6)
+
+def glass(t0,g=1.0,n=30,spread=.5):
+    add(hp(noise(.05),3000)*np.exp(-tt(.05)*90),t0,0.9*g);add(bp(noise(.3),2000,9000)*np.exp(-tt(.3)*14),t0,0.4*g)
+    for t in np.sort(t0+np.abs(rng.normal(0,spread/2.5,n))):
+        f=rng.uniform(2500,7000);w=tt(.18);sig=sum(np.sin(2*np.pi*f*m*w)/(k+1) for k,m in enumerate((1,2.76,5.4)))*np.exp(-w*rng.uniform(25,45));add(sig,t,rng.uniform(.04,.14)*g)
+def ceramic(t0,g=1.0):
+    add(bp(noise(.04),1200,6000)*np.exp(-tt(.04)*120),t0,1.0*g)
+    for t in t0+np.abs(rng.normal(0,.08,12)):f=rng.uniform(1200,3000);w=tt(.12);add(np.sin(2*np.pi*f*w)*np.exp(-w*40)+0.5*np.sin(2*np.pi*f*2.3*w)*np.exp(-w*60),t,rng.uniform(.08,.2)*g)
 def click(t0,g):w=tt(.025);add(bp(noise(.025),2500,7000)*np.exp(-w*260),t0,g);ping(t0,rng.uniform(1800,3200),.04,g*0.5)
 T=N/SR;beat=0.5
 for k in range(int(T/beat)):
@@ -79,6 +87,19 @@ for a in TL['attempts']:
     if k=='marshmallow':
         for j,dt in enumerate((0,.08,.17,.3,.42)):puff(ri+dt,.7-j*.1)
         patter(ri+.05,12,.4,.08)
+    if k=='ornament':glass(ri,1.0,40,.6);slap(ri,0.4,200)
+    if k=='gingerbread':
+        slap(ri,0.6,150)
+        for _ in range(26):add(hp(noise(.03),1800)*np.exp(-tt(.03)*150),ri+abs(rng.normal(0,.07)),rng.uniform(.2,.5))
+        patter(ri+.05,40,.5,.12)
+    if k=='cocoa':ceramic(ri,1.0);smash(ri+.01,1.2,1.4,lo=260)
+    if k=='globe':glass(ri,1.0,45,.7);smash(ri+.01,1.1,1.2,lo=300);slap(ri,0.5,120)
+    if k=='cake':slap(ri,0.8,140);smash(ri,1.2,1.3,lo=240);patter(ri+.05,25,.4,.1)
+    if k=='cake2':slap(ri,0.9,170);smash(ri,1.0,1.1,lo=280)
+    if k=='cake3':slap(ri,0.6,180);smash(ri,0.8,1.2,lo=300);pops(ri+.04,6,.12)
+    if k=='cake4':
+        for dt in (0,.09,.19):slap(ri+dt,0.8-dt,120+dt*200)
+        smash(ri,1.7,1.5,lo=220);patter(ri+.05,30,.5,.1)
     if k=='squish':   # soft food thud + wet squish
         add(lp(noise(.3),900)*np.exp(-tt(.3)*14),ri,1.0);add(np.sin(2*np.pi*(90-40*tt(.2))*tt(.2))*np.exp(-tt(.2)*16),ri,0.7)
         for _ in range(5):add(bp(noise(.05),600,2000)*np.exp(-tt(.05)*60),ri+rng.uniform(.03,.25),0.25)
