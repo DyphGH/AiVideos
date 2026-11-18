@@ -1,0 +1,30 @@
+2 FATOS (BR) — Porque é que o ecrã só sente o dedo  (~22 s)
+Referência: vídeo enviado (resultaaquee) — refeito no estilo 2D premium do 2 Factos
+Texto no topo desde o frame 0: "POR QUE A UNHA NÃO FUNCIONA?"
+
+VOZ DO GABRIEL
+[urgent] Toca na tela com a unha. Nada. Agora com o dedo… funcionou!
+[curious] Por baixo do vidro existe uma grade invisível, cheia de eletricidade.
+[amazed] E o teu corpo conduz eletricidade. Quando o dedo encosta, ele rouba um pouquinho… e o celular sente exatamente onde.
+[mischievously] Ele confere a tela inteira mais de sessenta vezes por segundo.
+[laughs] Por isso a unha, a luva e a caneta não funcionam… mas uma salsicha funciona!
+[playful] E uma banana? Testa aí e comenta: funcionou, sim ou não?
+
+NOTAS (cena a cena)
+- Frame 0: dedo a bater com a UNHA no ecrã de um telemóvel, "X" vermelho a piscar, ecrã sem reação; troca para a ponta do dedo → ondas amarelas + ícone abre.
+- Grade: vidro "abre-se" em vista isométrica, linhas (FILAS) e colunas (COLUNAS) de luz, faíscas a correr.
+- Corpo conduz: zoom no dedo, bolinhas Na+ / Cl- a brilhar; ao tocar, faíscas saem da grade para o dedo, números 100 → 62 → 80 na zona tocada (círculo).
+- "60 vezes por segundo": varrimento linha a linha muito rápido + contador "60+ /s".
+- Unha, luva, caneta com X vermelho; salsicha com ✓ verde + carimbo "FUNCIONA!".
+- Fim: banana a aproximar-se do ecrã + botões SIM / NÃO a saltar, corte seco.
+
+LEGENDA
+Já reparaste que a unha não funciona no ecrã? 📱💅 O motivo é eletricidade ⚡
+E a banana, funciona? Testa e comenta 👇🍌
+#curiosidades #tecnologia #celular #fatos #2fatos
+
+TÍTULO YOUTUBE
+Por que o celular não sente a unha? 📱 #shorts
+
+COMENTÁRIO PARA FIXAR
+Testaste com a banana? 🍌 Funcionou: ✅ SIM ou ❌ NÃO? 👇
