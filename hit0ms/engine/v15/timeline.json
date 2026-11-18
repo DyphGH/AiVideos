@@ -1,0 +1,55 @@
+{
+ "fps": 60,
+ "attempts": [
+  {
+   "level": 1,
+   "speed": 0.4,
+   "start": 0,
+   "release": 36,
+   "impact": 61,
+   "hold": 60,
+   "rw": 22,
+   "obj": "penalty",
+   "word": "PENALTY",
+   "end": 143
+  },
+  {
+   "level": 2,
+   "speed": 0.6,
+   "start": 143,
+   "release": 179,
+   "impact": 198,
+   "hold": 60,
+   "rw": 22,
+   "obj": "freekick",
+   "word": "CURVE",
+   "end": 280
+  },
+  {
+   "level": 3,
+   "speed": 0.8,
+   "start": 280,
+   "release": 316,
+   "impact": 331,
+   "hold": 60,
+   "rw": 22,
+   "obj": "bicycle",
+   "word": "BICYCLE",
+   "end": 413
+  },
+  {
+   "level": 4,
+   "speed": 1.0,
+   "start": 413,
+   "release": 449,
+   "impact": 460,
+   "hold": 88,
+   "rw": 22,
+   "obj": "rocket",
+   "word": "ROCKET",
+   "end": 570
+  }
+ ],
+ "total": 570,
+ "offset": 468
+}
