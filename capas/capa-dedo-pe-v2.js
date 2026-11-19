@@ -1,0 +1,12 @@
+const {chromium}=require('playwright');const fs=require('fs');
+const art=fs.readFileSync('/home/claude/oficina-remotion/src/art.js','utf8').replace(/export \{[^}]*\};?/,'');
+const font='data:font/woff2;base64,'+fs.readFileSync('/home/claude/oficina-remotion/public/fonts/mont900.woff2').toString('base64');
+const capa=`(()=>{let o=dpMesa()+DPM(maoCima(1,{dobra:1,treme:0}));
+ o+=fTxt(540,300,'SEU CORPO VAI',100,'#fff')+fTxt(540,430,'TE DESOBEDECER',104,FY,'middle',18);
+ o+=fStamp(9,0,540,1230,'NÃO DÁ!','#e0483a',110,-6);
+ o+=fPill('2 FATOS',9,1760);
+ return o;})()`;
+(async()=>{const b=await chromium.launch();const p=await b.newPage({viewport:{width:1080,height:1920}});
+await p.setContent(`<style>@font-face{font-family:M;src:url(${font});font-weight:900}body{margin:0}</style><svg id=s width=1080 height=1920 viewBox="0 0 1080 1920"></svg><script>window.window=window;${art}; document.getElementById('s').innerHTML=${capa};</script>`);
+await p.evaluate(()=>document.fonts.ready); await p.waitForTimeout(400);
+await p.screenshot({path:`${process.argv[2]}/capa-dedo-pe-v2.png`}); await b.close();})();
