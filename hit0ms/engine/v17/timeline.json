@@ -1,0 +1,55 @@
+{
+ "fps": 30,
+ "attempts": [
+  {
+   "level": 1,
+   "speed": 0.4,
+   "start": 0,
+   "release": 18,
+   "impact": 45,
+   "hold": 14,
+   "rw": 8,
+   "obj": "bag",
+   "word": "MONEY",
+   "end": 67
+  },
+  {
+   "level": 2,
+   "speed": 0.6,
+   "start": 67,
+   "release": 86,
+   "impact": 104,
+   "hold": 14,
+   "rw": 8,
+   "obj": "gold",
+   "word": "GOLD",
+   "end": 126
+  },
+  {
+   "level": 3,
+   "speed": 0.8,
+   "start": 126,
+   "release": 144,
+   "impact": 157,
+   "hold": 14,
+   "rw": 8,
+   "obj": "diamond",
+   "word": "ICE",
+   "end": 179
+  },
+  {
+   "level": 4,
+   "speed": 1.0,
+   "start": 179,
+   "release": 197,
+   "impact": 208,
+   "hold": 24,
+   "rw": 8,
+   "obj": "brief",
+   "word": "DEAL",
+   "end": 240
+  }
+ ],
+ "total": 240,
+ "offset": 16
+}

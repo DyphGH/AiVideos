@@ -100,6 +100,22 @@ for a in TL['attempts']:
     if k=='cake4':
         for dt in (0,.09,.19):slap(ri+dt,0.8-dt,120+dt*200)
         smash(ri,1.7,1.5,lo=220);patter(ri+.05,30,.5,.1)
+    if k=='cashbag':
+        w=tt(.25);add(lp(noise(.25),500)*np.exp(-w*18),ri,1.0);add(np.sin(2*np.pi*(70-25*w/.25)*w)*np.exp(-w*14),ri,0.8)
+        for t in np.sort(ri+0.02+np.abs(rng.normal(0,.35,70))):dd=rng.uniform(.03,.07);add(bp(noise(dd),1800,7000)*np.exp(-tt(dd)*rng.uniform(40,90))*np.sin(np.pi*np.minimum(1,tt(dd)/dd)),t,rng.uniform(.06,.16))
+        for _ in range(6):ping(ri+rng.uniform(0,.15),rng.uniform(2500,4000),.15,0.05)
+    if k=='goldbars':
+        for j,(dt,g) in enumerate([(0,1.0),(.11,.6),(.2,.45),(.33,.3),(.45,.2)]):
+            w=tt(.9);sig=sum(np.sin(2*np.pi*f*w)*np.exp(-w*dc)*a for f,dc,a in [(1180+j*40,6,1),(2950+j*60,9,.6),(4700,12,.4),(6900,16,.25)]);add(sig*np.minimum(1,w*2000),ri+dt,0.35*g);add(lp(noise(.06),900)*np.exp(-tt(.06)*60),ri+dt,0.7*g)
+    if k=='diamond':
+        add(hp(noise(.03),2500)*np.exp(-tt(.03)*120),ri,1.2);w=tt(.18);add(lp(noise(.18),1200)*np.exp(-w*25),ri,0.7)
+        for t in np.sort(ri+np.abs(rng.normal(0,.12,24))):add(bp(noise(.02),1500,6000)*np.exp(-tt(.02)*200),t,rng.uniform(.15,.45))
+        for f in (3300,5200,7400):w=tt(1.0);add(np.sin(2*np.pi*f*w)*np.exp(-w*5),ri+.02,0.08)
+    if k=='briefcase':
+        w=tt(.2);add(lp(noise(.2),700)*np.exp(-w*20),ri,0.9);add(np.sin(2*np.pi*(90-30*w/.2)*w)*np.exp(-w*18),ri,0.6)
+        for dt in (.05,.09):click(ri+dt,0.8)
+        w=tt(.35);add(lp(noise(.35),1500)*np.sin(np.pi*w/.35)*0.6,ri+.1,0.3)
+        for t in np.sort(ri+0.12+np.abs(rng.normal(0,.3,50))):dd=rng.uniform(.03,.07);add(bp(noise(dd),1800,7000)*np.exp(-tt(dd)*60)*np.sin(np.pi*np.minimum(1,tt(dd)/dd)),t,rng.uniform(.06,.14))
     if k=='squish':   # soft food thud + wet squish
         add(lp(noise(.3),900)*np.exp(-tt(.3)*14),ri,1.0);add(np.sin(2*np.pi*(90-40*tt(.2))*tt(.2))*np.exp(-tt(.2)*16),ri,0.7)
         for _ in range(5):add(bp(noise(.05),600,2000)*np.exp(-tt(.05)*60),ri+rng.uniform(.03,.25),0.25)

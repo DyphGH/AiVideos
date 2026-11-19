@@ -45,7 +45,7 @@ canvas{position:absolute;inset:0}
     <div class="lbl">IMPACT</div>
   </div>
   <div id="ask"></div>
-  <div id="secret"><div class="card"><div class="a">0 ms &middot; PERFECT</div><div class="b">SAVED IT!</div><div class="c">Comment <b id="word"></b> to prove it</div></div></div>
+  <div id="secret"><div class="card"><div class="a" id="stop">0 ms &middot; PERFECT</div><div class="b" id="stitle">SAVED IT!</div><div class="c">Comment <b id="word"></b> to prove it</div></div></div>
 </div>
 <script type="module">
 const TL=await (await fetch('/timeline.json')).json();
@@ -99,7 +99,7 @@ function simulate(objKey,landX,tEnd){const ob=CFG.objects[objKey];const key=objK
   if(!SIM[key]){seed=objKey.length*7919+13;SIM[key]=ob.parts().map(p=>{const ang=-Math.PI*(0.15+0.7*rnd());const sp=(ob.burst||520)*(0.35+rnd());return {...p,vx:Math.cos(ang)*sp*(p.dx>0?1:p.dx<0?-1:(rnd()<.5?-1:1)),vy:Math.sin(ang)*sp*(ob.up||1),vr:(rnd()-.5)*(ob.spin||14)};});}
   const parts=SIM[key];const out=[];const dt=1/240;
   for(const p of parts){let x=landX+p.dx,y=FLOOR_Y-ob.h/2+p.dy,vx=p.vx,vy=p.vy,r=0,vr=p.vr;const gy=FLOOR_Y-(p.rest||p.h/2);
-    for(let t=0;t<tEnd;t+=dt){vy+=2200*dt;x+=vx*dt;y+=vy*dt;r+=vr*dt;if(y>gy){y=gy;vy*=-0.32;vx*=0.72;vr*=0.6;if(Math.abs(vy)<60)vy=0;}}
+    for(let t=0;t<tEnd;t+=dt){const gs=p.g??1;vy+=2200*gs*dt;if(p.drag){vx*=1-p.drag*dt;vy=Math.min(vy,p.vmax||1e9);}x+=vx*dt+(p.flut?Math.sin(t*9+p.dx)*p.flut*dt:0);y+=vy*dt;r+=vr*dt;if(y>gy){y=gy;vy*=-0.32;vx*=0.72;vr*=0.6;if(Math.abs(vy)<60)vy=0;}}
     out.push({p,x,y,r});}
   return out;}
 
@@ -132,7 +132,7 @@ window.renderAt=(f0)=>{
   $('lv').textContent=`LEVEL ${a.level} / ${A.length}`;$('sp').textContent=`SPEED ${Math.round(a.speed*100)}%`;
   $('res').textContent=res;$('res').style.color=col;$('val').textContent=(ms>0?'+':'')+ms+' ms';$('val').style.color=col;
   $('mk').style.left=(50+Math.max(-1,Math.min(1,ms/1000))*50)+'%';$('hud').classList.toggle('perfect',ms===0);
-  $('secret').style.display=caught?'flex':'none';$('word').textContent=`"${a.word}"`;
+  $('secret').style.display=caught?'flex':'none';if(CFG.secret){$('stitle').textContent=CFG.secret.title;$('stitle').style.color=CFG.secret.color||'';$('stop').style.display=CFG.secret.top===false?'none':'';if(CFG.secret.border){const cd=document.querySelector('#secret .card');cd.style.borderColor=CFG.secret.border;cd.style.boxShadow='0 0 120px '+CFG.secret.border;}}cv.style.filter=(caught&&CFG.secret&&CFG.secret.gray)?'grayscale(1) contrast(1.15)':'none';$('word').textContent=`"${a.word}"`;
   $('rw').style.opacity=rwv>=0?(0.55+0.45*Math.abs(Math.sin(f*0.9))):0;
 };
 window.hideUI=()=>{document.getElementById('ui').style.display='none';};
