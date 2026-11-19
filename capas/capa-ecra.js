@@ -1,0 +1,13 @@
+const {chromium}=require('playwright');const fs=require('fs');
+const art=fs.readFileSync('/home/claude/oficina-remotion/src/art.js','utf8').replace(/export \{[^}]*\};?/,'');
+const font='data:font/woff2;base64,'+fs.readFileSync('/home/claude/oficina-remotion/public/fonts/mont900.woff2').toString('base64');
+const capa=`(()=>{let o=fBg(1,'#2a2470','#0b0a2a',1000)+'<defs><linearGradient id="ecScr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a4fb8"/><stop offset="1" stop-color="#17204e"/></linearGradient></defs>';
+ o+=ecPhone(0,540,1150,.95,1e9)+ecDedo(560,1040,-37,.8)+ecX(9,0,800,800,90)+ecSals(330,1500,20,.6);
+ o+=fTxt(540,320,'POR QUE A UNHA',96,'#fff')+fTxt(540,450,'NÃO FUNCIONA?',112,FY,'middle',18);
+ o+=fStamp(9,0,540,600,'MAS A SALSICHA SIM','#e0483a',54,-4);
+ o+=fPill('2 FATOS',9,1760);
+ return o;})()`;
+(async()=>{const b=await chromium.launch();const p=await b.newPage({viewport:{width:1080,height:1920}});
+await p.setContent(`<style>@font-face{font-family:M;src:url(${font});font-weight:900}body{margin:0}</style><svg id=s width=1080 height=1920 viewBox="0 0 1080 1920"></svg><script>window.window=window;${art}; document.getElementById('s').innerHTML=${capa};</script>`);
+await p.evaluate(()=>document.fonts.ready); await p.waitForTimeout(400);
+await p.screenshot({path:`${process.argv[2]}/capa-ecra.png`}); await b.close();})();
