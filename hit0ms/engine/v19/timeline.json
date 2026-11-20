@@ -1,0 +1,55 @@
+{
+ "fps": 30,
+ "attempts": [
+  {
+   "level": 1,
+   "speed": 0.4,
+   "start": 0,
+   "release": 20,
+   "impact": 47,
+   "hold": 22,
+   "rw": 8,
+   "obj": "fries",
+   "word": "SALTY",
+   "end": 77
+  },
+  {
+   "level": 2,
+   "speed": 0.6,
+   "start": 77,
+   "release": 98,
+   "impact": 116,
+   "hold": 22,
+   "rw": 8,
+   "obj": "ketchup",
+   "word": "KETCHUP",
+   "end": 146
+  },
+  {
+   "level": 3,
+   "speed": 0.8,
+   "start": 146,
+   "release": 165,
+   "impact": 178,
+   "hold": 22,
+   "rw": 8,
+   "obj": "pickles",
+   "word": "PICKLE",
+   "end": 208
+  },
+  {
+   "level": 4,
+   "speed": 1.0,
+   "start": 208,
+   "release": 227,
+   "impact": 238,
+   "hold": 24,
+   "rw": 8,
+   "obj": "cereal",
+   "word": "CRUNCH",
+   "end": 270
+  }
+ ],
+ "total": 270,
+ "offset": 18
+}
