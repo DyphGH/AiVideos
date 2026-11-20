@@ -1,0 +1,12 @@
+const {chromium}=require('playwright');const fs=require('fs');
+const art=fs.readFileSync('/home/claude/oficina-remotion/src/art.js','utf8').replace(/export \{[^}]*\};?/,'');
+const font='data:font/woff2;base64,'+fs.readFileSync('/home/claude/oficina-remotion/public/fonts/mont900.woff2').toString('base64');
+const capa=`(()=>{let o=esCeu(1)+esImpressora(1.3,540,1000,1,'figado');
+ o+=fTxt(540,300,'ASTRONAUTAS',100,'#fff')+fTxt(540,420,'IMPRIMINDO ÓRGÃOS',80,'#ff7ab8','middle',16)+fTxt(540,520,'NO ESPAÇO',104,FY,'middle',18);
+ o+=esMundo(880,1400,90,1,true)+fStamp(9,0,440,1400,'+ MUNDO DE GELO','#2e86d0',50,-4);
+ o+=fPill('2 FATOS',9,1760);
+ return o;})()`;
+(async()=>{const b=await chromium.launch();const p=await b.newPage({viewport:{width:1080,height:1920}});
+await p.setContent(`<style>@font-face{font-family:M;src:url(${font});font-weight:900}body{margin:0}</style><svg id=s width=1080 height=1920 viewBox="0 0 1080 1920"></svg><script>window.window=window;${art}; document.getElementById('s').innerHTML=${capa};</script>`);
+await p.evaluate(()=>document.fonts.ready); await p.waitForTimeout(400);
+await p.screenshot({path:`${process.argv[2]}/capa-espaco.png`}); await b.close();})();
