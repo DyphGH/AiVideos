@@ -116,6 +116,13 @@ for a in TL['attempts']:
         for dt in (.05,.09):click(ri+dt,0.8)
         w=tt(.35);add(lp(noise(.35),1500)*np.sin(np.pi*w/.35)*0.6,ri+.1,0.3)
         for t in np.sort(ri+0.12+np.abs(rng.normal(0,.3,50))):dd=rng.uniform(.03,.07);add(bp(noise(dd),1800,7000)*np.exp(-tt(dd)*60)*np.sin(np.pi*np.minimum(1,tt(dd)/dd)),t,rng.uniform(.06,.14))
+    if k=='drink':
+        glass(ri,0.9,35,.55);smash(ri+.01,1.3,1.6,lo=380)
+        for t in np.sort(ri+0.2+np.abs(rng.normal(0,.25,30))):dd=.03;w=tt(dd);f=np.linspace(rng.uniform(700,1100),rng.uniform(1600,2600),len(w));add(np.sin(2*np.pi*np.cumsum(f)/SR)*np.exp(-w*90),t,rng.uniform(.04,.1))
+    if k=='icecream':
+        slap(ri,0.7,150);smash(ri,1.2,1.4,lo=260)
+        for _ in range(22):add(hp(noise(.025),2000)*np.exp(-tt(.025)*170),ri+abs(rng.normal(0,.06)),rng.uniform(.15,.4))
+        patter(ri+.05,25,.4,.08)
     if k=='squish':   # soft food thud + wet squish
         add(lp(noise(.3),900)*np.exp(-tt(.3)*14),ri,1.0);add(np.sin(2*np.pi*(90-40*tt(.2))*tt(.2))*np.exp(-tt(.2)*16),ri,0.7)
         for _ in range(5):add(bp(noise(.05),600,2000)*np.exp(-tt(.05)*60),ri+rng.uniform(.03,.25),0.25)

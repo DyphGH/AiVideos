@@ -1,0 +1,55 @@
+{
+ "fps": 30,
+ "attempts": [
+  {
+   "level": 1,
+   "speed": 0.4,
+   "start": 0,
+   "release": 16,
+   "impact": 43,
+   "hold": 22,
+   "rw": 8,
+   "obj": "cola",
+   "word": "COLA",
+   "end": 73
+  },
+  {
+   "level": 2,
+   "speed": 0.6,
+   "start": 73,
+   "release": 93,
+   "impact": 111,
+   "hold": 22,
+   "rw": 8,
+   "obj": "coffee",
+   "word": "MORNING",
+   "end": 141
+  },
+  {
+   "level": 3,
+   "speed": 0.8,
+   "start": 141,
+   "release": 159,
+   "impact": 172,
+   "hold": 22,
+   "rw": 8,
+   "obj": "tea",
+   "word": "KETCHUP",
+   "end": 202
+  },
+  {
+   "level": 4,
+   "speed": 1.0,
+   "start": 202,
+   "release": 218,
+   "impact": 229,
+   "hold": 33,
+   "rw": 8,
+   "obj": "juice",
+   "word": "CURDLE",
+   "end": 270
+  }
+ ],
+ "total": 270,
+ "offset": 14
+}
