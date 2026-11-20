@@ -1,0 +1,12 @@
+const {chromium}=require('playwright');const fs=require('fs');
+const art=fs.readFileSync('/home/claude/oficina-remotion/src/art.js','utf8').replace(/export \{[^}]*\};?/,'');
+const font='data:font/woff2;base64,'+fs.readFileSync('/home/claude/oficina-remotion/public/fonts/mont900.woff2').toString('base64');
+const capa=`(()=>{let o=pbMar(1)+pbPeixe(560,980,1.45,1,0,{hlE:.6});
+ o+=fTxt(540,300,'ESSE PEIXE TEM A',88,'#fff')+fTxt(540,420,'CABEÇA',120,FY,'middle',18)+fTxt(540,540,'TRANSPARENTE',104,FY,'middle',18);
+ o+=fStamp(9,0,540,1330,'FILMADO ESTA SEMANA','#e0483a',54,-4);
+ o+=fPill('2 FATOS',9,1760);
+ return o;})()`;
+(async()=>{const b=await chromium.launch();const p=await b.newPage({viewport:{width:1080,height:1920}});
+await p.setContent(`<style>@font-face{font-family:M;src:url(${font});font-weight:900}body{margin:0}</style><svg id=s width=1080 height=1920 viewBox="0 0 1080 1920"></svg><script>window.window=window;${art}; document.getElementById('s').innerHTML=${capa};</script>`);
+await p.evaluate(()=>document.fonts.ready); await p.waitForTimeout(400);
+await p.screenshot({path:`${process.argv[2]}/capa-peixe-baleia.png`}); await b.close();})();
