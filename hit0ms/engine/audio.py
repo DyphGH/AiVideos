@@ -123,6 +123,36 @@ for a in TL['attempts']:
         slap(ri,0.7,150);smash(ri,1.2,1.4,lo=260)
         for _ in range(22):add(hp(noise(.025),2000)*np.exp(-tt(.025)*170),ri+abs(rng.normal(0,.06)),rng.uniform(.15,.4))
         patter(ri+.05,25,.4,.08)
+    if k=='banana':
+        slap(ri,1.0,120);smash(ri+.01,1.0,1.5,lo=220);slap(ri+.09,0.5,160);patter(ri+.05,20,.35,.08)
+    if k=='melon':
+        add(lp(noise(.06),600)*np.exp(-tt(.06)*50),ri,1.0);add(np.sin(2*np.pi*(95-40*tt(.25))*tt(.25))*np.exp(-tt(.25)*14),ri,0.8)
+        smash(ri+.01,1.6,1.7,crack=0.35,lo=240);patter(ri+.05,70,.6,.16)
+        for _ in range(14):add(hp(noise(.02),2500)*np.exp(-tt(.02)*200),ri+abs(rng.normal(0,.12)),rng.uniform(.1,.25))
+    if k=='donut':
+        for j,(dt,g) in enumerate([(0,1.0),(.2,.45)]):
+            w=tt(.25);f=180*(1+0.35*np.exp(-w*12));add(np.sin(2*np.pi*np.cumsum(f)/SR)*np.exp(-w*12),ri+dt,0.5*g);slap(ri+dt,0.7*g,150)
+        smash(ri+.01,1.0,1.2,lo=300);pops(ri+.04,18,.12)
+    if k=='cookie':
+        for _ in range(30):add(hp(noise(.03),1800)*np.exp(-tt(.03)*140),ri+abs(rng.normal(0,.07)),rng.uniform(.2,.55))
+        add(lp(noise(.2),1100)*np.exp(-tt(.2)*18),ri,0.6);smash(ri+.03,0.9,1.3,lo=320);patter(ri+.08,25,.4,.1)
+    if k=='cashbrick':
+        w=tt(.3);add(lp(noise(.3),450)*np.exp(-w*15),ri,1.0);add(np.sin(2*np.pi*(65-25*w/.3)*w)*np.exp(-w*12),ri,0.9)
+        w=tt(.25);add(bp(noise(.25),1500,5000)*np.exp(-w*14),ri+.01,0.35)
+        for t in np.sort(ri+0.02+np.abs(rng.normal(0,.4,90))):dd=rng.uniform(.03,.07);add(bp(noise(dd),1800,7000)*np.exp(-tt(dd)*rng.uniform(40,90))*np.sin(np.pi*np.minimum(1,tt(dd)/dd)),t,rng.uniform(.06,.16))
+    if k=='watch':
+        glass(ri,0.8,25,.4)
+        for j,f in enumerate((2100,3150,4400)):w=tt(.7);add(np.sin(2*np.pi*f*w)*np.exp(-w*7)*np.minimum(1,w*2000),ri,0.25/(j+1))
+        for t in np.sort(ri+0.03+np.abs(rng.normal(0,.2,30))):ping(t,rng.uniform(3000,6500),.06,rng.uniform(.04,.1))
+        for j in range(5):click(ri+.25+j*.11,0.35-j*.05)
+    if k=='pearls':
+        add(lp(noise(.12),900)*np.exp(-tt(.12)*30),ri,0.8)
+        for t in np.sort(ri+np.abs(rng.normal(0,.28,110))):dd=.018;w=tt(dd);add((bp(noise(dd),2500,8000)*0.6+np.sin(2*np.pi*rng.uniform(3500,5500)*w))*np.exp(-w*260),t,rng.uniform(.06,.22))
+    if k=='safe':
+        w=tt(.5);add(lp(noise(.5),300)*np.exp(-w*9),ri,1.2);add(np.sin(2*np.pi*(55-15*w/.5)*w)*np.exp(-w*8),ri,1.0)
+        for f in (380,610,950):w=tt(.8);add(np.sin(2*np.pi*f*w)*np.exp(-w*6),ri,0.12)
+        for t in np.sort(ri+0.06+np.abs(rng.normal(0,.35,80))):
+            for f in (rng.uniform(3800,5200),rng.uniform(6000,8000)):ping(t,f,.12,rng.uniform(.03,.07))
     if k=='squish':   # soft food thud + wet squish
         add(lp(noise(.3),900)*np.exp(-tt(.3)*14),ri,1.0);add(np.sin(2*np.pi*(90-40*tt(.2))*tt(.2))*np.exp(-tt(.2)*16),ri,0.7)
         for _ in range(5):add(bp(noise(.05),600,2000)*np.exp(-tt(.05)*60),ri+rng.uniform(.03,.25),0.25)

@@ -1,0 +1,55 @@
+{
+ "fps": 30,
+ "attempts": [
+  {
+   "level": 1,
+   "speed": 0.4,
+   "start": 0,
+   "release": 21,
+   "impact": 48,
+   "hold": 22,
+   "rw": 8,
+   "obj": "banana",
+   "word": "MAYO",
+   "end": 78
+  },
+  {
+   "level": 2,
+   "speed": 0.6,
+   "start": 78,
+   "release": 99,
+   "impact": 117,
+   "hold": 22,
+   "rw": 8,
+   "obj": "melon",
+   "word": "MUSTARD",
+   "end": 147
+  },
+  {
+   "level": 3,
+   "speed": 0.8,
+   "start": 147,
+   "release": 169,
+   "impact": 182,
+   "hold": 22,
+   "rw": 8,
+   "obj": "donut",
+   "word": "SPICY",
+   "end": 212
+  },
+  {
+   "level": 4,
+   "speed": 1.0,
+   "start": 212,
+   "release": 231,
+   "impact": 242,
+   "hold": 35,
+   "rw": 8,
+   "obj": "cookie",
+   "word": "DUNK",
+   "end": 285
+  }
+ ],
+ "total": 285,
+ "offset": 19
+}

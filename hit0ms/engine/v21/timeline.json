@@ -1,0 +1,55 @@
+{
+ "fps": 30,
+ "attempts": [
+  {
+   "level": 1,
+   "speed": 0.4,
+   "start": 0,
+   "release": 19,
+   "impact": 46,
+   "hold": 22,
+   "rw": 8,
+   "obj": "cash",
+   "word": "STACKS",
+   "end": 76
+  },
+  {
+   "level": 2,
+   "speed": 0.6,
+   "start": 76,
+   "release": 96,
+   "impact": 114,
+   "hold": 22,
+   "rw": 8,
+   "obj": "watch",
+   "word": "TICK",
+   "end": 144
+  },
+  {
+   "level": 3,
+   "speed": 0.8,
+   "start": 144,
+   "release": 165,
+   "impact": 178,
+   "hold": 22,
+   "rw": 8,
+   "obj": "pearls",
+   "word": "PEARLS",
+   "end": 208
+  },
+  {
+   "level": 4,
+   "speed": 1.0,
+   "start": 208,
+   "release": 225,
+   "impact": 236,
+   "hold": 26,
+   "rw": 8,
+   "obj": "safe",
+   "word": "CRACKED",
+   "end": 270
+  }
+ ],
+ "total": 270,
+ "offset": 17
+}
