@@ -1,0 +1,34 @@
+2 FATOS (BR) — Como funciona a máquina de cortar cabelo (formato "câmara lenta + RPM")  (~24 s)
+Referência: vídeos enviados (engineeredwithin1, "How does a hair clipper work?") — refeito em arte própria 2D premium
+Texto no topo desde o frame 0: "COMO FUNCIONA A MÁQUINA" / "DE CORTAR CABELO?"
+HUD em todo o vídeo: etiqueta de velocidade ("VELOCIDADE REAL" / "256x MAIS DEVAGAR" / "2x MAIS RÁPIDO") + velocímetro + contador "RPM"
+
+VOZ DO GABRIEL
+[urgent] Essa máquina dá duzentos e quarenta cortes por segundo. Olha em câmera lenta!
+[curious] São duas lâminas. A de baixo fica parada… e a de cima desliza por cima dela.
+[amazed] Cada dentinho funciona como uma tesoura.
+[mischievously] Mas quem mexe a lâmina? Um motorzinho gira um pino torto, fora do centro.
+[serious] O pino empurra um garfo de um lado pro outro… e o garfo arrasta a lâmina.
+[amazed] Sete mil e duzentas voltas por minuto. Cada volta, dois cortes!
+[playful] E o pente de plástico? Só escolhe o tamanho do cabelo. Comenta: qual número você usa?
+
+CONTAS: 7200 RPM ÷ 60 = 120 voltas/s × 2 cortes (ida e volta) = 240 cortes/s.
+
+NOTAS
+- Frame 0: máquina a zumbir a cortar (VELOCIDADE REAL, 7200 RPM, cabelos a voar) → "câmara lenta" (256x MAIS DEVAGAR, RPM cai para 28).
+- Lâminas em grande: de baixo fixa, de cima a deslizar; cada vão = mini tesoura (fio de cabelo cortado).
+- Dentro: motor → pino excêntrico a rodar → garfo (yoke) a abanar → lâmina. Cadeia "BATERIA › MOTOR › PINO › GARFO › LÂMINA".
+- Acelera de volta: 2x, 4x… VELOCIDADE REAL, contador "240 CORTES/S".
+- Fim: pentes nº 1, 2, 3, 4 a saltar (comenta o teu número), corte seco.
+
+LEGENDA
+Essa máquina dá 240 cortes POR SEGUNDO 🤯💈
+Olha em câmera lenta como ela funciona por dentro ⚙️
+Comenta: qual número de pente você usa? 👇
+#curiosidades #comofunciona #barbearia #engenharia #2fatos
+
+TÍTULO YOUTUBE
+Como funciona a máquina de cortar cabelo? 💈 #shorts
+
+COMENTÁRIO PARA FIXAR
+Qual número de pente você usa? 1️⃣ 2️⃣ 3️⃣ 4️⃣ 👇
