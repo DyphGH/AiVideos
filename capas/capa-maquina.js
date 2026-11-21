@@ -1,0 +1,13 @@
+const {chromium}=require('playwright');const fs=require('fs');
+const art=fs.readFileSync('/home/claude/oficina-remotion/src/art.js','utf8').replace(/export \{[^}]*\};?/,'');
+const font='data:font/woff2;base64,'+fs.readFileSync('/home/claude/oficina-remotion/public/fonts/mont900.woff2').toString('base64');
+const capa=`(()=>{const S=FP.mq_scene(0.5); let o=S.b+'<g transform="translate(0 60)">'+S.s+'</g>';
+ o+='<rect x="0" y="120" width="1080" height="330" fill="#1b2340" opacity=".88"/>';
+ o+=fTxt(540,260,'COMO FUNCIONA A',90,'#fff')+fTxt(540,380,'MÁQUINA DE CABELO?',82,FY,'middle',16);
+ o+=fStamp(9,0,540,1620,'240 CORTES POR SEGUNDO','#e0483a',48,-4);
+ o+=fPill('2 FATOS',9,1800);
+ return o;})()`;
+(async()=>{const b=await chromium.launch();const p=await b.newPage({viewport:{width:1080,height:1920}});
+await p.setContent(`<style>@font-face{font-family:M;src:url(${font});font-weight:900}body{margin:0}</style><svg id=s width=1080 height=1920 viewBox="0 0 1080 1920"></svg><script>window.window=window;${art}; document.getElementById('s').innerHTML=${capa};</script>`);
+await p.evaluate(()=>document.fonts.ready); await p.waitForTimeout(400);
+await p.screenshot({path:`${process.argv[2]}/capa-maquina.png`}); await b.close();})();
