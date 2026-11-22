@@ -1,0 +1,55 @@
+{
+ "fps": 30,
+ "attempts": [
+  {
+   "level": 1,
+   "speed": 0.4,
+   "start": 0,
+   "release": 17,
+   "impact": 44,
+   "hold": 22,
+   "rw": 8,
+   "obj": "fries",
+   "word": "CRISPY",
+   "end": 74
+  },
+  {
+   "level": 2,
+   "speed": 0.6,
+   "start": 74,
+   "release": 90,
+   "impact": 108,
+   "hold": 22,
+   "rw": 8,
+   "obj": "sushi",
+   "word": "WASABI",
+   "end": 138
+  },
+  {
+   "level": 3,
+   "speed": 0.8,
+   "start": 138,
+   "release": 155,
+   "impact": 168,
+   "hold": 22,
+   "rw": 8,
+   "obj": "cereal",
+   "word": "MILK",
+   "end": 198
+  },
+  {
+   "level": 4,
+   "speed": 1.0,
+   "start": 198,
+   "release": 219,
+   "impact": 230,
+   "hold": 32,
+   "rw": 8,
+   "obj": "banana",
+   "word": "SWEDEN",
+   "end": 270
+  }
+ ],
+ "total": 270,
+ "offset": 15
+}

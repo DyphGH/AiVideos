@@ -1,0 +1,55 @@
+{
+ "fps": 30,
+ "attempts": [
+  {
+   "level": 1,
+   "speed": 0.4,
+   "start": 0,
+   "release": 20,
+   "impact": 47,
+   "hold": 22,
+   "rw": 8,
+   "obj": "castle",
+   "word": "KING",
+   "end": 77
+  },
+  {
+   "level": 2,
+   "speed": 0.6,
+   "start": 77,
+   "release": 97,
+   "impact": 115,
+   "hold": 22,
+   "rw": 8,
+   "obj": "ship",
+   "word": "AHOY",
+   "end": 145
+  },
+  {
+   "level": 3,
+   "speed": 0.8,
+   "start": 145,
+   "release": 164,
+   "impact": 177,
+   "hold": 22,
+   "rw": 8,
+   "obj": "robot",
+   "word": "BEEP",
+   "end": 207
+  },
+  {
+   "level": 4,
+   "speed": 1.0,
+   "start": 207,
+   "release": 228,
+   "impact": 239,
+   "hold": 23,
+   "rw": 8,
+   "obj": "heli",
+   "word": "CHOPPER",
+   "end": 270
+  }
+ ],
+ "total": 270,
+ "offset": 18
+}
