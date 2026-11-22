@@ -17,7 +17,7 @@ canvas#out{position:absolute;inset:0;width:${W}px;height:${H}px;image-rendering:
 <script>
 const w=${w},h=${h}; const ease=x=>1-Math.pow(1-Math.max(0,Math.min(1,x)),3), clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
 const out=document.getElementById('out'), ctx=out.getContext('2d',{willReadFrequently:true}); ctx.imageSmoothingEnabled=false;
-const R=new THREE.WebGLRenderer({antialias:false,alpha:true,preserveDrawingBuffer:true}); R.setSize(w,h,false); R.setPixelRatio(1);
+const R=new THREE.WebGLRenderer({antialias:false,alpha:true,preserveDrawingBuffer:true}); R.setSize(w/2,h/2,false); R.setPixelRatio(1);
 const S=new THREE.Scene(), cam=new THREE.PerspectiveCamera(30,w/h,.05,100);
 S.add(new THREE.HemisphereLight(0xffe6d0,0x2a1a5a,1.0)); const key=new THREE.DirectionalLight(0xfff2dd,2.6); key.position.set(5,7,6); S.add(key);
 const rim=new THREE.DirectionalLight(0x6fd8ff,2.0); rim.position.set(-6,3,-5); S.add(rim); const fill=new THREE.PointLight(0xff7ab8,6,20); fill.position.set(-3,-2,4); S.add(fill);
@@ -126,6 +126,11 @@ function gauge(t,v){ const cx=60, cy=232; box(18,196,92,64,'#fffaf0'); ctx.fillS
   [4,16,32,64,128].forEach((n,i)=>{ const a=Math.PI+i/4*Math.PI; txt(String(n),cx+Math.cos(a)*17,cy+Math.sin(a)*17+3,6,i>3?'#e0483a':'#0a0a1a','center'); });
   const a=Math.PI+clamp(Math.log2(v/4)/5,0,1)*Math.PI; ctx.strokeStyle='#e0483a'; ctx.lineWidth=2; ctx.beginPath(); ctx.moveTo(cx,cy); ctx.lineTo(cx+Math.cos(a)*20,cy+Math.sin(a)*20); ctx.stroke();
   box(26,240,76,14,'#2e86d0'); txt(v+' POR SEGUNDO',64,251,8,'#fff','center'); }
+function bgP(t){ const g=ctx.createLinearGradient(0,0,0,h); g.addColorStop(0,'#2b2160'); g.addColorStop(.55,'#3d2f7a'); g.addColorStop(1,'#231a4d'); ctx.fillStyle=g; ctx.fillRect(0,0,w,h);
+  ctx.fillStyle='rgba(255,255,255,.045)'; const o=(t*10)%24; for(let i=-h;i<w+h;i+=24){ ctx.beginPath(); ctx.moveTo(i+o,0); ctx.lineTo(i+o+12,0); ctx.lineTo(i+o+12-h*.7,h); ctx.lineTo(i+o-h*.7,h); ctx.fill(); }
+  ctx.fillStyle='#ffd27a'; for(let i=0;i<26;i++){ ctx.globalAlpha=.25+.25*Math.sin(t*2+i); ctx.fillRect((i*53)%w,(i*97+((t*5)|0))%h,1,1); } ctx.globalAlpha=1; }
+const toothMats=[]; teeth.children.forEach((m,i)=>{ if(i>0&&m.material){ m.material=m.material.clone(); toothMats.push(m.material);} });
+const cDirty=new THREE.Color(0x8a5a2a), cClean=new THREE.Color(0xfffaf0);
 window.F_=function(t){
   const sl=sp(t), ph=t*128*Math.PI/sl; // 128 idas/voltas por segundo reais
   const osc=Math.sin(ph); headSpin.rotation.z=osc*.55; shaft.rotation.y=osc*.55; lever.rotation.y=osc*.55;
@@ -143,10 +148,11 @@ window.F_=function(t){
   else if(t<E.pop){ a=-.3+(t-E.real)*.2; rad=8; cy=4.6; ly=3.2; }
   else { const u=t-E.pop; headG.position.y=3.85+u*2.2-u*u*1.2; headG.rotation.set(u*4,u*6,0); a=.2; rad=9; cy=4.5; ly=3.6; }
   setShell(1-.88*cut); inside.visible=cut>.03; pcb.visible=t>=E.c3;
+  toothMats.forEach((m,i)=>{ const c=clamp((t-E.rampa-.4-i*.55)/.5,0,1); m.color.copy(cDirty).lerp(cClean,c); });
   a+=whip*.35*Math.sin(since*60); rad*=1+whip*.12;
   cam.position.set(Math.sin(a)*rad,cy,Math.cos(a)*rad); cam.lookAt(lx,ly,0);
   bubbles.forEach((b,i)=>{ const p=((t*(sl<1.5?1.2:.05)+i/30)%1); b.position.set(Math.cos(i*2.1)*(.4+p*1.6),3.85+Math.sin(i*1.3)*.5+p*1.2,.5+p*.8); b.visible=(t<E.slow||t>=E.rampa)&&p<.9; b.material.opacity=.8*(1-p); });
-  blueprint(t); R.render(S,cam); ctx.drawImage(R.domElement,0,0); dither(); hud2(t,sl);
+  bgP(t); R.render(S,cam); ctx.drawImage(R.domElement,0,0,w,h); dither(); hud2(t,sl);
   if(t<E.slow) card(t,.05,0,'ESCOVA ELÉTRICA','128 MOVIMENTOS POR SEGUNDO');
   else if(t<E.c1){ if(t<E.vai) card(t,E.slow+.4,0,'ELA NÃO GIRA...',''); else card(t,E.vai,0,'VAI E VOLTA!','±30° CADA VEZ'); label(headSpin,'CABEÇA',62,-30); }
   else if(t<E.c2){ card(t,E.c1,1,'O QUE FAZ BALANÇAR?',''); if(cut>.6){ label(shaft,'EIXO',-60,-60); label(lever,'ALAVANCA',-62,6); if(t>=7.4) label(wpin,'PINO',58,-26); if(t>=8.6) label(wheel,'RODA DENTADA',56,20); if(t>=9.6) label(pinion,'ENGRENAGEM DO MOTOR',-20,52); } }
