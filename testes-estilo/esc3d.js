@@ -81,6 +81,23 @@ const base=add(new THREE.CylinderGeometry(1.0,1.15,.5,32),M({color:0xdfe5ee}),ro
 const teeth=new THREE.Group(); teeth.position.set(0,3.85,.95); root.add(teeth); teeth.visible=false;
 add(new THREE.BoxGeometry(3.2,.5,.6),M({color:0xff8fa0}),teeth,{y:-.75});
 for(let i=0;i<6;i++) add(new THREE.BoxGeometry(.42,.9,.42),M({color:0xfffaf0}),teeth,{x:-1.25+i*.5,y:-.15,ol:1.06});
+
+// ---- pessoa (de frente) a escovar + caneca de café
+const PX0=50, P=new THREE.Group(); P.position.set(PX0,0,0); S.add(P);
+const skinP=M({color:0xe2b48c});
+add(new THREE.SphereGeometry(1.3,32,24),skinP,P,{sc:[1,1.1,1]});
+add(new THREE.SphereGeometry(1.36,32,24,0,Math.PI*2,0,Math.PI*.42),M({color:0x4a2a12}),P,{sc:[1,1.1,1],ol:1.02});
+for(const sx of [-1,1]){ add(new THREE.SphereGeometry(.2,12,10),M({color:0xffffff}),P,{x:sx*.45,y:.35,z:1.12,ol:1.08}); add(new THREE.SphereGeometry(.1,10,8),M({color:0x2a1a10}),P,{x:sx*.45,y:.35,z:1.3,ol:0}); add(new THREE.SphereGeometry(.28,10,8),skinP,P,{x:sx*1.3,y:.05,sc:[.4,1,.7]}); add(new THREE.BoxGeometry(.4,.07,.05),M({color:0x3a2010}),P,{x:sx*.45,y:.65,z:1.2,rz:sx*.15,ol:0}); }
+add(new THREE.SphereGeometry(.16,10,8),skinP,P,{y:.02,z:1.4});
+add(new THREE.SphereGeometry(.42,20,14),M({color:0x5a1424}),P,{y:-.5,z:1.02,sc:[1.3,.7,.5],ol:1.04});
+const tMatsP=[]; for(let i=0;i<6;i++){ const m=M({color:0xfffaf0}); tMatsP.push(m); add(new THREE.BoxGeometry(.13,.14,.08),m,P,{x:-.34+i*.135,y:-.36,z:1.22,ol:1.1}); }
+for(let i=0;i<6;i++){ add(new THREE.BoxGeometry(.13,.12,.08),tMatsP[i],P,{x:-.34+i*.135,y:-.66,z:1.18,ol:1.1}); }
+add(new THREE.TorusGeometry(.42,.06,8,24),M({color:0xd9626e}),P,{y:-.5,z:1.08,sc:[1.3,.75,1],ol:0});
+add(new THREE.ConeGeometry(1.8,1.6,24,1,true),M({color:0x2e6fd0,side:THREE.DoubleSide}),P,{y:-2.1});
+const brush2=root.clone(true); brush2.scale.setScalar(.32); brush2.rotation.set(0,0,Math.PI/2); P.add(brush2);
+const hand=add(new THREE.CapsuleGeometry(.22,.5,6,12),skinP,P,{rz:Math.PI/2});
+const mug=new THREE.Group(); P.add(mug); add(new THREE.CylinderGeometry(.32,.28,.7,20),M({color:0xffffff}),mug,{}); add(new THREE.TorusGeometry(.18,.05,6,16),M({color:0xffffff}),mug,{x:.36,ry:0}); add(new THREE.CylinderGeometry(.29,.29,.05,20),M({color:0x5a3214}),mug,{y:.3,ol:0});
+const cWhite=new THREE.Color(0xfffaf0), cYel=new THREE.Color(0xd9b84a);
 const hairs=[], strand={visible:false,position:new THREE.Vector3(),rotation:new THREE.Euler()};
 const bubbles=[]; for(let i=0;i<30;i++) bubbles.push(add(new THREE.SphereGeometry(.06+.03*(i%3),8,6),M({color:0xffffff,transparent:true,opacity:.8}),root,{ol:0}));
 
@@ -116,8 +133,8 @@ function label(obj,s,dx,dy){ const v=new THREE.Vector3(); obj.getWorldPosition(v
   ctx.fillStyle='#ffd21f'; const ex=x+dx, ey=y+dy; for(let i=0;i<=20;i++){ ctx.fillRect(x+(ex-x)*i/20|0,y+(ey-y)*i/20|0,1,1); } ctx.fillRect(x-1,y-1,3,3);
   ctx.font='900 10px M'; const tw=ctx.measureText(s).width; const bx=dx>0?ex:ex-tw-8; box(bx,ey-7,tw+8,14,'#ffd21f'); txt(s,bx+4,ey+4,10,'#0a0a1a'); }
 function setShell(o){ [bodyM,gripM,swM,ledM,bandM].forEach(m=>m.opacity=o); shell.traverse(m=>{ if(m.material===OUT) m.visible=o>.6; }); }
-const E={slow:2.6, vai:4.4, c1:6.2, c2:11.2, c3:15.6, tudo:20.0, rampa:22.6, real:27.0, pop:29.4, end:31.0};
-function sp(t){ if(t<E.slow) return 1; if(t<E.slow+.7) return 1+63*ease((t-E.slow)/.7); if(t<E.rampa) return 64; if(t<E.real){ const st=[32,8,2,1]; const k=Math.min(3,Math.floor((t-E.rampa)/1.1)); return st[k]; } return 1; }
+const E={slow:2.6, vai:4.4, c1:6.2, c2:11.2, c3:15.6, tudo:20.0, cafe:22.6, rampa:24.4, real:28.8, pop:31.2, end:32.8};
+function sp(t){ if(t<E.slow) return 1; if(t<E.slow+.7) return 1+63*ease((t-E.slow)/.7); if(t<E.tudo+2.6) return 64; if(t<E.cafe) return 64; if(t<E.rampa) return 1; if(t<E.real){ const st=[32,8,2,1]; const k=Math.min(3,Math.floor((t-E.rampa)/1.1)); return st[k]; } return 1; }
 function hud2(t,sl){ const real=sl<1.05, lab=real?'VELOCIDADE REAL':(sl>=64?'64x MAIS DEVAGAR':Math.round(sl)+'x MAIS DEVAGAR'); ctx.font='900 12px M'; const tw=ctx.measureText(lab).width;
   box(10,124,tw+12,18,real?'#e0483a':'#2e86d0'); for(let x=12;x<tw+20;x+=6){ctx.fillStyle='rgba(255,255,255,.12)';ctx.fillRect(x,126,3,14);} txt(lab,16,138,12,'#fff');
   const v=Math.round(7680/sl); box(232,124,118,18,'#0a0a1a','#ffd21f'); txt('MOV/MIN',237,137,9,'#ffd21f'); txt(String(v),345,138,12,'#fff','right');
@@ -136,21 +153,30 @@ window.F_=function(t){
   const osc=Math.sin(ph); headSpin.rotation.z=osc*.55; shaft.rotation.y=osc*.55; lever.rotation.y=osc*.55;
   const wa=ph; wheel.rotation.y=wa; pinion.rotation.y=-wa*2.6; arm.rotation.y=wa*2.6;
   root.position.x=sl<1.5?Math.sin(t*97)*.02:0;
-  const shots=[0,E.slow,E.vai,E.c1,8.6,E.c2,13.4,E.c3,17.8,E.tudo,E.rampa,E.real,E.pop]; let s0=0; shots.forEach(x=>{ if(t>=x) s0=x; }); const since=t-s0, whip=Math.max(0,1-since/.18);
+  const shots=[0,E.slow*.75,E.vai,E.c1,8.6,E.c2,13.4,E.c3,17.8,E.tudo,E.cafe,E.rampa,E.real,E.pop]; let s0=0; shots.forEach(x=>{ if(t>=x) s0=x; }); const since=t-s0, whip=Math.max(0,1-since/.18);
   let cut=0,a=0,rad=12,cy=2,ly=1,lx=0; teeth.visible=false; headG.position.set(0,3.85,.12); headG.rotation.set(0,0,0); baseGlow.visible=false;
+  const personShot=(t<E.slow*.75)||(t>=E.cafe&&t<E.pop);
+  P.visible=personShot; root.visible=!personShot; mug.visible=t>=E.cafe&&t<E.rampa+.3;
+  if(personShot){ // pessoa
+    let bx=.2*Math.sin(t*(t<E.slow?5:3)), by=0, vib=(sl<1.5?Math.sin(t*97)*.02:0);
+    if(t>=E.cafe&&t<E.rampa){ bx=3; } // escova fora durante o café
+    if(t>=E.rampa&&t<E.real){ const u=(t-E.rampa)/(E.real-E.rampa); bx=-.45+(.9*((u*3)%1>.5?2-(u*3%1)*2:(u*3%1)*2)); }
+    const mx=bx, my=-.5+by+vib; brush2.position.set(mx+1.34,my,1.25); hand.position.set(mx+2.0,my-.05,1.3);
+    if(t>=E.cafe&&t<E.rampa){ const u=clamp((t-E.cafe)/1.2,0,1), back=clamp((t-E.cafe-1.3)/.4,0,1); mug.position.set(1.2-u*.5+back*.6,-1.1+u*.55-back*.5,1.6); mug.rotation.z=u*1.1-back*1.1; }
+    const yel=clamp((t-E.cafe-.9)/.6,0,1); tMatsP.forEach((m,i)=>{ const clean=t>=E.rampa?clamp((t-E.rampa-.5-i*.55)/.5,0,1):0; m.color.copy(cWhite).lerp(cYel,yel*(1-clean)); if(t<E.cafe) m.color.copy(cWhite); });
+    a=.15*Math.sin(t*.7); cam.position.set(PX0+Math.sin(a)*7.6,.2,Math.cos(a)*7.6); cam.lookAt(PX0,.05,0); rad=-1;
+  } else
   if(t<E.slow){ a=-.5+t*.15; rad=27; cy=4.5; ly=1.3; }
   else if(t<E.c1){ const u=ease((t-E.slow)/.6); a=-.2+(t-E.slow)*.06; rad=27-u*22.5; cy=4.5-u*.1; ly=1.3+u*2.2; }
   else if(t<E.c2){ cut=ease((t-E.c1)/.5); a=t<8.6?.6+(t-E.c1)*.08:-.7+(t-8.6)*.08; rad=t<8.6?5.2:3.6; cy=t<8.6?.6:.4; ly=t<8.6?-.4:-.7; lx=.5; }
   else if(t<E.c3){ cut=1; a=t<13.4?1.45+(t-E.c2)*.08:-1.5+(t-13.4)*.08; rad=t<13.4?4.6:3.6; cy=-1.2; ly=-1.9; lx=.35; }
   else if(t<E.tudo){ cut=1; baseGlow.visible=t>=17.8; a=t<17.8?.8+(t-E.c3)*.06:-.6+(t-17.8)*.08; rad=t<17.8?5.6:5.0; cy=t<17.8?-.6:-3.2; ly=t<17.8?-1.6:-3.9; }
-  else if(t<E.rampa){ cut=1; a=-.4+(t-E.tudo)*.3; rad=17; cy=1.5; ly=-.6; }
-  else if(t<E.real){ cut=ease(1-(t-E.rampa)/.6); teeth.visible=true; a=1.2; rad=7.5; cy=5.2; ly=3.4; }
-  else if(t<E.pop){ a=-.3+(t-E.real)*.2; rad=8; cy=4.6; ly=3.2; }
+  else if(t<E.cafe){ cut=1; a=-.4+(t-E.tudo)*.3; rad=17; cy=1.5; ly=-.6; }
   else { const u=t-E.pop; headG.position.y=3.85+u*2.2-u*u*1.2; headG.rotation.set(u*4,u*6,0); a=.2; rad=9; cy=4.5; ly=3.6; }
   setShell(1-.88*cut); inside.visible=cut>.03; pcb.visible=t>=E.c3;
   toothMats.forEach((m,i)=>{ const c=clamp((t-E.rampa-.4-i*.55)/.5,0,1); m.color.copy(cDirty).lerp(cClean,c); });
-  a+=whip*.35*Math.sin(since*60); rad*=1+whip*.12;
-  cam.position.set(Math.sin(a)*rad,cy,Math.cos(a)*rad); cam.lookAt(lx,ly,0);
+  if(rad>0){ a+=whip*.35*Math.sin(since*60); rad*=1+whip*.12; }
+  if(rad>0){ cam.position.set(Math.sin(a)*rad,cy,Math.cos(a)*rad); cam.lookAt(lx,ly,0); }
   bubbles.forEach((b,i)=>{ const p=((t*(sl<1.5?1.2:.05)+i/30)%1); b.position.set(Math.cos(i*2.1)*(.4+p*1.6),3.85+Math.sin(i*1.3)*.5+p*1.2,.5+p*.8); b.visible=(t<E.slow||t>=E.rampa)&&p<.9; b.material.opacity=.8*(1-p); });
   bgP(t); R.render(S,cam); ctx.drawImage(R.domElement,0,0,w,h); dither(); hud2(t,sl);
   if(t<E.slow) card(t,.05,0,'ESCOVA ELÉTRICA','128 MOVIMENTOS POR SEGUNDO');
@@ -158,8 +184,9 @@ window.F_=function(t){
   else if(t<E.c2){ card(t,E.c1,1,'O QUE FAZ BALANÇAR?',''); if(cut>.6){ label(shaft,'EIXO',-60,-60); label(lever,'ALAVANCA',-62,6); if(t>=7.4) label(wpin,'PINO',58,-26); if(t>=8.6) label(wheel,'RODA DENTADA',56,20); if(t>=9.6) label(pinion,'ENGRENAGEM DO MOTOR',-20,52); } }
   else if(t<E.c3){ card(t,E.c2,2,'DENTRO DO MOTOR',''); label(motor.children[1],'ÍMÃS',-62,0); label(arm,'BOBINAS',58,-14); if(t>=13.4) label(ring,'ANEL',58,-36); }
   else if(t<E.tudo){ card(t,E.c3,3,'QUEM DÁ ENERGIA?',''); label(sw,'BOTÃO',60,-20); label(batt,'PILHA 1,2V',58,10); if(t>=17.8){ label(coilG,'BOBINA DE CARGA',40,-40); label(base,'BASE (SEM FIO!)',-40,46); } }
-  else if(t<E.rampa){ card(t,E.tudo,0,'TUDO JUNTO',''); label(arm,'MOTOR',58,0); label(wheel,'ENGRENAGENS',58,-24); label(batt,'PILHA',-56,0); label(headSpin,'CABEÇA',-56,-20); }
-  else if(t<E.real){ gauge(t,Math.round(128/sl)); }
+  else if(t<E.cafe){ card(t,E.tudo,0,'TUDO JUNTO',''); label(arm,'MOTOR',58,0); label(wheel,'ENGRENAGENS',58,-24); label(batt,'PILHA',-56,0); label(headSpin,'CABEÇA',-56,-20); }
+  else if(t<E.rampa){ card(t,E.cafe,0,'E DEPOIS DO CAFÉ?',''); if(t>E.cafe+1.1) card(t,E.cafe+1.1,0,'DENTES AMARELOS!',''); }
+  else if(t<E.real){ gauge(t,Math.round(128/sl)); card(t,E.rampa,0,'BRANQUINHOS DE NOVO',''); }
   else if(t<E.pop) card(t,E.real,0,'ESCOVA ELÉTRICA','128 MOVIMENTOS POR SEGUNDO');
   else { const k=ease((t-E.pop)/.15); ctx.save(); ctx.translate(250,190); ctx.rotate(-.2); ctx.scale(k,k); txt('POP!',0,0,30,'#0a0a1a','center'); txt('POP!',-2,-2,30,'#ffd21f','center'); ctx.restore(); }
   if(whip>0){ ctx.fillStyle='rgba(255,255,255,'+(whip*.35)+')'; ctx.fillRect(0,0,w,h); }
