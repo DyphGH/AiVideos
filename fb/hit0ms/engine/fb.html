@@ -1,0 +1,42 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Anton;src:url(anton-latin-400-normal.woff2)}@font-face{font-family:Inter;font-weight:800;src:url(inter-latin-800-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block}</style></head><body><canvas id="cv" width="1080" height="1350"></canvas>
+<script>
+const cv=document.getElementById('cv'),c=cv.getContext('2d');
+const P=JSON.parse(decodeURIComponent(location.hash.slice(1)));
+function lin(x0,y0,x1,y1,st){const g=c.createLinearGradient(x0,y0,x1,y1);st.forEach(([o,k])=>g.addColorStop(o,k));return g;}
+function rad(x,y,r0,r1,st){const g=c.createRadialGradient(x,y,r0,x,y,r1);st.forEach(([o,k])=>g.addColorStop(o,k));return g;}
+function fs(f,lw,s='#14202e'){c.fillStyle=f;c.fill();if(lw){c.lineWidth=lw;c.strokeStyle=s;c.stroke();}}
+// ---------- icons (drawn at origin, unit ~ 40px radius) ----------
+const I={
+ pizza(odd){c.beginPath();c.moveTo(-34,-30);c.quadraticCurveTo(0,-42,34,-30);c.lineTo(0,40);c.closePath();fs(lin(0,-30,0,40,[[0,'#ffe27a'],[1,'#f2a51a']]),3,'#7a4a00');
+   c.beginPath();c.moveTo(-37,-32);c.quadraticCurveTo(0,-46,37,-32);c.quadraticCurveTo(0,-38,-37,-32);c.lineWidth=7;c.strokeStyle='#c98a42';c.stroke();
+   for(const [x,y] of [[-12,-18],[12,-16],[0,6]]){c.beginPath();if(odd&&x===12){c.rect(x-6,y-6,12,12);fs('#ffd43b',2,'#9a7400');}else{c.arc(x,y,6.5,0,7);fs('#d6281f',2,'#6a0a0a');}}},
+ watch(odd){c.beginPath();c.roundRect(-8,-44,16,10,3);fs('#9aa3b5',2);c.beginPath();c.arc(0,0,34,0,7);fs(rad(-8,-8,4,36,[[0,'#ffffff'],[1,'#d5dbe6']]),4,'#14202e');
+   for(let i=0;i<12;i++){const a=i/12*Math.PI*2;c.beginPath();c.moveTo(Math.cos(a)*26,Math.sin(a)*26);c.lineTo(Math.cos(a)*30,Math.sin(a)*30);c.lineWidth=2.5;c.strokeStyle='#14202e';c.stroke();}
+   const a=odd?Math.PI*0.25:-Math.PI*0.25;c.beginPath();c.moveTo(0,0);c.lineTo(Math.sin(a)*22,-Math.cos(a)*22);c.lineWidth=4;c.strokeStyle='#e5484d';c.lineCap='round';c.stroke();c.beginPath();c.arc(0,0,4,0,7);fs('#14202e');},
+ donut(odd){c.beginPath();c.arc(0,0,34,0,7);c.arc(0,0,11,0,7,true);fs(lin(0,-34,0,34,[[0,'#f7c98a'],[1,'#b8742e']]),3,'#5a3008');
+   c.beginPath();for(let i=0;i<=30;i++){const a=i/30*Math.PI*2,r=28+Math.sin(i*1.9)*3;c.lineTo(Math.cos(a)*r,Math.sin(a)*r);}c.closePath();c.arc(0,0,14,0,7,true);fs('#ff6fae',2,'#8a1f52');
+   const C=['#fff','#ffd43b','#4dabf7','#69db7c'];for(let i=0;i<10;i++){const a=i*0.63,r=20;c.save();c.translate(Math.cos(a)*r,Math.sin(a)*r);c.rotate(i);c.fillStyle=C[i%4];c.fillRect(-4,-1.5,8,3);c.restore();}
+   if(odd){c.save();c.fillStyle=P.panel;for(const [x,y,r] of [[28,-20,10],[34,-8,9],[22,-30,8]]){c.beginPath();c.arc(x,y,r,0,7);c.fill();}c.restore();}},
+ letter(odd){c.font=`${P.font}`;c.textAlign='center';c.textBaseline='middle';c.fillStyle=P.ink||'#fff';c.fillText(odd?P.odd:P.char,0,2);}
+};
+// ---------- layout ----------
+function bg(){c.fillStyle=lin(0,0,0,1350,[[0,P.bg1],[1,P.bg2]]);c.fillRect(0,0,1080,1350);c.save();c.globalAlpha=.06;c.fillStyle='#fff';for(let y=0;y<1350;y+=28)for(let x=(y/28%2)*14;x<1080;x+=28){c.beginPath();c.arc(x,y,2,0,7);c.fill();}c.restore();}
+(async()=>{await document.fonts.load('70px Anton');await document.fonts.load('800 38px Inter');
+bg();
+c.textAlign='center';c.textBaseline='middle';
+c.font='70px Anton';c.fillStyle='#fff';c.fillText(P.t1,540,92);
+c.font='800 38px Inter';c.fillStyle=P.acc;c.fillText(P.t2,540,156);
+// panel
+const px=60,py=200,pw=960,ph=930;c.beginPath();c.roundRect(px,py,pw,ph,36);fs(P.panel,5,'rgba(255,255,255,.25)');
+const cols=P.cols,rows=P.rows,cw=pw/cols,ch=ph/rows;
+for(let r=0;r<rows;r++)for(let q=0;q<cols;q++){const odd=(r===P.or&&q===P.oc);c.save();c.translate(px+cw*(q+.5),py+ch*(r+.5));c.rotate(P.jit?((r*7+q*13)%5-2)*0.06:0);c.scale(P.sc,P.sc);I[P.icon](odd);c.restore();
+  if(P.answer&&odd){c.save();c.beginPath();c.arc(px+cw*(q+.5),py+ch*(r+.5),Math.max(cw,ch)*.62,0,7);c.lineWidth=10;c.strokeStyle='#ff3b3b';c.shadowColor='#ff3b3b';c.shadowBlur=20;c.stroke();c.restore();}}
+// footer brand
+c.beginPath();c.roundRect(240,1170,600,140,26);c.lineWidth=5;c.strokeStyle='#3ccf73';c.shadowColor='#3ccf73';c.shadowBlur=24;c.stroke();c.shadowBlur=0;
+c.font='68px Anton';c.fillStyle='#d7ffe3';c.shadowColor='#3ccf73';c.shadowBlur=18;c.fillText('@hit0ms',540,1218);c.shadowBlur=0;
+c.font='800 25px Inter';c.fillStyle='#fff';c.fillText('FOLLOW FOR DAILY CHALLENGES',540,1278);
+if(P.answer){c.save();c.translate(905,1240);c.rotate(-.08);c.beginPath();c.roundRect(-110,-42,220,84,20);fs('#ff3b3b',5,'#fff');c.font='54px Anton';c.fillStyle='#fff';c.fillText('ANSWER',0,4);c.restore();}
+window.done=true;})();
+</script></body></html>
