@@ -1,0 +1,55 @@
+{
+ "fps": 30,
+ "attempts": [
+  {
+   "level": 1,
+   "speed": 0.4,
+   "start": 0,
+   "release": 20,
+   "impact": 47,
+   "hold": 14,
+   "rw": 8,
+   "obj": "ball",
+   "word": "SNOW",
+   "end": 69
+  },
+  {
+   "level": 2,
+   "speed": 0.6,
+   "start": 69,
+   "release": 90,
+   "impact": 108,
+   "hold": 14,
+   "rw": 8,
+   "obj": "star",
+   "word": "STAR",
+   "end": 130
+  },
+  {
+   "level": 3,
+   "speed": 0.8,
+   "start": 130,
+   "release": 146,
+   "impact": 159,
+   "hold": 14,
+   "rw": 8,
+   "obj": "cane",
+   "word": "CANDY",
+   "end": 181
+  },
+  {
+   "level": 4,
+   "speed": 1.0,
+   "start": 181,
+   "release": 203,
+   "impact": 214,
+   "hold": 18,
+   "rw": 8,
+   "obj": "santa",
+   "word": "HOHOHO",
+   "end": 240
+  }
+ ],
+ "total": 240,
+ "offset": 218
+}

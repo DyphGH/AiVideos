@@ -166,6 +166,24 @@ for a in TL['attempts']:
         for j,(dt,g) in enumerate([(0,1.0),(.28,.5),(.46,.25)]):
             w=tt(.3);f=200*(1+0.3*np.exp(-w*10))*(1+0.1*np.sin(2*np.pi*9*w));ph=2*np.pi*np.cumsum(f)/SR;add(np.sin(ph)*np.exp(-w*9),ri+dt,0.6*g);add(lp(noise(.08),800)*np.exp(-tt(.08)*40),ri+dt,0.6*g)
         for _ in range(12):ping(ri+rng.uniform(0,.4),rng.uniform(3000,6000),.05,0.05)
+    if k=='ornament2':
+        glass(ri,1.1,50,.7);slap(ri,0.35,220)
+        [ping(ri+rng.uniform(.05,.6),rng.uniform(3500,7500),.25,rng.uniform(.03,.07)) for _ in range(14)]
+    if k=='star':glass(ri,1.0,40,.6);[ping(ri+.02+j*.07,f,.5,.12) for j,f in enumerate((1568,2093,2637,3136))]
+    if k=='candy':
+        add(hp(noise(.03),2200)*np.exp(-tt(.03)*150),ri,1.0)
+        for _ in range(28):add(hp(noise(.025),2500)*np.exp(-tt(.025)*170),ri+abs(rng.normal(0,.08)),rng.uniform(.2,.5))
+        glass(ri+.01,0.5,20,.4)
+    if k=='ceramic2':ceramic(ri,1.2);slap(ri,0.6,160);[add(bp(noise(.04),1200,5000)*np.exp(-tt(.04)*100),ri+abs(rng.normal(0,.12)),rng.uniform(.15,.35)) for _ in range(10)]
+    if k in ('balloon','balloonXL'):
+        big=1.6 if k=='balloonXL' else 1.0
+        add(hp(noise(.02),1500)*np.exp(-tt(.02)*200),ri,1.3*big)                       # pop
+        w=tt(.08);add(np.sin(2*np.pi*(160-60*w/.08)*w)*np.exp(-w*40),ri,0.7*big)         # rubber snap body
+        dw=.9*big;w=tt(dw);sp=lp(noise(dw),2500)*np.exp(-w*(4.5/big));add(sp/np.max(np.abs(sp)+1e-9),ri+.01,0.9)   # water burst
+        smash(ri+.02,1.2*big,1.6,lo=300)
+        for t in np.sort(ri+0.05+np.abs(rng.normal(0,.35*big,int(60*big)))):          # droplets raining down
+            dd=.03;w=tt(dd);f=np.linspace(rng.uniform(600,1000),rng.uniform(1400,2400),len(w));add(np.sin(2*np.pi*np.cumsum(f)/SR)*np.exp(-w*90),t,rng.uniform(.05,.14))
+        patter(ri+.15,int(70*big),.6*big,.14)
     r0=(a['impact']+a['hold'])/fps;dd=a['rw']/fps;w=tt(dd)
     fr=2400-1800*w/dd;ph=2*np.cumsum(np.pi*fr)/SR;ch=np.sign(np.sin(ph))*0.5*(np.sin(2*np.pi*14*w)>0)
     add(lp(ch,3500)*np.minimum(1,w/dd*2.5)*np.minimum(1,(dd-w)*30),r0,0.035)

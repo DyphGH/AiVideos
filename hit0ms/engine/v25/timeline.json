@@ -1,0 +1,55 @@
+{
+ "fps": 30,
+ "attempts": [
+  {
+   "level": 1,
+   "speed": 0.4,
+   "start": 0,
+   "release": 18,
+   "impact": 45,
+   "hold": 14,
+   "rw": 8,
+   "obj": "red",
+   "word": "POP",
+   "end": 67
+  },
+  {
+   "level": 2,
+   "speed": 0.6,
+   "start": 67,
+   "release": 89,
+   "impact": 107,
+   "hold": 14,
+   "rw": 8,
+   "obj": "blue",
+   "word": "SPLASH",
+   "end": 129
+  },
+  {
+   "level": 3,
+   "speed": 0.8,
+   "start": 129,
+   "release": 150,
+   "impact": 163,
+   "hold": 14,
+   "rw": 8,
+   "obj": "green",
+   "word": "SOAK",
+   "end": 185
+  },
+  {
+   "level": 4,
+   "speed": 1.0,
+   "start": 185,
+   "release": 202,
+   "impact": 213,
+   "hold": 19,
+   "rw": 8,
+   "obj": "xl",
+   "word": "TSUNAMI",
+   "end": 240
+  }
+ ],
+ "total": 240,
+ "offset": 217
+}
