@@ -1,0 +1,272 @@
+<title>Estúdio dos Bonecos</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&family=Inter:wght@400;600;800&display=swap">
+<style>
+:root{
+  --bg:#f3f0fb; --panel:#ffffff; --ink:#1d1838; --muted:#6b6590; --line:#e2dcf3;
+  --accent:#6c4cf0; --ig:#e1306c; --yt:#e62117; --fb:#1877f2;
+  --ok:#1f9d55; --warn:#d98a00; --bad:#d64545; --chip:#efeafd;
+  --pix:'Silkscreen',ui-monospace,monospace; --body:'Inter',system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#15122a;--panel:#1f1b3a;--ink:#f1eeff;--muted:#a49ccc;--line:#2f2a52;--accent:#9b85ff;--chip:#2a2550;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#15122a;--panel:#1f1b3a;--ink:#f1eeff;--muted:#a49ccc;--line:#2f2a52;--accent:#9b85ff;--chip:#2a2550;color-scheme:dark}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.5}
+.wrap{max-width:1100px;margin:0 auto;padding-block:20px 48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:grid;gap:18px}
+header{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px}
+h1{font-family:var(--pix);font-weight:700;font-size:clamp(22px,4vw,34px);margin:0;letter-spacing:1px}
+.hdr-r{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.upd{font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+.live{display:inline-flex;align-items:center;gap:6px;font-family:var(--pix);font-size:12px;color:var(--ok)}
+.live i{width:8px;height:8px;border-radius:50%;background:var(--ok);animation:pulse 1.6s infinite}
+@keyframes pulse{50%{opacity:.25}}
+button{font:inherit;font-weight:700;font-size:13px;padding:7px 14px;border-radius:10px;border:2px solid var(--ink);background:var(--panel);color:var(--ink);cursor:pointer}
+button:hover{background:var(--chip)}
+button:disabled{opacity:.5;cursor:default}
+.world{border-radius:14px;overflow:hidden;border:3px solid var(--ink);background:#7ec8ff}
+#cv{display:block;width:100%;height:auto;image-rendering:pixelated}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:16px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px;min-width:0;display:grid;gap:10px;align-content:start}
+.card.wide{grid-column:1/-1}
+.who{display:flex;align-items:center;gap:10px}
+.who canvas{width:40px;height:40px;image-rendering:pixelated;flex:none}
+.who h2{font-family:var(--pix);font-size:15px;margin:0;letter-spacing:.5px}
+.who p{margin:0;font-size:12px;color:var(--muted)}
+.day{font-family:var(--pix);font-size:12px;color:var(--muted);margin-top:4px}
+.post{display:grid;grid-template-columns:52px 1fr;gap:10px;align-items:start;padding:8px 0;border-top:1px dashed var(--line)}
+.time{font-family:var(--pix);font-size:14px;font-variant-numeric:tabular-nums}
+.post .t{font-weight:600;overflow-wrap:anywhere}
+.chips{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px}
+.chip{font-size:11px;font-weight:700;padding:2px 7px;border-radius:99px;background:var(--chip);color:var(--ink);letter-spacing:.3px;white-space:nowrap}
+.chip.ig{background:var(--ig);color:#fff}.chip.tt{background:#111;color:#fff}.chip.yt{background:var(--yt);color:#fff}.chip.fb{background:var(--fb);color:#fff}
+.chip.trial{background:transparent;border:1.5px solid var(--accent);color:var(--accent)}
+.chip.done{background:var(--ok);color:#fff}.chip.next{background:var(--warn);color:#fff}.chip.err{background:var(--bad);color:#fff}
+.chip.pend{opacity:.55}
+.acct{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.6px;color:var(--muted)}
+table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;font-size:14px}
+caption{text-align:left;padding-bottom:4px}
+th,td{text-align:left;padding:5px 4px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:11px;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);font-weight:700}
+td.n,th.n{text-align:right;white-space:nowrap}
+td.cap{overflow-wrap:anywhere}
+.tbl{overflow-x:auto}
+.scroll{max-height:460px;overflow:auto}
+.tabs{display:flex;gap:6px;flex-wrap:wrap}
+.tabs button[aria-pressed="true"]{background:var(--ink);color:var(--panel)}
+ol{margin:0;padding-left:26px;display:grid;gap:4px}
+ol li::marker{font-family:var(--pix);color:var(--accent)}
+.note{font-size:13px;color:var(--muted);margin:0}
+.warnbox{font-size:13px;color:var(--bad);margin:0}
+.empty{padding:14px;border:2px dashed var(--line);border-radius:12px;color:var(--muted);font-size:14px}
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>Estúdio dos Bonecos</h1>
+    <div class="hdr-r">
+      <span class="live" id="live" hidden><i></i>AO VIVO</span>
+      <span class="upd" id="upd">A acordar os bonecos…</span>
+      <button id="refresh" type="button">Atualizar agora</button>
+    </div>
+  </header>
+
+  <div class="world"><canvas id="cv" width="384" height="200" aria-label="Mini mundo animado: o carteiro leva o próximo post ao prédio da rede"></canvas></div>
+
+  <div class="grid">
+    <section class="card" aria-labelledby="h-car">
+      <div class="who"><canvas id="av-car" width="16" height="16"></canvas><div><h2 id="h-car">O Carteiro</h2><p>Posts agendados hoje e amanhã (Metricool, ao vivo)</p></div></div>
+      <div id="posts"><div class="empty">A perguntar ao Metricool…</div></div>
+    </section>
+    <section class="card" aria-labelledby="h-ana">
+      <div class="who"><canvas id="av-ana" width="16" height="16"></canvas><div><h2 id="h-ana">O Analista</h2><p>Últimos 7 dias por rede (Windsor, ao vivo)</p></div></div>
+      <div id="nums"><div class="empty">A perguntar ao Windsor…</div></div>
+    </section>
+    <section class="card wide" aria-labelledby="h-vid">
+      <div class="who"><canvas id="av-rea" width="16" height="16"></canvas><div><h2 id="h-vid">O Realizador</h2><p>Cada vídeo dos últimos 7 dias, com views em cada rede</p></div></div>
+      <div class="tabs" id="tabs" role="group" aria-label="Conta"><button type="button" data-acct="all" aria-pressed="true">Todas</button><button type="button" data-acct="2factos" aria-pressed="false">2 Factos</button><button type="button" data-acct="hit0ms" aria-pressed="false">Hit0Ms</button></div>
+      <div id="vids" class="tbl scroll"><div class="empty">A juntar os vídeos…</div></div>
+    </section>
+    <section class="card" aria-labelledby="h-ide">
+      <div class="who"><canvas id="av-ide" width="16" height="16"></canvas><div><h2 id="h-ide">O das Ideias</h2><p>Do relatório das 8:53, escolhe por número na conversa</p></div></div>
+      <div id="ideas"><div class="empty">As ideias de hoje chegam com o relatório da manhã.</div></div>
+    </section>
+    <section class="card" aria-labelledby="h-des">
+      <div class="who"><canvas id="av-des" width="16" height="16"></canvas><div><h2 id="h-des">O dos Desafios</h2><p>Desafios em imagem do Facebook</p></div></div>
+      <div id="chal"><div class="empty">Sem desafios em imagem registados ainda.</div></div>
+    </section>
+  </div>
+</div>
+
+<script>
+const MC='Metricool Social Media Management', WS='Windsor.ai';
+const BRANDS=[{id:'8058431',acct:'2factos'},{id:'8123515',acct:'hit0ms'}];
+const NET={IG:['ig','Instagram'],TT:['tt','TikTok'],YT:['yt','YouTube'],FB:['fb','Facebook']};
+const MCNET={instagram:'IG',tiktok:'TT',youtube:'YT',facebook:'FB'};
+const LABEL={'2factos':'2 Factos','hit0ms':'Hit0Ms'};
+const DENY=['needs_reauth','server_not_connected','blocked_by_policy','approval_required','not_in_manifest','consent_required'];
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmt=n=>n==null||isNaN(n)?'—':Number(n).toLocaleString('pt-PT');
+const acctOf=name=>/hit/i.test(String(name||''))?'hit0ms':'2factos';
+const $=id=>document.getElementById(id);
+
+// ---------- hora de Lisboa ----------
+function lis(d=new Date()){const p=Object.fromEntries(new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Lisbon',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).formatToParts(d).map(x=>[x.type,x.value]));
+  return {date:`${p.year}-${p.month}-${p.day}`,min:+p.hour*60+ +p.minute,hour:+p.hour};}
+function lisOffset(){try{const n=new Intl.DateTimeFormat('en-US',{timeZone:'Europe/Lisbon',timeZoneName:'longOffset'}).formatToParts(new Date()).find(x=>x.type==='timeZoneName').value;const m=n.match(/([+-]\d\d:\d\d)/);return m?m[1]:'+00:00';}catch{return '+00:00';}}
+function addDays(ds,k){const d=new Date(ds+'T12:00:00Z');d.setUTCDate(d.getUTCDate()+k);return d.toISOString().slice(0,10);}
+
+// ---------- estado ----------
+const ST={posts:{},postsErr:{},win:{},winErr:{},stamp:{},db:null};
+let filt='all';
+
+// ---------- mundo pixel ----------
+const cv=$('cv'),g=cv.getContext('2d');g.imageSmoothingEnabled=false;
+const W=384,H=200,GROUND=168;
+const BLD=[{k:'IG',x:214,col:'#e1306c',top:'#f77737'},{k:'TT',x:256,col:'#1b1b1b',top:'#25f4ee'},{k:'YT',x:298,col:'#e62117',top:'#ffffff'},{k:'FB',x:340,col:'#1877f2',top:'#ffffff'}];
+function px(x,y,w,h,c){g.fillStyle=c;g.fillRect(x|0,y|0,w|0,h|0);}
+function bone(x,y,shirt,hat,frame){const s=frame%2;px(x+2,y,4,4,'#f2c39c');px(x+2,y,4,1,hat);px(x+1,y+1,1,1,hat);
+  px(x+3,y+2,1,1,'#1d1838');px(x+5,y+2,1,1,'#1d1838');
+  px(x+1,y+4,6,5,shirt);px(x,y+5+(s?1:0),1,3,'#f2c39c');px(x+7,y+5+(s?0:1),1,3,'#f2c39c');
+  px(x+2,y+9,2,4-(s?1:0),'#2b2d55');px(x+4,y+9,2,4-(s?0:1),'#2b2d55');px(x+1+(s?0:1),y+13,3,1,'#111');px(x+4,y+13,3,1,'#111');}
+function allPosts(){return Object.values(ST.posts).flat();}
+let MET=null;
+function heights(){const m=MET||metrics();const o={};for(const k of ['IG','TT','YT','FB']){let v=0;for(const a of ['2factos','hit0ms'])v+=(m[a][k].views||0);o[k]=Math.round(26+Math.min(90,Math.log10(1+v)*15));}return o;}
+function nextPost(){const L=lis();return allPosts().filter(p=>p.date===L.date&&p.state!=='done'&&p.min>=L.min-30).sort((a,b)=>a.min-b.min)[0]||null;}
+const t0=performance.now();const still=matchMedia('(prefers-reduced-motion: reduce)');
+function draw(ts){const t=((ts||t0)-t0)/1000,L=lis();const night=L.hour<7||L.hour>=20;
+  px(0,0,W,GROUND,night?'#1b1f4a':'#7ec8ff');
+  if(night){g.fillStyle='#fff';for(let i=0;i<30;i++)g.fillRect((i*53)%W,(i*29)%110,1,1);px(340,18,10,10,'#fff6c4');}
+  else{px(30,20,14,14,'#ffe66d');for(const [cx,cy] of [[90,26],[160,16]]){const o=(cx+t*4)%(W+30)-30;px(o,cy,26,6,'#fff');px(o+6,cy-4,14,6,'#fff');}}
+  px(0,GROUND,W,H-GROUND,'#5aa84a');px(0,GROUND,W,2,'#3f8a36');px(0,GROUND+14,W,10,'#8b8fa8');for(let x=0;x<W;x+=16)px(x,GROUND+18,8,2,'#d8dbe8');
+  px(8,70,184,98,'#f4e3c3');px(8,66,184,6,'#b5562e');for(let x=8;x<192;x+=8)px(x,62,6,4,'#c9653a');
+  px(14,78,172,84,'#fff7e6');px(14,140,172,22,'#e9d4ac');
+  const st=[{x:24,n:'ana',shirt:'#6c4cf0',hat:'#3a2a1a'},{x:66,n:'ide',shirt:'#f4b400',hat:'#7a3a10'},{x:108,n:'rea',shirt:'#e1306c',hat:'#111'},{x:150,n:'des',shirt:'#1f9d55',hat:'#3a2a1a'}];
+  for(const [i,s] of st.entries()){px(s.x-2,128,30,4,'#8a5a33');px(s.x,132,2,10,'#6a4425');px(s.x+24,132,2,10,'#6a4425');
+    bone(s.x+10,114+Math.floor(t*3+i)%2,s.shirt,s.hat,Math.floor(t*4+i));
+    if(s.n==='ana'){px(s.x+2,112,12,10,'#1d1838');px(s.x+3,113,10,8,'#0b3b2e');for(let k=0;k<4;k++){const hh=2+((Math.floor(t*2)+k*3)%6);px(s.x+4+k*2,121-hh,1,hh,'#5fe08a');}}
+    if(s.n==='ide'){const on=Math.floor(t*1.5)%2;px(s.x+12,100,5,5,on?'#ffe66d':'#d8d2b0');px(s.x+13,105,3,2,'#888');if(on){px(s.x+10,98,1,1,'#ffe66d');px(s.x+18,98,1,1,'#ffe66d');}px(s.x+2,124,10,4,'#fff');px(s.x+3,125,8,1,'#999');}
+    if(s.n==='rea'){px(s.x+1,116,8,6,'#222');px(s.x+9,117,3,4,'#444');px(s.x+3,114,4,2,'#222');if(Math.floor(t*2)%2)px(s.x+2,117,2,2,'#e62117');px(s.x+18,110,8,5,'#fff');for(let k=0;k<4;k++)px(s.x+18+k*2,110,1,2,'#111');}
+    if(s.n==='des'){px(s.x+1,104,14,12,'#fff');px(s.x,103,16,1,'#6a4425');const k=Math.floor(t)%3;g.fillStyle='#e62117';g.beginPath();if(k===0){g.moveTo(s.x+8,106);g.lineTo(s.x+3,114);g.lineTo(s.x+13,114);}else if(k===1)g.rect(s.x+4,107,8,7);else g.arc(s.x+8,110,4,0,7);g.fill();}}
+  const hh=heights();
+  for(const b of BLD){const h=hh[b.k];px(b.x,GROUND-h,32,h,b.col);px(b.x,GROUND-h,32,3,b.top);
+    for(let y=GROUND-h+7;y<GROUND-8;y+=8)for(let x=b.x+4;x<b.x+30;x+=8)px(x,y,4,4,(night||Math.floor(t+x+y)%7===0)?'#ffe66d':'rgba(255,255,255,.35)');
+    px(b.x+12,GROUND-8,8,8,'#3b2a1a');g.fillStyle='#fff';g.font='7px Silkscreen, monospace';g.fillText(b.k,b.x+10,GROUND-h-3);}
+  const np=nextPost();let cx=196,carry=false;
+  if(np){const k=np.nets.find(n=>n.s!=='done')?.k||'IG';const target=BLD.find(b=>b.k===k)||BLD[0];const u=Math.max(0,Math.min(1,1-(np.min-L.min)/60));cx=196+(target.x+10-196)*u;carry=true;}
+  else cx=196+Math.sin(t*.8)*6;
+  bone(cx,GROUND-13+(Math.floor(t*6)%2?0:1),'#2e5fb0','#2e5fb0',Math.floor(t*6));if(carry){px(cx+7,GROUND-8,5,4,'#f4e3c3');px(cx+8,GROUND-7,3,1,'#e62117');}
+  const ps=allPosts().filter(p=>p.date===L.date);const done=ps.filter(p=>p.state==='done').length;
+  px(192,GROUND-30,4,30,'#6a4425');px(182,GROUND-38,24,10,'#ffd21f');g.fillStyle='#111';g.font='7px Silkscreen, monospace';g.fillText(`${done}/${ps.length}`,185,GROUND-30);
+  if(!still.matches)requestAnimationFrame(draw);}
+requestAnimationFrame(draw);setInterval(()=>{if(still.matches)draw();},30000);
+function avatar(id,shirt,hat){const c=$(id).getContext('2d');const p=(x,y,w,h,col)=>{c.fillStyle=col;c.fillRect(x,y,w,h);};
+  p(6,1,4,4,'#f2c39c');p(6,1,4,1,hat);p(7,3,1,1,'#1d1838');p(9,3,1,1,'#1d1838');p(5,5,6,5,shirt);p(4,6,1,3,'#f2c39c');p(11,6,1,3,'#f2c39c');p(6,10,2,4,'#2b2d55');p(8,10,2,4,'#2b2d55');}
+avatar('av-car','#2e5fb0','#2e5fb0');avatar('av-ana','#6c4cf0','#3a2a1a');avatar('av-ide','#f4b400','#7a3a10');avatar('av-des','#1f9d55','#3a2a1a');avatar('av-rea','#e1306c','#111');
+
+// ---------- normalizar dados ----------
+function parsePosts(payload,acct){const rows=(payload&&payload.data)||[];
+  return rows.filter(r=>!r.draft).map(r=>{const dt=r.publicationDate?.dateTime||'';
+    const nets=(r.providers||[]).map(p=>{const s=String(p.status||'').toUpperCase();return {k:MCNET[p.network]||p.network,s:s==='PUBLISHED'?'done':/ERROR|FAIL/.test(s)?'err':'pend',url:p.publicUrl||''};});
+    const st=nets.some(n=>n.s==='err')?'err':nets.length&&nets.every(n=>n.s==='done')?'done':'pend';
+    const title=r.youtubeData?.title||r.tiktokData?.title||String(r.text||'').split('\n')[0];
+    return {acct,date:dt.slice(0,10),time:dt.slice(11,16),min:+dt.slice(11,13)*60+ +dt.slice(14,16),title:String(title).replace(/\s*#shorts/i,''),nets,state:st,trial:r.instagramData?.type==='TRIAL_REEL'};});}
+const since7=()=>addDays(lis().date,-6);
+function videos(){const out=[];const s7=since7();
+  for(const r of ST.win.IG||[])if(r.media_caption&&r.date>=s7)out.push({acct:acctOf(r.account_name),k:'IG',date:r.date,cap:r.media_caption,views:r.media_views});
+  for(const r of ST.win.TT||[]){const d=String(r.video_create_datetime||'').slice(0,10);if(d>=s7)out.push({acct:acctOf(r.username),k:'TT',date:d,cap:r.video_caption,views:r.video_views_count});}
+  for(const r of ST.win.YT||[]){const d=String(r.published_at||'').slice(0,10);if(d>=s7)out.push({acct:acctOf(r.account_name),k:'YT',date:d,cap:r.video_title,views:r.video_view_count});}
+  return out;}
+function metrics(){const m={};for(const a of ['2factos','hit0ms']){m[a]={};for(const k of ['IG','TT','YT','FB'])m[a][k]={views:null,fol:null};}
+  for(const v of videos()){const c=m[v.acct][v.k];c.views=(c.views||0)+(+v.views||0);}
+  for(const r of ST.win.IG||[])if(r.followers_count!=null)m[acctOf(r.account_name)].IG.fol=r.followers_count;
+  for(const r of ST.win.YT||[])if(r.subscriber_count!=null)m[acctOf(r.account_name)].YT.fol=r.subscriber_count;
+  const fb=[...(ST.win.FB||[])].sort((a,b)=>String(a.date).localeCompare(String(b.date)));
+  for(const r of fb){const c=m[acctOf(r.account_name)].FB;c.views=(c.views||0)+(+r.blue_reels_play_count||0);if(r.page_follows!=null)c.fol=r.page_follows;}
+  return m;}
+
+// ---------- render ----------
+function netChip(n){const [cls,name]=NET[n.k]||['',n.k];const mark=n.s==='done'?' ✓':n.s==='err'?' ✗':' ⏳';
+  const inner=`${esc(name)}${mark}`;const c=`chip ${cls} ${n.s==='pend'?'pend':''}`;
+  return n.url&&/^https:\/\//.test(n.url)?`<a class="${c}" href="${esc(n.url)}" target="_blank" rel="noopener" style="text-decoration:none">${inner}</a>`:`<span class="${c}">${inner}</span>`;}
+function errMsg(e,server){const c=e&&e.code;
+  if(c==='needs_reauth')return `volta a ligar o ${server} em Definições → Conectores do claude.ai.`;
+  if(c==='server_not_connected'||c==='selection_required')return `adiciona ou escolhe o conector ${server} no claude.ai.`;
+  if(c==='not_in_manifest'||c==='approval_required'||c==='consent_required')return `a página precisa da tua autorização para usar o ${server}. Carrega em "Atualizar agora".`;
+  if(c==='server_unavailable')return `o ${server} não respondeu agora; tento outra vez sozinho.`;
+  if(c==='tool_error')return `o ${server} devolveu um erro: ${String(e.message||'').slice(0,120)}`;
+  return `não consegui falar com o ${server} agora.`;}
+function renderPosts(){const L=lis();const ps=allPosts().sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time));
+  const errs=Object.entries(ST.postsErr).filter(([,e])=>e);
+  if(!Object.keys(ST.posts).length&&!errs.length)return;
+  const nx=nextPost();let h='',lastDay='';
+  for(const p of ps){if(p.date!==lastDay){lastDay=p.date;h+=`<div class="day">${p.date===L.date?'HOJE':p.date===addDays(L.date,1)?'AMANHÃ':esc(p.date)}</div>`;}
+    const st=p.state==='done'?'<span class="chip done">saiu em tudo</span>':p.state==='err'?'<span class="chip err">erro, ver</span>':p===nx?'<span class="chip next">a seguir</span>':'';
+    h+=`<div class="post"><div class="time">${esc(p.time)}</div><div><div class="acct">${esc(LABEL[p.acct])}</div><div class="t">${esc(p.title)}</div><div class="chips">${p.nets.map(netChip).join('')}${p.trial?'<span class="chip trial">trial reel</span>':''}${st}</div></div></div>`;}
+  if(!ps.length&&Object.keys(ST.posts).length)h='<div class="empty">Nada agendado para hoje nem amanhã.</div>';
+  for(const [a,e] of errs)h+=`<p class="warnbox">${esc(LABEL[a])}: ${esc(errMsg(e,MC))}</p>`;
+  h+='<p class="note">Toca numa rede para abrir o post. Os vídeos do Facebook da Hit0Ms és tu que publicas, não aparecem aqui.</p>';
+  $('posts').innerHTML=h;}
+function renderNums(){const m=MET;const errs=Object.entries(ST.winErr).filter(([,e])=>e);
+  if(!Object.keys(ST.win).length&&!errs.length)return;let h='';
+  for(const a of ['2factos','hit0ms']){h+=`<div class="tbl"><table><caption class="acct">${esc(LABEL[a])}</caption><thead><tr><th>Rede</th><th class="n">Seguidores</th><th class="n">Views 7 dias</th></tr></thead><tbody>`;
+    for(const k of ['IG','TT','YT','FB'])h+=`<tr><td>${esc(NET[k][1])}${k==='FB'?' <span class="note">(plays de reels)</span>':''}</td><td class="n">${fmt(m[a][k].fol)}</td><td class="n">${fmt(m[a][k].views)}</td></tr>`;
+    h+='</tbody></table></div>';
+    const top=videos().filter(v=>v.acct===a).sort((x,y)=>(+y.views||0)-(+x.views||0))[0];
+    if(top)h+=`<p class="note">🏆 Melhor da semana: ${esc(String(top.cap).split('\n')[0].replace(/#\S+/g,'').slice(0,70))} (${esc(NET[top.k][1])}, ${fmt(top.views)} views)</p>`;}
+  for(const [k,e] of errs)h+=`<p class="warnbox">${esc(NET[k]?.[1]||k)}: ${esc(errMsg(e,WS))}</p>`;
+  if(ST.db?.verdict)h+=`<p class="note"><b>O que está a resultar:</b> ${esc(ST.db.verdict)}</p>`;
+  h+='<p class="note">O TikTok não dá seguidores pelo Windsor. As views de IG, TikTok e YouTube são o total de cada vídeo publicado nos últimos 7 dias.</p>';
+  $('nums').innerHTML=h;}
+function key(s){return String(s||'').toLowerCase().replace(/#\S+/g,'').replace(/[^\p{L}\p{N} ]/gu,'').replace(/\s+/g,' ').trim().slice(0,24);}
+function renderVids(){if(!Object.keys(ST.win).length)return;const vs=videos().filter(v=>filt==='all'||v.acct===filt);
+  const groups=new Map();
+  for(const v of vs){const kk=v.acct+'|'+v.date+'|'+key(v.cap);let gq=groups.get(kk);if(!gq){gq={acct:v.acct,date:v.date,cap:v.cap,IG:null,TT:null,YT:null};groups.set(kk,gq);}gq[v.k]=(gq[v.k]||0)+(+v.views||0);}
+  const tot=r=>(r.IG||0)+(r.TT||0)+(r.YT||0);
+  const rows=[...groups.values()].sort((a,b)=>b.date.localeCompare(a.date)||tot(b)-tot(a));
+  if(!rows.length){$('vids').innerHTML='<div class="empty">Sem vídeos nos últimos 7 dias.</div>';return;}
+  $('vids').innerHTML=`<table><thead><tr><th>Dia</th><th>Vídeo</th><th class="n">IG</th><th class="n">TikTok</th><th class="n">YouTube</th></tr></thead><tbody>${rows.map(r=>`<tr><td>${esc(r.date.slice(8,10)+'/'+r.date.slice(5,7))}</td><td class="cap"><span class="acct">${esc(LABEL[r.acct])}</span><br>${esc(String(r.cap).split('\n')[0].replace(/#\S+/g,'').slice(0,90))}</td><td class="n">${fmt(r.IG)}</td><td class="n">${fmt(r.TT)}</td><td class="n">${fmt(r.YT)}</td></tr>`).join('')}</tbody></table>
+  <p class="note">O mesmo vídeo junta-se numa linha quando o dia e a legenda batem certo; legendas diferentes por rede ficam em linhas separadas.</p>`;}
+function renderDb(){const S=ST.db;if(!S)return;
+  const I=S.ideas||[];if(I.length)$('ideas').innerHTML=`<ol>${I.map(i=>`<li value="${Number(i.n)||''}"><span class="acct">${esc(i.acct)}</span> · ${esc(i.text)}</li>`).join('')}</ol><p class="note">Responde na conversa com os números e as horas.${S.updated?' Relatório de '+esc(S.updated)+'.':''}</p>`;
+  const C=S.challenges||[];if(C.length)$('chal').innerHTML=`<div class="tbl"><table><thead><tr><th>Desafio</th><th class="n">Alcance</th><th class="n">Coment.</th></tr></thead><tbody>${C.map(c=>`<tr><td>${esc(c.title)}</td><td class="n">${fmt(c.reach)}</td><td class="n">${fmt(c.comments)}</td></tr>`).join('')}</tbody></table></div>`;}
+function renderStamp(){const ts=Object.values(ST.stamp);if(!ts.length)return;const oldest=Math.min(...ts);
+  $('upd').textContent='Dados de '+new Date(oldest).toLocaleTimeString('pt-PT',{hour:'2-digit',minute:'2-digit',timeZone:'Europe/Lisbon'});$('live').hidden=false;}
+function renderAll(){MET=metrics();renderPosts();renderNums();renderVids();renderDb();renderStamp();}
+setInterval(renderAll,60000);
+
+// ---------- ligações ao vivo ----------
+let mcp=null;const unsubs=[];
+function mcInput(b){const L=lis(),o=lisOffset();return {brandId:b.id,fromDate:`${L.date}T00:00:00${o}`,toDate:`${addDays(L.date,1)}T23:59:59${o}`,timezone:'Europe/Lisbon'};}
+const WIN={
+  IG:{connector:'instagram',fields:['account_name','followers_count','media_caption','media_views','date'],date_preset:'last_7dT'},
+  TT:{connector:'tiktok_organic',fields:['username','video_caption','video_views_count','video_create_datetime'],date_preset:'last_7dT'},
+  YT:{connector:'youtube',fields:['account_name','video_title','video_view_count','published_at','subscriber_count'],date_preset:'last_7dT'},
+  FB:{connector:'facebook_organic',fields:['account_name','date','blue_reels_play_count','page_follows'],date_preset:'last_7dT'}};
+const pendingRetry={};
+function onWin(k){return ev=>{
+  if(ev.type==='data'){const p=ev.result.payload;
+    if(p&&p.status&&p.status!=='done'&&!(p.data&&p.data.length)){if(!pendingRetry[k])pendingRetry[k]=setTimeout(()=>{pendingRetry[k]=null;mcp.callTool(WS,'get_data',WIN[k],{cache:{staleTime:0,gcTime:3600000,refresh:true}}).catch(()=>{});},30000);return;}
+    ST.win[k]=(p&&p.data)||[];ST.winErr[k]=null;ST.stamp['w'+k]=ev.result.cache?.storedAt||Date.now();}
+  else{ST.winErr[k]=ev.error;if(DENY.includes(ev.error?.code))delete ST.win[k];}
+  renderAll();};}
+function onMc(b){return ev=>{
+  if(ev.type==='data'){ST.posts[b.acct]=parsePosts(ev.result.payload,b.acct);ST.postsErr[b.acct]=null;ST.stamp['m'+b.acct]=ev.result.cache?.storedAt||Date.now();}
+  else{ST.postsErr[b.acct]=ev.error;if(DENY.includes(ev.error?.code))delete ST.posts[b.acct];}
+  renderAll();};}
+let watchedDay='';
+function startWatches(){while(unsubs.length)unsubs.pop()();watchedDay=lis().date;
+  for(const b of BRANDS)unsubs.push(mcp.watchTool(MC,'getScheduledPosts',mcInput(b),onMc(b),{cache:{staleTime:120000,gcTime:3600000},refetchInterval:180000}));
+  for(const k of Object.keys(WIN))unsubs.push(mcp.watchTool(WS,'get_data',WIN[k],onWin(k),{cache:{staleTime:600000,gcTime:3600000},refetchInterval:900000}));}
+setInterval(()=>{if(mcp&&lis().date!==watchedDay)startWatches();},60000);
+$('refresh').addEventListener('click',async()=>{if(!mcp)return;const bt=$('refresh');bt.disabled=true;bt.textContent='A atualizar…';
+  const calls=[...BRANDS.map(b=>mcp.callTool(MC,'getScheduledPosts',mcInput(b),{cache:{staleTime:0,gcTime:3600000,refresh:true}}).then(r=>onMc(b)({type:'data',result:r}),e=>onMc(b)({type:'error',error:e}))),
+    ...Object.keys(WIN).map(k=>mcp.callTool(WS,'get_data',WIN[k],{cache:{staleTime:0,gcTime:3600000,refresh:true}}).then(r=>onWin(k)({type:'data',result:r}),e=>onWin(k)({type:'error',error:e})))];
+  await Promise.allSettled(calls);bt.disabled=false;bt.textContent='Atualizar agora';});
+$('tabs').addEventListener('click',e=>{const b=e.target.closest('button[data-acct]');if(!b)return;filt=b.dataset.acct;
+  for(const x of $('tabs').children)x.setAttribute('aria-pressed',String(x===b));renderVids();});
+
+const to=setTimeout(()=>{if(!Object.keys(ST.stamp).length)$('upd').textContent='Os conectores ainda não responderam…';},10000);
+claude.use('mcp').then(m=>{mcp=m;if(!m){clearTimeout(to);$('refresh').hidden=true;$('upd').textContent='Abre no claude.ai com a tua conta para ver ao vivo.';
+    for(const id of ['posts','nums','vids'])$(id).innerHTML='<div class="empty">Os dados ao vivo só aparecem a quem tem o Metricool e o Windsor ligados.</div>';return;}
+  startWatches();});
+claude.use('db').then(db=>{if(!db)return;db.doc('estado/hoje').onSnapshot(s=>{if(s.exists){ST.db=s.data();renderAll();}},()=>{});});
+</script>
