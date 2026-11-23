@@ -6,3 +6,7 @@ remotion/out/
 
 # exceção: vídeos finais pedidos para o repositório
 !videos/**/*.mp4
+hit0ms/engine/v*/audio.wav
+hit0ms/engine/v*/fonts/
+hit0ms/engine/v*/video_tmp.mp4
+hit0ms/engine/v*/test_*
