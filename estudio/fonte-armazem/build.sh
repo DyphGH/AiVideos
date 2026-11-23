@@ -1,0 +1,1 @@
+cat a_head.html > ../estudio.html; printf "\n<script src=\"https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js\"></script>\n<script>\n" >> ../estudio.html; cat b_data.js d_ware.js >> ../estudio.html; printf "</script>\n" >> ../estudio.html
