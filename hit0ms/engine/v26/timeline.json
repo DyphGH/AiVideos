@@ -1,0 +1,55 @@
+{
+ "fps": 30,
+ "attempts": [
+  {
+   "level": 1,
+   "speed": 0.4,
+   "start": 0,
+   "release": 21,
+   "impact": 48,
+   "hold": 14,
+   "rw": 8,
+   "obj": "cereal",
+   "word": "JUICY",
+   "end": 70
+  },
+  {
+   "level": 2,
+   "speed": 0.6,
+   "start": 70,
+   "release": 87,
+   "impact": 105,
+   "hold": 14,
+   "rw": 8,
+   "obj": "pancakes",
+   "word": "SAUCE",
+   "end": 127
+  },
+  {
+   "level": 3,
+   "speed": 0.8,
+   "start": 127,
+   "release": 144,
+   "impact": 157,
+   "hold": 14,
+   "rw": 8,
+   "obj": "waffle",
+   "word": "MAYO",
+   "end": 179
+  },
+  {
+   "level": 4,
+   "speed": 1.0,
+   "start": 179,
+   "release": 199,
+   "impact": 210,
+   "hold": 22,
+   "rw": 8,
+   "obj": "toast",
+   "word": "FISHY",
+   "end": 240
+  }
+ ],
+ "total": 240,
+ "offset": 214
+}

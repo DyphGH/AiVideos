@@ -184,6 +184,12 @@ for a in TL['attempts']:
         for t in np.sort(ri+0.05+np.abs(rng.normal(0,.35*big,int(60*big)))):          # droplets raining down
             dd=.03;w=tt(dd);f=np.linspace(rng.uniform(600,1000),rng.uniform(1400,2400),len(w));add(np.sin(2*np.pi*np.cumsum(f)/SR)*np.exp(-w*90),t,rng.uniform(.05,.14))
         patter(ri+.15,int(70*big),.6*big,.14)
+    if k in ('egg','eggXL','eggGold'):
+        bg=1.7 if k=='eggXL' else 1.0
+        add(hp(noise(.025),2200)*np.exp(-tt(.025)*180),ri,1.1*bg)
+        for _ in range(int(10*bg)):add(hp(noise(.015),3000)*np.exp(-tt(.015)*250),ri+abs(rng.normal(0,.04)),rng.uniform(.2,.45))
+        slap(ri+.01,0.7*bg,180);smash(ri+.02,0.8*bg,1.2,lo=320)
+        if k=='eggGold':[ping(ri+j*.06,f,.6,.1) for j,f in enumerate((2093,2637,3136))]
     r0=(a['impact']+a['hold'])/fps;dd=a['rw']/fps;w=tt(dd)
     fr=2400-1800*w/dd;ph=2*np.cumsum(np.pi*fr)/SR;ch=np.sign(np.sin(ph))*0.5*(np.sin(2*np.pi*14*w)>0)
     add(lp(ch,3500)*np.minimum(1,w/dd*2.5)*np.minimum(1,(dd-w)*30),r0,0.035)
