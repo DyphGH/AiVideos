@@ -339,12 +339,15 @@ $('agenda').addEventListener('click',async e=>{const b=e.target.closest('button[
   if(act==='resume'){patch={draft:false};msg=`Retomar "${p.title.slice(0,50)}"? Volta a sair às ${p.time} de ${dm(p.date)}.`;}
   if(!(await confirmBox(act==='save'?'Mudar hora':act==='pause'?'Pausar post':'Retomar post',msg)))return;
   const raw=JSON.parse(JSON.stringify(p.raw));for(const k of ['id','uuid','creationDate','creatorUserMail','creatorUserId','brandTags'])delete raw[k];
-  raw.providers=(raw.providers||[]).map(x=>({network:x.network}));Object.assign(raw,patch);
+  raw.providers=(raw.providers||[]).map(x=>({network:x.network}));Object.assign(raw,patch);stripNets(raw);
   b.disabled=true;b.textContent='A guardar…';
   try{await mcp.callTool(MC,'updateScheduledPost',{id:String(p.raw.id),uuid:String(p.raw.uuid),blogId:p.blog,info:JSON.stringify(raw)});
     toast('Feito! O Metricool já tem a alteração.');UI.editing=null;refreshAll();}
   catch(err){toast('Não consegui: '+errMsg(err,MC));b.disabled=false;b.textContent='Tentar outra vez';}});
 
+// o Metricool recusa dados de redes que não estão nos providers (ex.: twitterData)
+const NETDATA={twitter:'twitterData',facebook:'facebookData',instagram:'instagramData',linkedin:'linkedinData',pinterest:'pinterestData',youtube:'youtubeData',tiktok:'tiktokData',bluesky:'blueskyData',threads:'threadsData',gmb:'gmbData'};
+function stripNets(raw){const keep=new Set((raw.providers||[]).map(x=>x.network));for(const [n,f] of Object.entries(NETDATA))if(!keep.has(n))delete raw[f];return raw;}
 const isVid=r=>/\.(mp4|mov|m4v)(\?|$)/i.test(String(r.media?.[0]||''));
 function initOpts(p){const r=p.raw,v=isVid(r);return {redes:p.nets.map(n=>n.k).filter(k=>NETS.includes(k)),ig:r.instagramData?.type||(v?'REEL':'POST'),fb:r.facebookData?.type||(v?'REEL':'POST'),stories:[]};}
 function optsBlock(p){const o=UI.optState||initOpts(p),v=isVid(p.raw);const nets=v?NETS:['IG','FB'];
@@ -377,7 +380,7 @@ async function optsAction(act,p,b){const r=p.raw;const L=lis();if(p.date<L.date|
   if(o.redes.includes('FB'))raw.facebookData={...(raw.facebookData||{}),type:o.fb};
   if(o.redes.includes('TT')&&!raw.tiktokData?.title)raw.tiktokData={privacyOption:'PUBLIC_TO_EVERYONE',...(raw.tiktokData||{}),title:title.slice(0,90),isAigc:true};
   if(o.redes.includes('YT')&&!raw.youtubeData?.title)raw.youtubeData={type:'short',privacy:'public',madeForKids:false,...(raw.youtubeData||{}),title:(title.slice(0,88)+' #shorts')};
-  for(const [k,f] of [['IG','instagramData'],['FB','facebookData'],['TT','tiktokData'],['YT','youtubeData']])if(!o.redes.includes(k))delete raw[f];
+  stripNets(raw);
   if(o.redes.every(k=>(k==='IG'&&o.ig==='STORY')||(k==='FB'&&o.fb==='STORY'))){raw.text='';raw.firstCommentText='';}
   b.disabled=true;b.textContent='A guardar…';
   try{await mcp.callTool(MC,'updateScheduledPost',{id:String(r.id),uuid:String(r.uuid),blogId:p.blog,info:JSON.stringify(raw)});
