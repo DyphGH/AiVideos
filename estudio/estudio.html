@@ -321,7 +321,7 @@ function renderAgenda(){const el=$('agenda');const errs=Object.entries(ST.mcErr)
     let acts='';
     if(editable){if(UI.editing==='o:'+p.id)acts=optsBlock(p);else if(UI.editing===p.id)acts=`<div class="row"><input type="datetime-local" id="dt-${esc(p.id)}" value="${esc(p.date)}T${esc(p.time)}" min="${esc(L.date)}T00:00"><button type="button" class="sm primary" data-act="save" data-id="${esc(p.id)}">Guardar</button><button type="button" class="sm" data-act="cancel">Cancelar</button></div>`;
       else acts=`<div class="row"><button type="button" class="sm" data-act="edit" data-id="${esc(p.id)}">Mudar hora</button><button type="button" class="sm" data-act="opts" data-id="${esc(p.id)}">Onde sai</button>${p.state==='pause'?`<button type="button" class="sm" data-act="resume" data-id="${esc(p.id)}">Retomar</button>`:`<button type="button" class="sm" data-act="pause" data-id="${esc(p.id)}">Pausar</button>`}</div>`;}
-    h+=`<div class="post"><div class="time">${esc(p.time)}</div><div><div class="acct">${esc(LABEL[p.acct])}</div><div class="t">${esc(p.title)}</div><div class="chips">${p.nets.map(netChip).join('')}${p.trial?'<span class="chip trial">trial reel</span>':''}${p.raw.instagramData?.type==='STORY'&&p.nets.some(n=>n.k==='IG')?'<span class="chip trial">story IG</span>':''}${p.raw.facebookData?.type==='STORY'&&p.nets.some(n=>n.k==='FB')?'<span class="chip trial">story FB</span>':''}${badge}</div>${acts}</div></div>`;}
+    h+=`<div class="post"><div class="time">${esc(p.time)}</div><div><div class="acct">${esc(LABEL[p.acct])}</div><div class="t">${esc(p.title)}</div><div class="chips">${p.nets.map(netChip).join('')}${p.trial?'<span class="chip trial">trial reel</span>':''}${p.raw.instagramData?.type==='STORY'&&p.nets.some(n=>n.k==='IG')?'<span class="chip trial">story IG</span>':''}${p.raw.facebookData?.type==='STORY'&&p.nets.some(n=>n.k==='FB')?'<span class="chip trial">story FB</span>':''}${p.raw.autoPublish===false?'<span class="chip next">📲 acabas tu</span>':''}${badge}</div>${acts}</div></div>`;}
   if(!h)h='<div class="empty">Nada agendado nos próximos 7 dias.</div>';
   for(const [a,e] of errs)h+=`<p class="warnbox">${esc(LABEL[a])}: ${esc(errMsg(e,MC))}</p>`;
   h+='<p class="note">Só dá para mexer em posts que ainda não saíram. "Onde sai" muda as redes, reel/trial reel/story e cria stories extra.</p>';
@@ -331,6 +331,10 @@ $('agenda').addEventListener('click',async e=>{const b=e.target.closest('button[
   const p=D.posts.find(x=>x.id===b.dataset.id);if(!p)return;
   if(act==='opts'){UI.editing='o:'+p.id;UI.optState=initOpts(p);renderAgenda();return;}
   if(act==='saveopts'||act==='story'){await optsAction(act,p,b);return;}
+  if(act==='linkstory'){const [dd,tt]=plus30(p.date,p.time);const title=String(p.title||'Vídeo').slice(0,90);
+    if(!(await confirmBox('Story com link',`A oficina faz a story de "${title.slice(0,50)}" e agenda-a para ${wd(dd)} ${dm(dd)} às ${tt} (Instagram e Facebook). Recebes uma notificação do Metricool para pores o link e a música.`,'Pedir')))return;
+    if(await addPedidos([{n:null,acct:p.acct==='hit0ms'?'Hit0Ms':'2 Factos',tipo:'story_link',text:'Story com link: '+title,date:dd,time:tt,post:{blog:p.blog,id:String(p.raw.id),uuid:String(p.raw.uuid),title,date:p.date,time:p.time},estado:'novo',criado:new Date().toISOString(),relatorio:'',nota:''}])){toast('Pedido! A oficina faz a story na próxima ronda.');UI.editing=null;UI.optState=null;renderAgenda();}
+    return;}
   if(act==='edit'){UI.editing=p.id;renderAgenda();$('dt-'+p.id)?.focus();return;}
   let patch={},msg='';
   if(act==='save'){const v=$('dt-'+p.id).value;if(!v){return;}const [dd,tt]=v.split('T');const L=lis();if(dd<L.date||(dd===L.date&&(+tt.slice(0,2)*60+ +tt.slice(3,5))<=L.min)){toast('Essa hora já passou.');return;}
@@ -348,6 +352,7 @@ $('agenda').addEventListener('click',async e=>{const b=e.target.closest('button[
 // o Metricool recusa dados de redes que não estão nos providers (ex.: twitterData)
 const NETDATA={twitter:'twitterData',facebook:'facebookData',instagram:'instagramData',linkedin:'linkedinData',pinterest:'pinterestData',youtube:'youtubeData',tiktok:'tiktokData',bluesky:'blueskyData',threads:'threadsData',gmb:'gmbData'};
 function stripNets(raw){const keep=new Set((raw.providers||[]).map(x=>x.network));for(const [n,f] of Object.entries(NETDATA))if(!keep.has(n))delete raw[f];return raw;}
+function plus30(d,t){let m=+t.slice(0,2)*60+ +t.slice(3,5)+30,dd=d;if(m>=1440){m-=1440;dd=addDays(d,1);}return [dd,String(Math.floor(m/60)).padStart(2,'0')+':'+String(m%60).padStart(2,'0')];}
 const isVid=r=>/\.(mp4|mov|m4v)(\?|$)/i.test(String(r.media?.[0]||''));
 function initOpts(p){const r=p.raw,v=isVid(r);return {redes:p.nets.map(n=>n.k).filter(k=>NETS.includes(k)),ig:r.instagramData?.type||(v?'REEL':'POST'),fb:r.facebookData?.type||(v?'REEL':'POST'),stories:[]};}
 function optsBlock(p){const o=UI.optState||initOpts(p),v=isVid(p.raw);const nets=v?NETS:['IG','FB'];
@@ -356,6 +361,7 @@ function optsBlock(p){const o=UI.optState||initOpts(p),v=isVid(p.raw);const nets
   ${o.redes.includes('FB')?`<div class="r"><span class="lb">Facebook</span><select data-pf="fb" aria-label="Tipo no Facebook">${opt(v?['REEL','POST','STORY']:['POST','STORY'],o.fb)}</select></div>`:''}
   <div class="r"><button type="button" class="sm primary" data-act="saveopts" data-id="${esc(p.id)}">Guardar</button><button type="button" class="sm" data-act="cancel">Fechar</button></div>
   <div class="r"><span class="lb">Story extra</span><button type="button" class="sm" data-act="story" data-net="IG" data-id="${esc(p.id)}">+ Instagram</button><button type="button" class="sm" data-act="story" data-net="FB" data-id="${esc(p.id)}">+ Facebook</button></div>
+  ${v?`<div class="r"><span class="lb">+30 min</span><button type="button" class="sm" data-act="linkstory" data-id="${esc(p.id)}">+ Story com link e música</button></div>`:''}
   <p class="note">Story extra = post novo com o mesmo ${v?'vídeo':'imagem'}, à mesma hora, sem legenda.</p></div>`;}
 $('agenda').addEventListener('change',e=>{const t=e.target;if(!t.closest('.pub[data-k="agenda"]')||!UI.optState)return;pubEdit(UI.optState,t);renderAgenda();});
 async function optsAction(act,p,b){const r=p.raw;const L=lis();if(p.date<L.date||(p.date===L.date&&p.min<=L.min+2)){toast('Este post já está a sair.');return;}
@@ -433,21 +439,23 @@ const DEF_T={'2 Factos':['12:30','22:30'],'Hit0Ms':['12:00','18:00'],'Desafio FB
 // ---------- onde publicar (ideias e correio) ----------
 const NETS=['IG','FB','TT','YT'],NETK={IG:'instagram',FB:'facebook',TT:'tiktok',YT:'youtube'};
 const TIPO={REEL:'Reel',TRIAL_REEL:'Trial reel',POST:'Post',STORY:'Story'};
-function defPub(acct){if(acct==='2 Factos')return {redes:['IG','FB','TT','YT'],ig:'TRIAL_REEL',fb:'REEL',stories:[]};
-  if(acct==='Desafio FB')return {redes:['FB'],ig:'POST',fb:'POST',stories:[]};
-  return {redes:['IG','TT','YT'],ig:'REEL',fb:'REEL',stories:[]};}
+function defPub(acct){if(acct==='2 Factos')return {redes:['IG','FB','TT','YT'],ig:'TRIAL_REEL',fb:'REEL',stories:[],linkStory:true};
+  if(acct==='Desafio FB')return {redes:['FB'],ig:'POST',fb:'POST',stories:[],linkStory:false};
+  return {redes:['IG','TT','YT'],ig:'REEL',fb:'REEL',stories:[],linkStory:true};}
 const opt=(arr,cur)=>arr.map(o=>`<option value="${o}" ${cur===o?'selected':''}>${TIPO[o]}</option>`).join('');
 function netBoxes(p,list=NETS){return list.map(n=>`<label class="ck"><input type="checkbox" data-pf="net" data-v="${n}" ${p.redes.includes(n)?'checked':''}>${NET[n]}</label>`).join('');}
 function pubBlock(k,p,acct){const img=acct==='Desafio FB';
   return `<div class="pub" data-k="${esc(k)}"><div class="r"><span class="lb">Onde sai</span>${netBoxes(p)}</div>
   ${p.redes.includes('IG')?`<div class="r"><span class="lb">Instagram</span><select data-pf="ig" aria-label="Tipo no Instagram">${opt(img?['POST']:['REEL','TRIAL_REEL'],p.ig)}</select></div>`:''}
   ${p.redes.includes('FB')?`<div class="r"><span class="lb">Facebook</span><select data-pf="fb" aria-label="Tipo no Facebook">${opt(img?['POST']:['REEL','POST'],p.fb)}</select></div>`:''}
-  <div class="r"><span class="lb">+ Story</span>${['IG','FB'].map(n=>`<label class="ck"><input type="checkbox" data-pf="story" data-v="${n}" ${p.stories.includes(n)?'checked':''}>${NET[n]}</label>`).join('')}</div></div>`;}
+  <div class="r"><span class="lb">+ Story</span>${['IG','FB'].map(n=>`<label class="ck"><input type="checkbox" data-pf="story" data-v="${n}" ${p.stories.includes(n)?'checked':''}>${NET[n]}</label>`).join('')}</div>
+  ${img?'':`<div class="r"><span class="lb">+30 min</span><label class="ck"><input type="checkbox" data-pf="link" ${p.linkStory?'checked':''}>Story com link e música (IG + FB)</label></div>`}</div>`;}
 function pubEdit(p,t){const f=t.dataset.pf,v=t.dataset.v;
   if(f==='net')p.redes=t.checked?NETS.filter(n=>n===v||p.redes.includes(n)):p.redes.filter(x=>x!==v);
   else if(f==='story')p.stories=t.checked?[...new Set([...(p.stories||[]),v])]:(p.stories||[]).filter(x=>x!==v);
+  else if(f==='link')p.linkStory=t.checked;
   else if(f==='ig'||f==='fb')p[f]=t.value;}
-function pubText(p){if(!p||!p.redes)return '';return [...p.redes.map(n=>n==='IG'?'IG '+String(TIPO[p.ig]||'').toLowerCase():n==='FB'?'FB '+String(TIPO[p.fb]||'').toLowerCase():n),...(p.stories||[]).map(n=>'story '+n)].join(' · ');}
+function pubText(p){if(!p||!p.redes)return '';return [...p.redes.map(n=>n==='IG'?'IG '+String(TIPO[p.ig]||'').toLowerCase():n==='FB'?'FB '+String(TIPO[p.fb]||'').toLowerCase():n),...(p.stories||[]).map(n=>'story '+n),...(p.linkStory?['story c/ link +30 min']:[])].join(' · ');}
 function renderOwnPub(){const el=$('own-pub'),sel=$('own-acct');if(!el||!sel)return;const a=sel.value;if(!UI.ownPub||UI.ownAcct!==a){UI.ownPub=defPub(a);UI.ownAcct=a;}el.innerHTML=pubBlock('own',UI.ownPub,a);}
 function renderIdeas(){const I=ST.db?.ideas||[];const L=lis();const taken=new Set(ST.ped.filter(p=>p.date>=L.date&&p.n!=null&&p.relatorio===ST.db?.updated).map(p=>p.n));
   let h='';
