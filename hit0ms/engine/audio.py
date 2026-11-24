@@ -190,6 +190,27 @@ for a in TL['attempts']:
         for _ in range(int(10*bg)):add(hp(noise(.015),3000)*np.exp(-tt(.015)*250),ri+abs(rng.normal(0,.04)),rng.uniform(.2,.45))
         slap(ri+.01,0.7*bg,180);smash(ri+.02,0.8*bg,1.2,lo=320)
         if k=='eggGold':[ping(ri+j*.06,f,.6,.1) for j,f in enumerate((2093,2637,3136))]
+    if k=='tv':       # heavy thud + screen glass smash + electric fizz/sparks
+        w=tt(.35);add(lp(noise(.35),400)*np.exp(-w*12),ri,1.1);add(np.sin(2*np.pi*(60-20*w/.35)*w)*np.exp(-w*10),ri,0.9)
+        glass(ri,1.2,55,.7)
+        dz=.6;w=tt(dz);bz=np.sign(np.sin(2*np.pi*120*w))*0.5+bp(noise(dz),2000,7000)*0.8;add(bz*np.exp(-w*5)*(0.5+0.5*(rng.random(len(w))>.6)),ri+.03,0.12)
+        for t in np.sort(ri+0.03+np.abs(rng.normal(0,.2,26))):add(hp(noise(.012),3500)*np.exp(-tt(.012)*300),t,rng.uniform(.1,.3))
+    if k=='console':  # plastic crack + rattling clicks + disc spin
+        add(hp(noise(.03),1800)*np.exp(-tt(.03)*140),ri,1.0);add(bp(noise(.12),900,4500)*np.exp(-tt(.12)*35),ri,0.8)
+        w=tt(.25);add(np.sin(2*np.pi*(95-35*w/.25)*w)*np.exp(-w*16),ri,0.7)
+        ts=np.sort(ri+0.02+np.abs(rng.normal(0,.2,40)));[click(t,rng.uniform(.12,.35)) for t in ts]
+        w=tt(.5);add(np.sin(2*np.pi*np.cumsum(900+700*np.exp(-w*6))/SR)*np.exp(-w*7)*(0.6+0.4*np.sin(2*np.pi*30*w)),ri+.05,0.06)
+    if k=='headphones':  # plastic snap + bouncy cups + spring boings
+        add(hp(noise(.025),2200)*np.exp(-tt(.025)*170),ri,1.0);slap(ri,0.6,190)
+        for j,(dt,g) in enumerate([(0,1.0),(.22,.5),(.38,.25)]):
+            w=tt(.22);f=240*(1+0.4*np.exp(-w*14));add(np.sin(2*np.pi*np.cumsum(f)/SR)*np.exp(-w*14),ri+dt,0.45*g);add(lp(noise(.06),900)*np.exp(-tt(.06)*50),ri+dt,0.5*g)
+        for dt in (.06,.16):w=tt(.4);fr=520*(1+0.25*np.sin(2*np.pi*14*w)*np.exp(-w*5));add(np.sin(2*np.pi*np.cumsum(fr)/SR)*np.exp(-w*8),ri+dt,0.12)
+        ts=np.sort(ri+0.03+np.abs(rng.normal(0,.15,18)));[click(t,rng.uniform(.08,.22)) for t in ts]
+    if k=='sneaker':  # rubber thud + sole squeak + cardboard crunch + tissue rustle
+        w=tt(.22);add(lp(noise(.22),600)*np.exp(-w*20),ri,1.0);add(np.sin(2*np.pi*(110-40*w/.22)*w)*np.exp(-w*18),ri,0.8);slap(ri+.1,0.5,140)
+        w=tt(.18);fr=1400+500*np.sin(np.pi*w/.18);add(np.sin(2*np.pi*np.cumsum(fr)/SR)*np.sin(np.pi*w/.18)*(0.7+0.3*np.sin(2*np.pi*60*w)),ri+.04,0.18)
+        for _ in range(14):add(bp(noise(.03),700,3000)*np.exp(-tt(.03)*110),ri+abs(rng.normal(0,.06)),rng.uniform(.15,.4))
+        w=tt(.45);add(bp(noise(.45),2500,8000)*np.sin(np.pi*w/.45)*(0.5+0.5*np.abs(np.sin(2*np.pi*11*w))),ri+.05,0.12)
     r0=(a['impact']+a['hold'])/fps;dd=a['rw']/fps;w=tt(dd)
     fr=2400-1800*w/dd;ph=2*np.cumsum(np.pi*fr)/SR;ch=np.sign(np.sin(ph))*0.5*(np.sin(2*np.pi*14*w)>0)
     add(lp(ch,3500)*np.minimum(1,w/dd*2.5)*np.minimum(1,(dd-w)*30),r0,0.035)

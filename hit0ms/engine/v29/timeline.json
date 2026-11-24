@@ -1,0 +1,55 @@
+{
+ "fps": 30,
+ "attempts": [
+  {
+   "level": 1,
+   "speed": 0.4,
+   "start": 0,
+   "release": 16,
+   "impact": 43,
+   "hold": 14,
+   "rw": 8,
+   "obj": "icecream",
+   "word": "FREEZE",
+   "end": 65
+  },
+  {
+   "level": 2,
+   "speed": 0.6,
+   "start": 65,
+   "release": 81,
+   "impact": 99,
+   "hold": 14,
+   "rw": 8,
+   "obj": "cereal",
+   "word": "CRUNCH",
+   "end": 121
+  },
+  {
+   "level": 3,
+   "speed": 0.8,
+   "start": 121,
+   "release": 140,
+   "impact": 153,
+   "hold": 14,
+   "rw": 8,
+   "obj": "choc",
+   "word": "SWEET",
+   "end": 175
+  },
+  {
+   "level": 4,
+   "speed": 1.0,
+   "start": 175,
+   "release": 191,
+   "impact": 202,
+   "hold": 15,
+   "rw": 8,
+   "obj": "sushi",
+   "word": "WASABI",
+   "end": 225
+  }
+ ],
+ "total": 225,
+ "offset": 206
+}

@@ -1,0 +1,29 @@
+[
+ {
+  "n": "06-christmas-tree", "mode": "grid", "icon": "tree",
+  "t1": "FIND THE TREE WITHOUT A STAR", "t2": "COMMENT THE ROW + COLUMN",
+  "acc": "#ffd21f", "bg1": "#0b2418", "bg2": "#1d5e3c", "panel": "#f5f8f2", "lab": "#2f5a43",
+  "cols": 9, "rows": 9, "or": 2, "oc": 7, "sc": 1.08
+ },
+ {
+  "n": "07-triangles", "mode": "tri",
+  "t1": "HOW MANY TRIANGLES?", "t2": "MOST PEOPLE GET THIS WRONG",
+  "acc": "#4dd4ff", "bg1": "#0f1630", "bg2": "#2a2f7a", "panel": "#f4f6fb", "ink": "#16203a",
+  "apex": [540, 250], "base": [[220, 830], [860, 830]], "inner": [420, 660], "hy": 600,
+  "ans": 12, "bd": ["TOP PART: 3 + 2 + 1 = 6", "FULL HEIGHT: 3 + 2 + 1 = 6"]
+ },
+ {
+  "n": "08-squares", "mode": "sq",
+  "t1": "HOW MANY SQUARES?", "t2": "ONLY 1 IN 10 GETS IT RIGHT",
+  "acc": "#ffb020", "bg1": "#2a1608", "bg2": "#8a3f12", "panel": "#fff7ea", "ink": "#2a1608",
+  "x0": 250, "y0": 240, "size": 580, "n4": 4,
+  "ans": 30
+ },
+ {
+  "n": "09-spot-the-8", "mode": "grid", "icon": "letter",
+  "font": "62px Anton", "char": "B", "odd": "8", "ink": "#1a1f36",
+  "t1": "SPOT THE 8 AMONG THE B'S", "t2": "ONLY SHARP EYES FIND IT",
+  "acc": "#ff5c8a", "bg1": "#1a1030", "bg2": "#3d1f6e", "panel": "#fdf6e8", "lab": "#7a5a9a",
+  "cols": 12, "rows": 12, "or": 5, "oc": 3, "sc": 1
+ }
+]

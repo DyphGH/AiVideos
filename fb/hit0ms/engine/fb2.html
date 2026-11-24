@@ -1,0 +1,76 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Anton;src:url(anton-latin-400-normal.woff2)}@font-face{font-family:Inter;font-weight:800;src:url(inter-latin-800-normal.woff2)}@font-face{font-family:Inter;font-weight:900;src:url(inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block}</style></head><body><canvas id="cv" width="1080" height="1350"></canvas>
+<script>
+// fb2: hit0ms puzzles 06+ (grid with row/col labels, triangles, squares). Same look as fb.html.
+const cv=document.getElementById('cv'),c=cv.getContext('2d');
+const P=JSON.parse(decodeURIComponent(location.hash.slice(1)));
+function lin(x0,y0,x1,y1,st){const g=c.createLinearGradient(x0,y0,x1,y1);st.forEach(([o,k])=>g.addColorStop(o,k));return g;}
+function fs(f,lw,s='#14202e'){c.fillStyle=f;c.fill();if(lw){c.lineWidth=lw;c.strokeStyle=s;c.stroke();}}
+function fit(txt,font,size,maxw){c.font=`${font.replace('$',size)}`;while(c.measureText(txt).width>maxw&&size>20){size-=2;c.font=font.replace('$',size);}}
+function star(x,y,R,r){c.beginPath();for(let i=0;i<10;i++){const a=-Math.PI/2+i*Math.PI/5,rr=i%2?r:R;c.lineTo(x+Math.cos(a)*rr,y+Math.sin(a)*rr);}c.closePath();}
+const I={
+ tree(odd){c.lineJoin='round';
+   c.beginPath();c.roundRect(-6,24,12,13,2);fs('#8a5a2b',2,'#4a2c10');
+   const T=[[-27,-7,17],[-14,10,24],[0,28,31]];
+   for(let i=T.length-1;i>=0;i--){const [a,b,w]=T[i];c.beginPath();c.moveTo(0,a);c.quadraticCurveTo(w*.5,(a+b)/2,w,b);c.quadraticCurveTo(0,b+5,-w,b);c.quadraticCurveTo(-w*.5,(a+b)/2,0,a);c.closePath();fs(lin(0,a,0,b,[[0,'#3fbf5f'],[1,'#1f8a3d']]),2.5,'#0f4a22');}
+   c.beginPath();c.moveTo(-17,3);c.quadraticCurveTo(0,10,19,1);c.lineWidth=2.5;c.strokeStyle='#f3f3f3';c.stroke();
+   c.beginPath();c.moveTo(-24,20);c.quadraticCurveTo(0,28,26,17);c.stroke();
+   for(const [x,y,k] of [[-7,-8,'#e5383b'],[8,-3,'#4dabf7'],[-12,13,'#ffd43b'],[4,15,'#e5383b'],[16,23,'#ffd43b'],[-18,25,'#4dabf7'],[1,-16,'#ffd43b']]){c.beginPath();c.arc(x,y,3.6,0,7);fs(k,1.5,'rgba(0,0,0,.45)');}
+   if(!odd){star(0,-32,11,4.6);fs('#ffcf1f',2,'#9a6a00');}},
+ letter(odd){c.font=P.font;c.textAlign='center';c.textBaseline='middle';c.fillStyle=P.ink;c.fillText(odd?P.odd:P.char,0,3);}
+};
+function bg(){c.fillStyle=lin(0,0,0,1350,[[0,P.bg1],[1,P.bg2]]);c.fillRect(0,0,1080,1350);c.save();c.globalAlpha=.06;c.fillStyle='#fff';for(let y=0;y<1350;y+=28)for(let x=(y/28%2)*14;x<1080;x+=28){c.beginPath();c.arc(x,y,2,0,7);c.fill();}c.restore();}
+function pill(x,y,txt,font,col='#ff3b3b'){c.save();c.font=font;const w=c.measureText(txt).width+44;x=Math.max(70+w/2,Math.min(1010-w/2,x));c.beginPath();c.roundRect(x-w/2,y-30,w,60,30);c.shadowColor='rgba(0,0,0,.35)';c.shadowBlur=14;fs(col,4,'#fff');c.shadowBlur=0;c.fillStyle='#fff';c.textAlign='center';c.textBaseline='middle';c.fillText(txt,x,y+2);c.restore();}
+const px=60,py=200,pw=960,ph=930;
+function line(x0,y0,x1,y1,w,col){c.beginPath();c.moveTo(x0,y0);c.lineTo(x1,y1);c.lineWidth=w;c.strokeStyle=col;c.lineCap='round';c.stroke();}
+function answerBox(lines){ // bottom area of panel (y 880..1110)
+  c.save();c.beginPath();c.roundRect(110,875,860,230,28);fs(P.answer?'#ff3b3b':'rgba(0,0,0,.05)',P.answer?5:3,P.answer?'#fff':'rgba(0,0,0,.12)');
+  c.textAlign='center';c.textBaseline='middle';
+  if(!P.answer){c.font='60px Anton';c.fillStyle=P.ink;c.fillText('?',540,935);c.font='800 34px Inter';c.fillText('COMMENT YOUR ANSWER BELOW',540,1010);c.font='800 24px Inter';c.globalAlpha=.6;c.fillText('THINK TWICE BEFORE YOU ANSWER',540,1058);}
+  else{c.font='86px Anton';c.fillStyle='#fff';c.fillText('ANSWER: '+P.ans,540,935);c.font='800 30px Inter';lines.forEach((t,i)=>c.fillText(t,540,1012+i*44));}
+  c.restore();}
+(async()=>{await document.fonts.load('70px Anton');await document.fonts.load('800 38px Inter');await document.fonts.load('900 38px Inter');
+bg();c.textAlign='center';c.textBaseline='middle';
+fit(P.t1,'$px Anton',72,990);c.fillStyle='#fff';c.fillText(P.t1,540,92);
+fit(P.t2,'800 $px Inter',38,980);c.fillStyle=P.acc;c.fillText(P.t2,540,156);
+c.beginPath();c.roundRect(px,py,pw,ph,36);fs(P.panel,5,'rgba(255,255,255,.25)');
+if(P.mode==='grid'){
+  const L=46,cols=P.cols,rows=P.rows,cw=Math.floor((pw-L-18)/cols),ch=Math.floor((ph-L-18)/rows),gx=px+L+Math.floor((pw-L-18-cw*cols)/2),gy=py+L+Math.floor((ph-L-18-ch*rows)/2);
+  c.font='800 22px Inter';c.fillStyle=P.lab;c.textAlign='center';c.textBaseline='middle';
+  for(let q=0;q<cols;q++)c.fillText(q+1,gx+cw*(q+.5),py+L/2+4);
+  for(let r=0;r<rows;r++)c.fillText(r+1,px+L/2+4,gy+ch*(r+.5));
+  for(let r=0;r<rows;r++)for(let q=0;q<cols;q++){const odd=(r===P.or&&q===P.oc);c.save();c.translate(gx+Math.floor(cw/2)+cw*q,gy+Math.floor(ch/2)+ch*r);c.scale(P.sc,P.sc);I[P.icon](odd);c.restore();}
+  // verification: for every cell, count pixels that differ strongly (>48 in any channel) from each other cell;
+  // a cell is "odd" if its median difference vs all other cells is large (ignores gradient dithering noise)
+  const D=[];for(let r=0;r<rows;r++)for(let q=0;q<cols;q++)D.push({rc:[r+1,q+1],d:c.getImageData(gx+cw*q,gy+ch*r,cw,ch).data});
+  const score=D.map(a=>{const v=D.filter(b=>b!==a).map(b=>{let n=0;for(let i=0;i<a.d.length;i+=4)if(Math.abs(a.d[i]-b.d[i])>48||Math.abs(a.d[i+1]-b.d[i+1])>48||Math.abs(a.d[i+2]-b.d[i+2])>48)n++;return n;}).sort((x,y)=>x-y);return v[v.length>>1];});
+  window.check={cells:D.length,odd:D.map((a,i)=>({rc:a.rc,s:score[i]})).filter(o=>o.s>20),maxNormal:Math.max(...score.filter(s=>s<=20))};
+  if(P.answer){const x=gx+cw*(P.oc+.5),y=gy+ch*(P.or+.5);c.save();c.beginPath();c.arc(x,y,Math.max(cw,ch)*.62,0,7);c.lineWidth=10;c.strokeStyle='#ff3b3b';c.shadowColor='#ff3b3b';c.shadowBlur=20;c.stroke();c.restore();
+    pill(x,y+(P.or<rows-2?ch*1.25+8:-ch*1.25-8),`ROW ${P.or+1}, COLUMN ${P.oc+1}`,'800 30px Inter');}
+}
+if(P.mode==='tri'){
+  const [ax,ay]=P.apex,[[bx0,by],[bx1]]=P.base,hy=P.hy,t=(hy-ay)/(by-ay);
+  if(P.answer){ // shade the two parts in soft colours
+    c.beginPath();c.moveTo(ax,ay);c.lineTo(ax+(bx0-ax)*t,hy);c.lineTo(ax+(bx1-ax)*t,hy);c.closePath();c.fillStyle='rgba(77,212,255,.28)';c.fill();
+    c.beginPath();c.moveTo(ax+(bx0-ax)*t,hy);c.lineTo(bx0,by);c.lineTo(bx1,by);c.lineTo(ax+(bx1-ax)*t,hy);c.closePath();c.fillStyle='rgba(255,176,32,.25)';c.fill();}
+  c.lineJoin='round';const W=12;
+  for(const bx of [bx0,...P.inner,bx1])line(ax,ay,bx,by,W,P.ink);
+  line(bx0,by,bx1,by,W,P.ink);line(ax+(bx0-ax)*t,hy,ax+(bx1-ax)*t,hy,W,P.answer?'#0a8fc0':P.ink);
+  answerBox(P.bd);
+}
+if(P.mode==='sq'){
+  const {x0,y0,size,n4}=P,s=size/n4;
+  if(P.answer){const ex=[[0,0,1,'#e5383b',14],[2,0,2,'#1c7ed6',14],[0,1,3,'#2f9e44',26]];
+    c.save();c.lineWidth=9;c.lineJoin='round';for(const [i,j,k,col,m] of ex){c.strokeStyle=col;c.strokeRect(x0+i*s+m,y0+j*s+m,k*s-2*m,k*s-2*m);}c.restore();}
+  c.lineCap='square';for(let i=0;i<=n4;i++){line(x0+i*s,y0,x0+i*s,y0+size,12,P.ink);line(x0,y0+i*s,x0+size,y0+i*s,12,P.ink);}
+  if(P.answer){c.save();c.lineWidth=10;c.strokeStyle='#e8a400';c.strokeRect(x0-14,y0-14,size+28,size+28);c.restore();}
+  answerBox(['1×1: 16  +  2×2: 9  +  3×3: 4  +  4×4: 1','16 + 9 + 4 + 1 = 30']);
+}
+c.beginPath();c.roundRect(240,1170,600,140,26);c.lineWidth=5;c.strokeStyle='#3ccf73';c.shadowColor='#3ccf73';c.shadowBlur=24;c.stroke();c.shadowBlur=0;
+c.textAlign='center';c.textBaseline='middle';
+c.font='68px Anton';c.fillStyle='#d7ffe3';c.shadowColor='#3ccf73';c.shadowBlur=18;c.fillText('@hit0ms',540,1218);c.shadowBlur=0;
+c.font='800 25px Inter';c.fillStyle='#fff';c.fillText('FOLLOW FOR DAILY CHALLENGES',540,1278);
+if(P.answer){c.save();c.translate(905,1240);c.rotate(-.08);c.beginPath();c.roundRect(-110,-42,220,84,20);fs('#ff3b3b',5,'#fff');c.font='54px Anton';c.fillStyle='#fff';c.fillText('ANSWER',0,4);c.restore();}
+window.done=true;})();
+</script></body></html>
