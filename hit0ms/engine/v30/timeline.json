@@ -1,0 +1,55 @@
+{
+ "fps": 30,
+ "attempts": [
+  {
+   "level": 1,
+   "speed": 0.4,
+   "start": 0,
+   "release": 19,
+   "impact": 46,
+   "hold": 14,
+   "rw": 8,
+   "obj": "classic",
+   "word": "CARROT",
+   "end": 68
+  },
+  {
+   "level": 2,
+   "speed": 0.6,
+   "start": 68,
+   "release": 85,
+   "impact": 103,
+   "hold": 14,
+   "rw": 8,
+   "obj": "tiny",
+   "word": "SNOWBALL",
+   "end": 125
+  },
+  {
+   "level": 3,
+   "speed": 0.8,
+   "start": 125,
+   "release": 140,
+   "impact": 153,
+   "hold": 14,
+   "rw": 8,
+   "obj": "goofy",
+   "word": "MELT",
+   "end": 175
+  },
+  {
+   "level": 4,
+   "speed": 1.0,
+   "start": 175,
+   "release": 195,
+   "impact": 206,
+   "hold": 26,
+   "rw": 8,
+   "obj": "gent",
+   "word": "BLIZZARD",
+   "end": 240
+  }
+ ],
+ "total": 240,
+ "offset": 210
+}
