@@ -301,7 +301,7 @@ claude.use('db').then(d=>{db=d;if(!d){$('prod').innerHTML='<div class="empty">Os
 
 // ---------- comentários (Porta-voz) ----------
 const NETC={IG:['ig','Instagram','instagram'],TT:['tt','TikTok','tiktok_organic'],YT:['yt','YouTube','youtube']};
-const ACC={IG:{'2factos':'17841455871971680','hit0ms':'17841480860002035'},TT:{'2factos':'_000B2sXhH_oIKdEIYYkCeNpx1TTroy2lkZx','hit0ms':'_000W0Pjs680u1XlsI43A14hai_8CGL34k44'}};
+const ACC={IG:{'2factos':'17841455871971680','hit0ms':'17841480860002035'},TT:{'2factos':'_000B2sXhH_oIKdEIYYkCeNpx1TTroy2lkZx','hit0ms':'_000W0Pjs680u1XlsI43A14hai_8CGL34k44'},YT:{'2factos':'88030','hit0ms':'96519'}};
 function renderCom(){if(!ST.comOk)return;const L=lis();const C=[...ST.com].sort((a,b)=>String(b.quando).localeCompare(String(a.quando)));
   const pend=C.filter(c=>c.estado==='pendente');const today=C.filter(c=>String(c.feito||c.quando||'').slice(0,10)===L.date);
   const auto=today.filter(c=>c.estado==='auto').length,hid=today.filter(c=>c.estado==='escondido').length,sent=today.filter(c=>c.estado==='enviado').length;
@@ -321,11 +321,11 @@ $('com').addEventListener('click',async e=>{const b=e.target.closest('button[dat
   const n=NETC[c.net];const account=c.account_id||ACC[c.net]?.[c.acct];const act=b.dataset.act;
   try{if(act==='ign'){await db.collection('comentarios').doc(c._id).update({estado:'ignorado',feito:new Date().toISOString()});return;}
     if(act==='send'){const msg=box.querySelector('textarea').value.trim();if(!msg){toast('Escreve a resposta primeiro.');return;}
-      b.disabled=true;b.textContent='A enviar…';const params={comment_id:String(c.comment_id),message:msg.slice(0,1100)};if(c.net==='TT')params.video_id=String(c.video_id||'');
+      b.disabled=true;b.textContent='A enviar…';const params=c.net==='YT'?{comment_id:String(c.comment_id),text:msg.slice(0,1100)}:{comment_id:String(c.comment_id),message:msg.slice(0,1100)};if(c.net==='TT')params.video_id=String(c.video_id||'');
       await mcp.callTool(WS,'execute_action',{connector:n[2],action:'reply_to_comment',account,params});
       await db.collection('comentarios').doc(c._id).update({estado:'enviado',resposta:msg,feito:new Date().toISOString()});toast('Resposta enviada!');}
     if(act==='hide'){if(!(await confirmBox('Esconder comentário','Fica visível só para quem o escreveu. Dá para desfazer na app.','Esconder')))return;
-      const params={comment_id:String(c.comment_id)};if(c.net==='TT')params.video_id=String(c.video_id||'');
-      await mcp.callTool(WS,'execute_action',{connector:n[2],action:'hide_comment',account,params});
+      const params={comment_id:String(c.comment_id)};if(c.net==='TT')params.video_id=String(c.video_id||'');if(c.net==='YT')params.status='heldForReview';
+      await mcp.callTool(WS,'execute_action',{connector:n[2],action:c.net==='YT'?'moderate_comment':'hide_comment',account,params});
       await db.collection('comentarios').doc(c._id).update({estado:'escondido',feito:new Date().toISOString()});toast('Escondido.');}}
   catch(err){toast('Não consegui: '+errMsg(err,WS));b.disabled=false;b.textContent=act==='send'?'Enviar':act==='hide'?'Esconder':'Ignorar';}});
