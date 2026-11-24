@@ -1,0 +1,55 @@
+{
+ "fps": 30,
+ "attempts": [
+  {
+   "level": 1,
+   "speed": 0.4,
+   "start": 0,
+   "release": 16,
+   "impact": 43,
+   "hold": 14,
+   "rw": 8,
+   "obj": "ball",
+   "word": "PAR",
+   "end": 65
+  },
+  {
+   "level": 2,
+   "speed": 0.6,
+   "start": 65,
+   "release": 82,
+   "impact": 100,
+   "hold": 14,
+   "rw": 8,
+   "obj": "flag",
+   "word": "BIRDIE",
+   "end": 122
+  },
+  {
+   "level": 3,
+   "speed": 0.8,
+   "start": 122,
+   "release": 139,
+   "impact": 152,
+   "hold": 14,
+   "rw": 8,
+   "obj": "bag",
+   "word": "EAGLE",
+   "end": 174
+  },
+  {
+   "level": 4,
+   "speed": 1.0,
+   "start": 174,
+   "release": 196,
+   "impact": 207,
+   "hold": 25,
+   "rw": 8,
+   "obj": "trophy",
+   "word": "ALBATROSS",
+   "end": 240
+  }
+ ],
+ "total": 240,
+ "offset": 211
+}
