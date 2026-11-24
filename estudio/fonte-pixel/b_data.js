@@ -34,7 +34,7 @@ function errMsg(e,server){const c=e&&e.code;
 
 // =================== ESTADO ===================
 const ST={mc:{},mcPast:{},mcErr:{},w:{},wErr:{},stamp:{},db:null,ped:[],pedOk:false,com:[],comOk:false};
-const UI={anaAcct:'2factos',vidAcct:'all',vidSort:'date',pick:{},editing:null,optState:null,ownPub:null,ownAcct:'2 Factos'};
+const UI={anaAcct:'2factos',vidAcct:'all',vidSort:'date',pick:{},editing:null};
 let D=null; // derivados
 function derive(){const L=lis();const d={};
   // agenda
@@ -120,22 +120,16 @@ function renderAgenda(){const el=$('agenda');const errs=Object.entries(ST.mcErr)
     const badge=p.state==='done'?'<span class="chip done">saiu em tudo</span>':p.state==='err'?'<span class="chip err">erro</span>':p.state==='pause'?'<span class="chip pause">em pausa</span>':p===D.next?'<span class="chip next">a seguir</span>':'';
     const future=p.date>L.date||p.min>L.min+2;const editable=future&&!p.anyDone;
     let acts='';
-    if(editable){if(UI.editing==='o:'+p.id)acts=optsBlock(p);else if(UI.editing===p.id)acts=`<div class="row"><input type="datetime-local" id="dt-${esc(p.id)}" value="${esc(p.date)}T${esc(p.time)}" min="${esc(L.date)}T00:00"><button type="button" class="sm primary" data-act="save" data-id="${esc(p.id)}">Guardar</button><button type="button" class="sm" data-act="cancel">Cancelar</button></div>`;
-      else acts=`<div class="row"><button type="button" class="sm" data-act="edit" data-id="${esc(p.id)}">Mudar hora</button><button type="button" class="sm" data-act="opts" data-id="${esc(p.id)}">Onde sai</button>${p.state==='pause'?`<button type="button" class="sm" data-act="resume" data-id="${esc(p.id)}">Retomar</button>`:`<button type="button" class="sm" data-act="pause" data-id="${esc(p.id)}">Pausar</button>`}</div>`;}
-    h+=`<div class="post"><div class="time">${esc(p.time)}</div><div><div class="acct">${esc(LABEL[p.acct])}</div><div class="t">${esc(p.title)}</div><div class="chips">${p.nets.map(netChip).join('')}${p.trial?'<span class="chip trial">trial reel</span>':''}${p.raw.instagramData?.type==='STORY'&&p.nets.some(n=>n.k==='IG')?'<span class="chip trial">story IG</span>':''}${p.raw.facebookData?.type==='STORY'&&p.nets.some(n=>n.k==='FB')?'<span class="chip trial">story FB</span>':''}${p.raw.autoPublish===false?'<span class="chip next">📲 acabas tu</span>':''}${badge}</div>${acts}</div></div>`;}
+    if(editable){if(UI.editing===p.id)acts=`<div class="row"><input type="datetime-local" id="dt-${esc(p.id)}" value="${esc(p.date)}T${esc(p.time)}" min="${esc(L.date)}T00:00"><button type="button" class="sm primary" data-act="save" data-id="${esc(p.id)}">Guardar</button><button type="button" class="sm" data-act="cancel">Cancelar</button></div>`;
+      else acts=`<div class="row"><button type="button" class="sm" data-act="edit" data-id="${esc(p.id)}">Mudar hora</button>${p.state==='pause'?`<button type="button" class="sm" data-act="resume" data-id="${esc(p.id)}">Retomar</button>`:`<button type="button" class="sm" data-act="pause" data-id="${esc(p.id)}">Pausar</button>`}</div>`;}
+    h+=`<div class="post"><div class="time">${esc(p.time)}</div><div><div class="acct">${esc(LABEL[p.acct])}</div><div class="t">${esc(p.title)}</div><div class="chips">${p.nets.map(netChip).join('')}${p.trial?'<span class="chip trial">trial reel</span>':''}${badge}</div>${acts}</div></div>`;}
   if(!h)h='<div class="empty">Nada agendado nos próximos 7 dias.</div>';
   for(const [a,e] of errs)h+=`<p class="warnbox">${esc(LABEL[a])}: ${esc(errMsg(e,MC))}</p>`;
-  h+='<p class="note">Só dá para mexer em posts que ainda não saíram. "Onde sai" muda as redes, reel/trial reel/story e cria stories extra.</p>';
+  h+='<p class="note">Só dá para mexer em posts que ainda não saíram.</p>';
   el.innerHTML=h;}
 $('agenda').addEventListener('click',async e=>{const b=e.target.closest('button[data-act]');if(!b)return;const act=b.dataset.act;
-  if(act==='cancel'){UI.editing=null;UI.optState=null;renderAgenda();return;}
+  if(act==='cancel'){UI.editing=null;renderAgenda();return;}
   const p=D.posts.find(x=>x.id===b.dataset.id);if(!p)return;
-  if(act==='opts'){UI.editing='o:'+p.id;UI.optState=initOpts(p);renderAgenda();return;}
-  if(act==='saveopts'||act==='story'){await optsAction(act,p,b);return;}
-  if(act==='linkstory'){const [dd,tt]=plus30(p.date,p.time);const title=String(p.title||'Vídeo').slice(0,90);
-    if(!(await confirmBox('Story com link',`A oficina faz a story de "${title.slice(0,50)}" e agenda-a para ${wd(dd)} ${dm(dd)} às ${tt} (Instagram e Facebook). Recebes uma notificação do Metricool para pores o link e a música.`,'Pedir')))return;
-    if(await addPedidos([{n:null,acct:p.acct==='hit0ms'?'Hit0Ms':'2 Factos',tipo:'story_link',text:'Story com link: '+title,date:dd,time:tt,post:{blog:p.blog,id:String(p.raw.id),uuid:String(p.raw.uuid),title,date:p.date,time:p.time},estado:'novo',criado:new Date().toISOString(),relatorio:'',nota:''}])){toast('Pedido! A oficina faz a story na próxima ronda.');UI.editing=null;UI.optState=null;renderAgenda();}
-    return;}
   if(act==='edit'){UI.editing=p.id;renderAgenda();$('dt-'+p.id)?.focus();return;}
   let patch={},msg='';
   if(act==='save'){const v=$('dt-'+p.id).value;if(!v){return;}const [dd,tt]=v.split('T');const L=lis();if(dd<L.date||(dd===L.date&&(+tt.slice(0,2)*60+ +tt.slice(3,5))<=L.min)){toast('Essa hora já passou.');return;}
@@ -144,55 +138,12 @@ $('agenda').addEventListener('click',async e=>{const b=e.target.closest('button[
   if(act==='resume'){patch={draft:false};msg=`Retomar "${p.title.slice(0,50)}"? Volta a sair às ${p.time} de ${dm(p.date)}.`;}
   if(!(await confirmBox(act==='save'?'Mudar hora':act==='pause'?'Pausar post':'Retomar post',msg)))return;
   const raw=JSON.parse(JSON.stringify(p.raw));for(const k of ['id','uuid','creationDate','creatorUserMail','creatorUserId','brandTags'])delete raw[k];
-  raw.providers=(raw.providers||[]).map(x=>({network:x.network}));Object.assign(raw,patch);stripNets(raw);
+  raw.providers=(raw.providers||[]).map(x=>({network:x.network}));Object.assign(raw,patch);
   b.disabled=true;b.textContent='A guardar…';
   try{await mcp.callTool(MC,'updateScheduledPost',{id:String(p.raw.id),uuid:String(p.raw.uuid),blogId:p.blog,info:JSON.stringify(raw)});
     toast('Feito! O Metricool já tem a alteração.');UI.editing=null;refreshAll();}
   catch(err){toast('Não consegui: '+errMsg(err,MC));b.disabled=false;b.textContent='Tentar outra vez';}});
 
-// o Metricool recusa dados de redes que não estão nos providers (ex.: twitterData)
-const NETDATA={twitter:'twitterData',facebook:'facebookData',instagram:'instagramData',linkedin:'linkedinData',pinterest:'pinterestData',youtube:'youtubeData',tiktok:'tiktokData',bluesky:'blueskyData',threads:'threadsData',gmb:'gmbData'};
-function stripNets(raw){const keep=new Set((raw.providers||[]).map(x=>x.network));for(const [n,f] of Object.entries(NETDATA))if(!keep.has(n))delete raw[f];return raw;}
-function plus30(d,t){let m=+t.slice(0,2)*60+ +t.slice(3,5)+30,dd=d;if(m>=1440){m-=1440;dd=addDays(d,1);}return [dd,String(Math.floor(m/60)).padStart(2,'0')+':'+String(m%60).padStart(2,'0')];}
-const isVid=r=>/\.(mp4|mov|m4v)(\?|$)/i.test(String(r.media?.[0]||''));
-function initOpts(p){const r=p.raw,v=isVid(r);return {redes:p.nets.map(n=>n.k).filter(k=>NETS.includes(k)),ig:r.instagramData?.type||(v?'REEL':'POST'),fb:r.facebookData?.type||(v?'REEL':'POST'),stories:[]};}
-function optsBlock(p){const o=UI.optState||initOpts(p),v=isVid(p.raw);const nets=v?NETS:['IG','FB'];
-  return `<div class="pub" data-k="agenda"><div class="r"><span class="lb">Onde sai</span>${netBoxes(o,nets)}</div>
-  ${o.redes.includes('IG')?`<div class="r"><span class="lb">Instagram</span><select data-pf="ig" aria-label="Tipo no Instagram">${opt(v?['REEL','TRIAL_REEL','STORY']:['POST','STORY'],o.ig)}</select></div>`:''}
-  ${o.redes.includes('FB')?`<div class="r"><span class="lb">Facebook</span><select data-pf="fb" aria-label="Tipo no Facebook">${opt(v?['REEL','POST','STORY']:['POST','STORY'],o.fb)}</select></div>`:''}
-  <div class="r"><button type="button" class="sm primary" data-act="saveopts" data-id="${esc(p.id)}">Guardar</button><button type="button" class="sm" data-act="cancel">Fechar</button></div>
-  <div class="r"><span class="lb">Story extra</span><button type="button" class="sm" data-act="story" data-net="IG" data-id="${esc(p.id)}">+ Instagram</button><button type="button" class="sm" data-act="story" data-net="FB" data-id="${esc(p.id)}">+ Facebook</button></div>
-  ${v?`<div class="r"><span class="lb">+30 min</span><button type="button" class="sm" data-act="linkstory" data-id="${esc(p.id)}">+ Story com link e música</button></div>`:''}
-  <p class="note">Story extra = post novo com o mesmo ${v?'vídeo':'imagem'}, à mesma hora, sem legenda.</p></div>`;}
-$('agenda').addEventListener('change',e=>{const t=e.target;if(!t.closest('.pub[data-k="agenda"]')||!UI.optState)return;pubEdit(UI.optState,t);renderAgenda();});
-async function optsAction(act,p,b){const r=p.raw;const L=lis();if(p.date<L.date||(p.date===L.date&&p.min<=L.min+2)){toast('Este post já está a sair.');return;}
-  const title=String(r.youtubeData?.title||r.tiktokData?.title||capLine(r.text)||'Vídeo').replace(/\s*#shorts/i,'').trim();
-  if(act==='story'){const net=b.dataset.net;if(!r.media?.length){toast('Este post não tem vídeo nem imagem.');return;}
-    if(!(await confirmBox('Story extra',`Criar uma story no ${NET[net]} com o mesmo ${isVid(r)?'vídeo':'imagem'} de "${title.slice(0,50)}", ${wd(p.date)} ${dm(p.date)} às ${p.time}?`,'Criar story')))return;
-    const info={autoPublish:true,draft:false,descendants:[],hasNotReadNotes:false,shortener:false,smartLinkData:{ids:[]},mediaAltText:[],firstCommentText:'',
-      publicationDate:{dateTime:r.publicationDate.dateTime,timezone:r.publicationDate.timezone||'Europe/Lisbon'},media:[...r.media],providers:[{network:NETK[net]}]};
-    if(net==='IG')info.instagramData={type:'STORY',isAiGenerated:r.instagramData?.isAiGenerated??true};else info.facebookData={type:'STORY'};
-    b.disabled=true;b.textContent='A criar…';
-    try{await mcp.callTool(MC,'createScheduledPost',{blogId:p.blog,date:`${r.publicationDate.dateTime}${lisOffset()}`,info:JSON.stringify(info)});
-      toast(`Story no ${NET[net]} agendada!`);UI.editing=null;UI.optState=null;refreshAll();}
-    catch(err){toast('Não consegui: '+errMsg(err,MC));b.disabled=false;b.textContent='Tentar outra vez';}
-    return;}
-  const o=UI.optState;if(!o||!o.redes.length){toast('Escolhe pelo menos uma rede.');return;}
-  if(!isVid(r)&&o.redes.some(k=>k==='TT'||k==='YT')){toast('TikTok e YouTube precisam de vídeo.');return;}
-  const desc=o.redes.map(k=>k==='IG'?'Instagram '+TIPO[o.ig].toLowerCase():k==='FB'?'Facebook '+TIPO[o.fb].toLowerCase():NET[k]).join(', ');
-  if(!(await confirmBox('Onde sai',`"${title.slice(0,50)}" vai sair em: ${desc}.`,'Guardar')))return;
-  const raw=JSON.parse(JSON.stringify(r));for(const k of ['id','uuid','creationDate','creatorUserMail','creatorUserId','brandTags'])delete raw[k];
-  raw.providers=o.redes.map(k=>({network:NETK[k]}));
-  if(o.redes.includes('IG'))raw.instagramData={...(raw.instagramData||{}),type:o.ig,isAiGenerated:raw.instagramData?.isAiGenerated??true};
-  if(o.redes.includes('FB'))raw.facebookData={...(raw.facebookData||{}),type:o.fb};
-  if(o.redes.includes('TT')&&!raw.tiktokData?.title)raw.tiktokData={privacyOption:'PUBLIC_TO_EVERYONE',...(raw.tiktokData||{}),title:title.slice(0,90),isAigc:true};
-  if(o.redes.includes('YT')&&!raw.youtubeData?.title)raw.youtubeData={type:'short',privacy:'public',madeForKids:false,...(raw.youtubeData||{}),title:(title.slice(0,88)+' #shorts')};
-  stripNets(raw);
-  if(o.redes.every(k=>(k==='IG'&&o.ig==='STORY')||(k==='FB'&&o.fb==='STORY'))){raw.text='';raw.firstCommentText='';}
-  b.disabled=true;b.textContent='A guardar…';
-  try{await mcp.callTool(MC,'updateScheduledPost',{id:String(r.id),uuid:String(r.uuid),blogId:p.blog,info:JSON.stringify(raw)});
-    toast('Feito! O Metricool já tem a alteração.');UI.editing=null;UI.optState=null;refreshAll();}
-  catch(err){toast('Não consegui: '+errMsg(err,MC));b.disabled=false;b.textContent='Tentar outra vez';}}
 function setTabs(){for(const g of document.querySelectorAll('.tabs[data-k]'))for(const b of g.children)b.setAttribute('aria-pressed',String(b.dataset.v===UI[g.dataset.k]));}
 document.addEventListener('click',e=>{const b=e.target.closest('.tabs[data-k] button');if(!b)return;UI[b.parentElement.dataset.k]=b.dataset.v;setTabs();renderAna();renderVids();});
 function tile(k,color,v,d,dcls=''){return `<div class="tile"><div class="k">${color?`<i style="background:${color}"></i>`:''}${esc(k)}</div><div class="v">${v}</div><div class="d ${dcls}">${d}</div></div>`;}
@@ -237,43 +188,19 @@ function renderVids(){if(!D.hasW)return;const rows=vidRows();
 
 // ---------- ideias -> pedidos ----------
 const DEF_T={'2 Factos':['12:30','22:30'],'Hit0Ms':['12:00','18:00'],'Desafio FB':['15:00','20:00']};
-// ---------- onde publicar (ideias e correio) ----------
-const NETS=['IG','FB','TT','YT'],NETK={IG:'instagram',FB:'facebook',TT:'tiktok',YT:'youtube'};
-const TIPO={REEL:'Reel',TRIAL_REEL:'Trial reel',POST:'Post',STORY:'Story'};
-function defPub(acct){if(acct==='2 Factos')return {redes:['IG','FB','TT','YT'],ig:'TRIAL_REEL',fb:'REEL',stories:[],linkStory:true};
-  if(acct==='Desafio FB')return {redes:['FB'],ig:'POST',fb:'POST',stories:[],linkStory:false};
-  return {redes:['IG','TT','YT'],ig:'REEL',fb:'REEL',stories:[],linkStory:true};}
-const opt=(arr,cur)=>arr.map(o=>`<option value="${o}" ${cur===o?'selected':''}>${TIPO[o]}</option>`).join('');
-function netBoxes(p,list=NETS){return list.map(n=>`<label class="ck"><input type="checkbox" data-pf="net" data-v="${n}" ${p.redes.includes(n)?'checked':''}>${NET[n]}</label>`).join('');}
-function pubBlock(k,p,acct){const img=acct==='Desafio FB';
-  return `<div class="pub" data-k="${esc(k)}"><div class="r"><span class="lb">Onde sai</span>${netBoxes(p)}</div>
-  ${p.redes.includes('IG')?`<div class="r"><span class="lb">Instagram</span><select data-pf="ig" aria-label="Tipo no Instagram">${opt(img?['POST']:['REEL','TRIAL_REEL'],p.ig)}</select></div>`:''}
-  ${p.redes.includes('FB')?`<div class="r"><span class="lb">Facebook</span><select data-pf="fb" aria-label="Tipo no Facebook">${opt(img?['POST']:['REEL','POST'],p.fb)}</select></div>`:''}
-  <div class="r"><span class="lb">+ Story</span>${['IG','FB'].map(n=>`<label class="ck"><input type="checkbox" data-pf="story" data-v="${n}" ${p.stories.includes(n)?'checked':''}>${NET[n]}</label>`).join('')}</div>
-  ${img?'':`<div class="r"><span class="lb">+30 min</span><label class="ck"><input type="checkbox" data-pf="link" ${p.linkStory?'checked':''}>Story com link e música (IG + FB)</label></div>`}</div>`;}
-function pubEdit(p,t){const f=t.dataset.pf,v=t.dataset.v;
-  if(f==='net')p.redes=t.checked?NETS.filter(n=>n===v||p.redes.includes(n)):p.redes.filter(x=>x!==v);
-  else if(f==='story')p.stories=t.checked?[...new Set([...(p.stories||[]),v])]:(p.stories||[]).filter(x=>x!==v);
-  else if(f==='link')p.linkStory=t.checked;
-  else if(f==='ig'||f==='fb')p[f]=t.value;}
-function pubText(p){if(!p||!p.redes)return '';return [...p.redes.map(n=>n==='IG'?'IG '+String(TIPO[p.ig]||'').toLowerCase():n==='FB'?'FB '+String(TIPO[p.fb]||'').toLowerCase():n),...(p.stories||[]).map(n=>'story '+n),...(p.linkStory?['story c/ link +30 min']:[])].join(' · ');}
-function renderOwnPub(){const el=$('own-pub'),sel=$('own-acct');if(!el||!sel)return;const a=sel.value;if(!UI.ownPub||UI.ownAcct!==a){UI.ownPub=defPub(a);UI.ownAcct=a;}el.innerHTML=pubBlock('own',UI.ownPub,a);}
 function renderIdeas(){const I=ST.db?.ideas||[];const L=lis();const taken=new Set(ST.ped.filter(p=>p.date>=L.date&&p.n!=null&&p.relatorio===ST.db?.updated).map(p=>p.n));
   let h='';
   if(!I.length)h+=`<div class="empty">As ideias chegam às 8:53.</div>`;
-  else{h+=`<p class="note">Marca, escolhe dia, hora e onde sai, manda.</p>`;
+  else{h+=`<p class="note">Marca, escolhe dia e hora, manda.</p>`;
     for(const it of I){const id='i'+it.n;const on=!!UI.pick[id];const done=taken.has(it.n);const dt=DEF_T[it.acct]||['12:00','18:00'];
-      h+=`<div class="idea ${on?'on':''}"><input type="checkbox" id="${id}" data-n="${esc(it.n)}" ${on?'checked':''} ${done?'disabled':''} aria-label="Escolher ideia ${esc(it.n)}"><div><label for="${id}"><span class="num">${esc(it.n)}</span><span class="acct">${esc(it.acct)}</span><br>${esc(it.text)}${done?' <span class="chip done">já pedida</span>':''}</label>
-      ${on?`<div class="when"><select data-f="day" data-n="${esc(it.n)}" aria-label="Dia"><option value="0" ${UI.pick[id].day==0?'selected':''}>Hoje</option><option value="1" ${UI.pick[id].day==1?'selected':''}>Amanhã</option><option value="2" ${UI.pick[id].day==2?'selected':''}>Depois de amanhã</option></select><input type="time" data-f="time" data-n="${esc(it.n)}" value="${esc(UI.pick[id].time||dt[0])}" aria-label="Hora"></div>${pubBlock(id,UI.pick[id].pub||(UI.pick[id].pub=defPub(it.acct)),it.acct)}`:''}</div></div>`;}}
-  h+=`<details ${I.length?'':'open'}><summary>Pedir uma ideia minha</summary><div style="display:grid;gap:8px;margin-top:8px"><select class="field" id="own-acct">${['2 Factos','Hit0Ms','Desafio FB'].map(a=>`<option ${UI.ownAcct===a?'selected':''}>${a}</option>`).join('')}</select><textarea class="field" id="own-text" placeholder="Ex.: Hit0Ms com copos de vidro a partir, 4 cores"></textarea><div id="own-pub"></div><div style="display:flex;gap:6px;flex-wrap:wrap"><select class="field" id="own-day"><option value="0">Hoje</option><option value="1">Amanhã</option><option value="2">Depois de amanhã</option></select><input class="field" type="time" id="own-time" value="18:00"><button type="button" class="sm" id="own-go">Mandar esta</button></div></div></details>`;
+      h+=`<div class="idea ${on?'on':''}"><input type="checkbox" id="${id}" data-n="${esc(it.n)}" ${on?'checked':''} ${done?'disabled':''} aria-label="Escolher ideia ${esc(it.n)}"><label for="${id}"><span class="num">${esc(it.n)}</span><span class="acct">${esc(it.acct)}</span><br>${esc(it.text)}${done?' <span class="chip done">já pedida</span>':''}
+      ${on?`<div class="when"><select data-f="day" data-n="${esc(it.n)}" aria-label="Dia"><option value="0" ${UI.pick[id].day==0?'selected':''}>Hoje</option><option value="1" ${UI.pick[id].day==1?'selected':''}>Amanhã</option><option value="2" ${UI.pick[id].day==2?'selected':''}>Depois de amanhã</option></select><input type="time" data-f="time" data-n="${esc(it.n)}" value="${esc(UI.pick[id].time||dt[0])}" aria-label="Hora"></div>`:''}</label></div>`;}}
+  h+=`<details ${I.length?'':'open'}><summary>Pedir uma ideia minha</summary><div style="display:grid;gap:8px;margin-top:8px"><select class="field" id="own-acct"><option>2 Factos</option><option>Hit0Ms</option><option>Desafio FB</option></select><textarea class="field" id="own-text" placeholder="Ex.: Hit0Ms com copos de vidro a partir, 4 cores"></textarea><div style="display:flex;gap:6px;flex-wrap:wrap"><select class="field" id="own-day"><option value="0">Hoje</option><option value="1">Amanhã</option><option value="2">Depois de amanhã</option></select><input class="field" type="time" id="own-time" value="18:00"><button type="button" class="sm" id="own-go">Mandar esta</button></div></div></details>`;
   const n=Object.keys(UI.pick).length;
   if(I.length)h+=`<div class="sticky"><span class="note">${n?`${n} escolhida${n>1?'s':''}`:'Nenhuma escolhida'}</span><button type="button" class="primary" id="send-picks" ${n?'':'disabled'}>Mandar para a produção</button></div>`;
-  $('ideas').innerHTML=h;renderOwnPub();}
-$('ideas').addEventListener('change',e=>{const t=e.target;
-  const pb=t.closest('.pub');if(pb){const k=pb.dataset.k;const p=k==='own'?UI.ownPub:UI.pick[k]?.pub;if(p){pubEdit(p,t);if(k==='own')renderOwnPub();else renderIdeas();}return;}
-  if(t.id==='own-acct'){renderOwnPub();return;}
-  const id='i'+t.dataset.n;
-  if(t.type==='checkbox'){const it=(ST.db?.ideas||[]).find(x=>String(x.n)===t.dataset.n);if(t.checked)UI.pick[id]={day:0,time:(DEF_T[it?.acct]||['12:00'])[0],pub:defPub(it?.acct)};else delete UI.pick[id];renderIdeas();return;}
+  $('ideas').innerHTML=h;}
+$('ideas').addEventListener('change',e=>{const t=e.target;const id='i'+t.dataset.n;
+  if(t.type==='checkbox'){const it=(ST.db?.ideas||[]).find(x=>String(x.n)===t.dataset.n);if(t.checked)UI.pick[id]={day:0,time:(DEF_T[it?.acct]||['12:00'])[0]};else delete UI.pick[id];renderIdeas();return;}
   if(t.dataset.f&&UI.pick[id])UI.pick[id][t.dataset.f]=t.value;});
 async function addPedidos(list){if(!db){toast('Abre a página no claude.ai para mandar pedidos.');return false;}
   try{for(const p of list){await db.collection('pedidos').doc('p'+Date.now()+Math.floor(Math.random()*1000)).set(p);}return true;}
@@ -282,16 +209,14 @@ $('ideas').addEventListener('click',async e=>{const L=lis();
   if(e.target.id==='send-picks'){const I=ST.db?.ideas||[];const list=[];
     for(const [id,v] of Object.entries(UI.pick)){const it=I.find(x=>'i'+x.n===id);if(!it)continue;const date=addDays(L.date,+v.day||0);const time=v.time||'12:00';
       if(date===L.date&&(+time.slice(0,2)*60+ +time.slice(3,5))<L.min+60){toast(`A ideia ${it.n} precisa de pelo menos 1 hora. Escolhe mais tarde.`);return;}
-      if(v.pub&&!v.pub.redes.length&&!(v.pub.stories||[]).length){toast(`A ideia ${it.n} não tem nenhuma rede escolhida.`);return;}
-      list.push({n:it.n,acct:it.acct,text:String(it.text),date,time,pub:v.pub||defPub(it.acct),estado:'novo',criado:new Date().toISOString(),relatorio:ST.db?.updated||'',nota:''});}
+      list.push({n:it.n,acct:it.acct,text:String(it.text),date,time,estado:'novo',criado:new Date().toISOString(),relatorio:ST.db?.updated||'',nota:''});}
     if(!list.length)return;
-    if(!(await confirmBox('Mandar para a produção',`${list.length} pedido${list.length>1?'s':''}: ${list.map(p=>`${p.n} (${wd(p.date)} ${p.time} · ${pubText(p.pub)})`).join(', ')}. A oficina pega nisto na próxima ronda.`,'Mandar')))return;
+    if(!(await confirmBox('Mandar para a produção',`${list.length} pedido${list.length>1?'s':''}: ${list.map(p=>`${p.n} (${wd(p.date)} ${p.time})`).join(', ')}. A oficina pega nisto na próxima ronda.`,'Mandar')))return;
     e.target.disabled=true;if(await addPedidos(list)){UI.pick={};toast('Mandado! O Guionista trata disso.');}else e.target.disabled=false;}
   if(e.target.id==='own-go'){const text=$('own-text').value.trim();if(text.length<6){toast('Escreve a ideia com um pouco mais de detalhe.');return;}
     const date=addDays(L.date,+$('own-day').value),time=$('own-time').value||'18:00';
     if(date===L.date&&(+time.slice(0,2)*60+ +time.slice(3,5))<L.min+60){toast('Precisa de pelo menos 1 hora. Escolhe mais tarde.');return;}
-    renderOwnPub();const pub=UI.ownPub;if(!pub.redes.length&&!pub.stories.length){toast('Escolhe pelo menos uma rede.');return;}
-    if(await addPedidos([{n:null,acct:$('own-acct').value,text:text.slice(0,600),date,time,pub,estado:'novo',criado:new Date().toISOString(),relatorio:'',nota:''}])){toast('Mandado! O Guionista trata disso.');}}});
+    if(await addPedidos([{n:null,acct:$('own-acct').value,text:text.slice(0,600),date,time,estado:'novo',criado:new Date().toISOString(),relatorio:'',nota:''}])){toast('Mandado! O Guionista trata disso.');}}});
 
 // ---------- produção ----------
 const ESTADOS=[['novo','Na fila'],['a_fazer','Em produção'],['precisa_voz','Precisa da tua voz'],['voz_recebida','Voz recebida'],['agendado','Agendado']];
@@ -301,7 +226,7 @@ function renderProd(){const P=[...ST.ped].sort((a,b)=>String(b.criado).localeCom
   let h='<p class="note">A oficina passa de hora a hora (9h–23h).</p>';
   for(const p of P.slice(0,30)){const i=ESTADOS.findIndex(x=>x[0]===p.estado);const err=p.estado==='erro';
     h+=`<div class="ped"><div style="display:flex;justify-content:space-between;gap:8px;align-items:baseline"><span class="acct">${esc(p.acct)}${p.n!=null?' · ideia '+esc(p.n):''}</span><span class="note">${esc(wd(p.date||lis().date))} ${esc(dm(p.date||lis().date))} · ${esc(p.time||'')}</span></div>
-    <div style="font-weight:600">${esc(p.text)}</div>${p.pub?`<div class="chips"><span class="chip">${esc(pubText(p.pub))}</span></div>`:''}<div class="steps" aria-hidden="true">${ESTADOS.map((x,j)=>`<i class="${err?'err':j<=i?'on':''}"></i>`).join('')}</div>
+    <div style="font-weight:600">${esc(p.text)}</div><div class="steps" aria-hidden="true">${ESTADOS.map((x,j)=>`<i class="${err?'err':j<=i?'on':''}"></i>`).join('')}</div>
     <div class="chips"><span class="chip ${err?'err':p.estado==='agendado'?'done':p.estado==='precisa_voz'?'next':''}">${esc(err?'Erro':(ESTADOS[i]?.[1]||p.estado))}</span></div>
     ${p.nota?`<p class="note">${esc(p.nota)}</p>`:''}
     ${p.guiao&&p.estado==='precisa_voz'?`<pre class="guiao">${esc(p.guiao)}</pre><div style="display:flex;gap:6px;flex-wrap:wrap"><button type="button" class="sm" data-act="copy" data-id="${esc(p._id)}">Copiar guião</button><label class="btn sm" style="padding:4px 9px;font-size:12px;border-width:1.5px;border-radius:8px">Enviar MP3<input type="file" accept="audio/mpeg,audio/mp3,.mp3,audio/*" data-act="mp3" data-id="${esc(p._id)}" class="sr"></label><span class="note" id="up-${esc(p._id)}"></span></div>`:''}
@@ -331,7 +256,7 @@ function renderHud(){
   const nI=(ST.db?.ideas||[]).length;const dot2=document.querySelector('#dock button[data-id="ide"] .dot');if(dot2){dot2.textContent=nI;dot2.hidden=!nI;}}
 let onWorld=()=>{};
 let renderQ=false;function renderAll(){if(renderQ)return;renderQ=true;requestAnimationFrame(()=>{renderQ=false;derive();
-  if(UI.editing==null)renderAgenda();renderAna();renderLab();renderVids();if(!document.activeElement?.closest?.('#ideas'))renderIdeas();renderProd();renderChal();renderCom();renderHud();onWorld();});}
+  if(UI.editing==null)renderAgenda();renderAna();renderLab();renderVids();if(!document.activeElement?.closest?.('#ideas'))renderIdeas();renderProd();renderChal();renderCom();renderPla();renderHud();onWorld();});}
 setInterval(renderAll,60000);
 
 // =================== LIGAÇÕES AO VIVO ===================
@@ -342,6 +267,9 @@ const WIN={
   igMedia:{connector:'instagram',fields:['account_name','date','media_caption','media_views','media_reach','media_reel_skip_rate','media_permalink','media_like_count','media_comments_count','media_shares'],date_preset:'last_28dT'},
   tt:{connector:'tiktok_organic',fields:['username','video_caption','video_views_count','video_likes','video_full_watched_rate','video_create_datetime'],date_preset:'last_28dT'},
   yt:{connector:'youtube',fields:['account_name','video_title','video_view_count','video_like_count','published_at','subscriber_count'],date_preset:'last_28dT'},
+  bbIG:{connector:'instagram',fields:['account_name','date','media_id','media_caption','media_permalink','media_thumbnail_url','media_views','media_like_count','media_comments_count','media_shares','media_saved','media_reel_skip_rate','media_reel_avg_watch_time'],date_preset:'last_7dT'},
+  bbTT:{connector:'tiktok_organic',fields:['username','video_id','video_caption','video_create_datetime','video_views_count','video_likes','video_comments','video_shares','video_average_time_watched','video_duration','video_full_watched_rate','video_share_url'],date_preset:'last_7dT'},
+  bbYT:{connector:'youtube',fields:['account_name','video_title','published_at','video_view_count','video_like_count','video_comment_count','average_view_duration','average_view_percentage'],date_preset:'last_7dT'},
   fb:{connector:'facebook_organic',fields:['account_name','date','blue_reels_play_count','page_follows'],date_preset:'last_28dT'}};
 const pendingRetry={};
 function onWin(k){return ev=>{
@@ -359,7 +287,7 @@ function inputs(){const L=lis();return {agenda:b=>mcRange(b,L.date,addDays(L.dat
 function startWatches(){while(unsubs.length)unsubs.pop()();watchedDay=lis().date;const I=inputs();
   for(const b of BRANDS){unsubs.push(mcp.watchTool(MC,'getScheduledPosts',I.agenda(b),onMc(b,'mc'),{cache:{staleTime:120000,gcTime:3600000},refetchInterval:180000}));
     unsubs.push(mcp.watchTool(MC,'getScheduledPosts',I.past(b),onMc(b,'mcPast'),{cache:{staleTime:1800000,gcTime:86400000},refetchInterval:3600000}));}
-  for(const k of Object.keys(WIN))unsubs.push(mcp.watchTool(WS,'get_data',WIN[k],onWin(k),{cache:{staleTime:600000,gcTime:86400000},refetchInterval:900000}));}
+  for(const k of Object.keys(WIN)){const fast=k.startsWith('bb');unsubs.push(mcp.watchTool(WS,'get_data',WIN[k],onWin(k),{cache:{staleTime:fast?120000:600000,gcTime:86400000},refetchInterval:fast?300000:900000}));}}
 setInterval(()=>{if(mcp&&lis().date!==watchedDay)startWatches();},60000);
 async function refreshAll(){if(!mcp)return;const I=inputs();const o={cache:{staleTime:0,gcTime:3600000,refresh:true}};
   await Promise.allSettled([...BRANDS.map(b=>mcp.callTool(MC,'getScheduledPosts',I.agenda(b),o).then(r=>onMc(b,'mc')({type:'data',result:r}),e=>onMc(b,'mc')({type:'error',error:e}))),
@@ -404,3 +332,47 @@ $('com').addEventListener('click',async e=>{const b=e.target.closest('button[dat
       await mcp.callTool(WS,'execute_action',{connector:n[2],action:c.net==='YT'?'moderate_comment':'hide_comment',account,params});
       await db.collection('comentarios').doc(c._id).update({estado:'escondido',feito:new Date().toISOString()});toast('Escondido.');}}
   catch(err){toast('Não consegui: '+errMsg(err,WS));b.disabled=false;b.textContent=act==='send'?'Enviar':act==='hide'?'Esconder':'Ignorar';}});
+
+// ---------- placards ----------
+const PLA={slide:{},list:null};
+function plaData(){const out={'2factos':[],'hit0ms':[]};if(!ST.w.bbIG&&!ST.w.bbTT)return null;
+  const trial=D?D.trial:new Set();const now=Date.now();
+  const items=[];
+  for(const r of ST.w.bbIG||[]){if(!r.media_caption&&!r.media_permalink)continue;items.push({acct:acctOf(r.account_name),key:key(r.media_caption),cap:capLine(r.media_caption),date:r.date,t:null,thumb:safeUrl(r.media_thumbnail_url),url:safeUrl(r.media_permalink),trial:trial.has(normUrl(r.media_permalink)),
+    IG:{v:r.media_views,l:r.media_like_count,c:r.media_comments_count,s:r.media_shares,sv:r.media_saved,skip:r.media_reel_skip_rate,avg:r.media_reel_avg_watch_time!=null?r.media_reel_avg_watch_time/1000:null}});}
+  for(const r of ST.w.bbTT||[]){const a=acctOf(r.username),k=key(r.video_caption),dt=String(r.video_create_datetime||'');let it=items.find(x=>x.acct===a&&x.key===k&&!x.TT);
+    if(!it){it={acct:a,key:k,cap:capLine(r.video_caption),date:dt.slice(0,10),thumb:'',url:'',trial:false};items.push(it);}
+    it.t=dt;it.dur=r.video_duration;it.ttUrl=safeUrl(r.video_share_url);it.TT={v:r.video_views_count,l:r.video_likes,c:r.video_comments,s:r.video_shares,avg:r.video_average_time_watched,full:r.video_full_watched_rate};}
+  for(const r of ST.w.bbYT||[]){const a=acctOf(r.account_name),pt=Date.parse(r.published_at);if(!pt||now-pt>7*864e5)continue;
+    let best=null,bd=40*60000;for(const it of items){if(it.acct!==a||!it.t||it.YT)continue;const d=Math.abs(Date.parse(it.t+'Z')-pt);if(d<bd){bd=d;best=it;}}
+    if(!best){best={acct:a,key:key(r.video_title),cap:String(r.video_title||'').replace(/\s*#shorts/i,''),date:String(r.published_at).slice(0,10),t:String(r.published_at).slice(0,19),thumb:'',url:'',trial:false};items.push(best);}
+    best.YT={v:r.video_view_count,l:r.video_like_count,c:r.video_comment_count,avgPct:r.average_view_percentage?r.average_view_percentage/100:null,avg:r.average_view_duration||null};}
+  for(const it of items){it.total=['IG','TT','YT'].reduce((s,k)=>s+(+it[k]?.v||0),0);const ts=it.t?Date.parse(it.t+(it.t.length<=19?'Z':'')):Date.parse(it.date+'T12:00:00Z');it.ts=ts;it.hours=Math.max(1,(now-ts)/36e5);it.vel=it.total/it.hours;}
+  for(const a of ['2factos','hit0ms']){const L=items.filter(x=>x.acct===a).sort((x,y)=>y.ts-x.ts);if(!L.length)continue;
+    const latest=L[0],normal=L.find(x=>!x.trial)||null,hot=[...L].filter(x=>x.hours<=72).sort((x,y)=>y.vel-x.vel)[0]||[...L].sort((x,y)=>y.total-x.total)[0];
+    out[a]=[{id:a+'-new',title:'MAIS RECENTE',slides:[{lab:'Mais recente',it:latest},...(normal&&normal!==latest?[{lab:'Último normal',it:normal}]:[])]},{id:a+'-hot',title:'A BOMBAR 🔥',slides:[{lab:'A bombar',it:hot}]}];}
+  return out;}
+function ago(ts){const m=Math.round((Date.now()-ts)/60000);return m<60?`há ${m} min`:m<1440?`há ${Math.round(m/60)} h`:`há ${Math.round(m/1440)} dias`;}
+function retBar(lbl,frac,txt){if(frac==null||isNaN(frac))return '';const p=Math.max(0,Math.min(1,frac));return `<div class="bb-ret"><span style="width:78px;white-space:nowrap">${esc(lbl)}</span><i><b style="width:${Math.round(p*100)}%"></b></i><span style="min-width:52px;text-align:right;white-space:nowrap">${esc(txt)}</span></div>`;}
+function slideHTML(s){const it=s.it;const c=(n)=>n==null?'—':short(n);
+  const th=it.thumb?`<img src="${esc(it.thumb)}" alt="" referrerpolicy="no-referrer" onerror="this.parentNode.textContent='▶'">`:'▶';
+  let net=`<div class="bb-net"><span class="h"></span><span class="h">views</span><span class="h">likes</span><span class="h">coment.</span><span class="h">partilhas</span>`;
+  for(const k of ['IG','TT','YT'])if(it[k])net+=`<b>${k}</b><span>${c(it[k].v)}</span><span>${c(it[k].l)}</span><span>${c(it[k].c)}</span><span>${c(it[k].s)}</span>`;net+='</div>';
+  const dur=it.dur||null;let ret='';
+  if(it.IG&&it.IG.avg!=null)ret+=retBar('IG vê',dur?it.IG.avg/dur:null,dur?`${it.IG.avg.toFixed(1)}/${Math.round(dur)}s`:`${it.IG.avg.toFixed(1)}s`)||`<div class="bb-ret">IG vê ${it.IG.avg.toFixed(1)}s em média</div>`;
+  if(it.IG&&it.IG.skip!=null)ret+=retBar('IG >3s',1-it.IG.skip,pct(1-it.IG.skip));
+  if(it.TT&&it.TT.avg!=null&&dur)ret+=retBar('TT vê',it.TT.avg/dur,`${(+it.TT.avg).toFixed(1)}/${Math.round(dur)}s`);
+  if(it.TT&&it.TT.full!=null)ret+=retBar('TT até fim',it.TT.full,pct(it.TT.full));
+  if(it.YT&&it.YT.avgPct)ret+=retBar('YT vê',Math.min(1,it.YT.avgPct),pct(it.YT.avgPct));
+  const link=it.url||it.ttUrl;
+  return `<div class="bb-s"><div class="th">${th}</div><div><div class="acct">${esc(s.lab)}${it.trial?' · <span class="chip trial">trial</span>':''}</div><div class="ti">${link?`<a href="${esc(link)}" target="_blank" rel="noopener" style="color:inherit">${esc(String(it.cap).slice(0,90))}</a>`:esc(String(it.cap).slice(0,90))}</div>
+    <div class="when">${esc(ago(it.ts))}${it.IG&&it.IG.sv!=null?` · ${short(it.IG.sv)} guardaram`:''}</div><div class="bb-big">${short(it.total)} <span class="note" style="font-size:12px">views</span></div>${net}${ret}</div></div>`;}
+function renderPla(){const P=plaData();PLA.list=P;if(!P){return;}let h='';
+  for(const a of ['2factos','hit0ms'])for(const b of P[a]){const i=(PLA.slide[b.id]||0)%b.slides.length;
+    h+=`<div class="bb" data-id="${b.id}"><div class="bb-h"><b>${esc(LABEL[a])} · ${esc(b.title)}</b>${b.slides.length>1?`<span class="nav"><button type="button" data-d="-1" aria-label="Anterior">‹</button><button type="button" data-d="1" aria-label="Seguinte">›</button></span>`:''}</div>${slideHTML(b.slides[i])}${b.slides.length>1?`<div class="bb-dots">${b.slides.map((_,j)=>`<i class="${j===i?'on':''}"></i>`).join('')}</div>`:''}</div>`;}
+  if(!h)h='<div class="empty">Sem vídeos nos últimos 7 dias.</div>';
+  h+='<p class="note">Atualiza de 5 em 5 minutos. A retenção do YouTube chega com 1 a 2 dias de atraso; o Facebook não dá números por vídeo.</p>';
+  $('pla').innerHTML=h;}
+$('pla').addEventListener('click',e=>{const b=e.target.closest('button[data-d]');if(!b)return;const id=b.closest('.bb').dataset.id;PLA.slide[id]=(PLA.slide[id]||0)+(+b.dataset.d)+10;renderPla();});
+{let sx=null;$('pla').addEventListener('touchstart',e=>{sx=e.touches[0].clientX;},{passive:true});$('pla').addEventListener('touchend',e=>{if(sx==null)return;const dx=e.changedTouches[0].clientX-sx;const bb=e.target.closest('.bb');sx=null;if(!bb||Math.abs(dx)<40)return;PLA.slide[bb.dataset.id]=(PLA.slide[bb.dataset.id]||0)+(dx<0?1:-1)+10;renderPla();});}
+setInterval(()=>{if(!PLA.list)return;for(const a of ['2factos','hit0ms'])for(const b of PLA.list[a])if(b.slides.length>1)PLA.slide[b.id]=(PLA.slide[b.id]||0)+1;if($('drawer').classList.contains('open')&&!$('sec-pla').hidden)renderPla();},9000);
