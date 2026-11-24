@@ -33,7 +33,7 @@ function errMsg(e,server){const c=e&&e.code;
   return `não consegui falar com o ${server} agora.`;}
 
 // =================== ESTADO ===================
-const ST={mc:{},mcPast:{},mcErr:{},w:{},wErr:{},stamp:{},db:null,ped:[],pedOk:false};
+const ST={mc:{},mcPast:{},mcErr:{},w:{},wErr:{},stamp:{},db:null,ped:[],pedOk:false,com:[],comOk:false};
 const UI={anaAcct:'2factos',vidAcct:'all',vidSort:'date',pick:{},editing:null};
 let D=null; // derivados
 function derive(){const L=lis();const d={};
@@ -252,10 +252,11 @@ function renderChal(){const C=ST.db?.challenges||[];const I=(ST.db?.ideas||[]).f
 function renderHud(){
   const ts=Object.values(ST.stamp);if(ts.length){$('upd').textContent=''+new Date(Math.min(...ts)).toLocaleTimeString('pt-PT',{hour:'2-digit',minute:'2-digit',timeZone:'Europe/Lisbon'});$('live').hidden=false;}
   const need=ST.ped.filter(p=>p.estado==='precisa_voz').length;const dot=document.querySelector('#dock button[data-id="gui"] .dot');if(dot){dot.textContent=need;dot.hidden=!need;}
+  const nC=ST.com.filter(c=>c.estado==='pendente').length;const dot3=document.querySelector('#dock button[data-id="por"] .dot');if(dot3){dot3.textContent=nC;dot3.hidden=!nC;}
   const nI=(ST.db?.ideas||[]).length;const dot2=document.querySelector('#dock button[data-id="ide"] .dot');if(dot2){dot2.textContent=nI;dot2.hidden=!nI;}}
 let onWorld=()=>{};
 let renderQ=false;function renderAll(){if(renderQ)return;renderQ=true;requestAnimationFrame(()=>{renderQ=false;derive();
-  if(UI.editing==null)renderAgenda();renderAna();renderLab();renderVids();if(!document.activeElement?.closest?.('#ideas'))renderIdeas();renderProd();renderChal();renderHud();onWorld();});}
+  if(UI.editing==null)renderAgenda();renderAna();renderLab();renderVids();if(!document.activeElement?.closest?.('#ideas'))renderIdeas();renderProd();renderChal();renderCom();renderHud();onWorld();});}
 setInterval(renderAll,60000);
 
 // =================== LIGAÇÕES AO VIVO ===================
@@ -295,4 +296,36 @@ claude.use('mcp').then(m=>{mcp=m;if(!m){clearTimeout(loadT);$('upd').textContent
   startWatches();});
 claude.use('db').then(d=>{db=d;if(!d){$('prod').innerHTML='<div class="empty">Os pedidos só funcionam com a página aberta no claude.ai.</div>';return;}
   d.doc('estado/hoje').onSnapshot(s=>{ST.db=s.exists?s.data():null;renderAll();},()=>{});
+  d.collection('comentarios').onSnapshot(s=>{ST.com=s.docs.map(x=>({...x.data(),_id:x.id}));ST.comOk=true;renderAll();},()=>{ST.comOk=true;renderAll();});
   d.collection('pedidos').onSnapshot(s=>{ST.ped=s.docs.map(x=>({...x.data(),_id:x.id}));ST.pedOk=true;renderAll();},()=>{ST.pedOk=true;renderAll();});});
+
+// ---------- comentários (Porta-voz) ----------
+const NETC={IG:['ig','Instagram','instagram'],TT:['tt','TikTok','tiktok_organic'],YT:['yt','YouTube','youtube']};
+const ACC={IG:{'2factos':'17841455871971680','hit0ms':'17841480860002035'},TT:{'2factos':'_000B2sXhH_oIKdEIYYkCeNpx1TTroy2lkZx','hit0ms':'_000W0Pjs680u1XlsI43A14hai_8CGL34k44'}};
+function renderCom(){if(!ST.comOk)return;const L=lis();const C=[...ST.com].sort((a,b)=>String(b.quando).localeCompare(String(a.quando)));
+  const pend=C.filter(c=>c.estado==='pendente');const today=C.filter(c=>String(c.feito||c.quando||'').slice(0,10)===L.date);
+  const auto=today.filter(c=>c.estado==='auto').length,hid=today.filter(c=>c.estado==='escondido').length,sent=today.filter(c=>c.estado==='enviado').length;
+  let h=`<div class="tiles"><div class="tile"><div class="k">À tua espera</div><div class="v">${pend.length}</div></div><div class="tile"><div class="k">Respondidos hoje</div><div class="v">${auto+sent}</div><div class="d">${auto} sozinho · ${sent} por ti</div></div></div>`;
+  if(hid)h+=`<p class="warnbox">🛡️ ${hid} comentário${hid>1?'s':''} escondido${hid>1?'s':''} hoje (dados pessoais ou insultos).</p>`;
+  if(!pend.length)h+='<div class="empty">Nada à tua espera.</div>';
+  for(const c of pend.slice(0,25)){const n=NETC[c.net]||['','?'];
+    h+=`<div class="cm" data-id="${esc(c._id)}"><div class="who"><span class="chip ${n[0]}">${esc(n[1])}</span><span class="acct">${esc(LABEL[c.acct]||c.acct)}</span>${c.user?`<span>@${esc(c.user)}</span>`:''}${c.motivo?`<span>· ${esc(c.motivo)}</span>`:''}</div>
+    <div class="txt">${esc(c.text)}</div><textarea aria-label="Resposta">${esc(c.resposta||'')}</textarea>
+    <div class="acts"><button type="button" class="sm primary" data-act="send">Enviar</button><button type="button" class="sm" data-act="ign">Ignorar</button><button type="button" class="sm danger" data-act="hide">Esconder</button></div></div>`;}
+  const done=C.filter(c=>c.estado!=='pendente').slice(0,30);
+  if(done.length)h+=`<details><summary>Últimas respostas</summary><div class="tbl"><table><tbody>${done.map(c=>`<tr><td><span class="chip ${(NETC[c.net]||[''])[0]}">${esc(c.net)}</span></td><td class="cap">${esc(String(c.text||'').slice(0,60))}${c.resposta&&c.estado!=='escondido'?`<br><span class="note">↳ ${esc(c.resposta)}</span>`:''}</td><td class="n note">${esc(c.estado)}</td></tr>`).join('')}</tbody></table></div></details>`;
+  h+='<p class="note">Facebook não deixa responder por aqui.</p>';
+  if(document.activeElement?.closest?.('#com textarea'))return;$('com').innerHTML=h;}
+$('com').addEventListener('click',async e=>{const b=e.target.closest('button[data-act]');if(!b)return;const box=b.closest('.cm');const c=ST.com.find(x=>x._id===box.dataset.id);if(!c)return;
+  if(!mcp||!db){toast('Abre a página no claude.ai.');return;}
+  const n=NETC[c.net];const account=c.account_id||ACC[c.net]?.[c.acct];const act=b.dataset.act;
+  try{if(act==='ign'){await db.collection('comentarios').doc(c._id).update({estado:'ignorado',feito:new Date().toISOString()});return;}
+    if(act==='send'){const msg=box.querySelector('textarea').value.trim();if(!msg){toast('Escreve a resposta primeiro.');return;}
+      b.disabled=true;b.textContent='A enviar…';const params={comment_id:String(c.comment_id),message:msg.slice(0,1100)};if(c.net==='TT')params.video_id=String(c.video_id||'');
+      await mcp.callTool(WS,'execute_action',{connector:n[2],action:'reply_to_comment',account,params});
+      await db.collection('comentarios').doc(c._id).update({estado:'enviado',resposta:msg,feito:new Date().toISOString()});toast('Resposta enviada!');}
+    if(act==='hide'){if(!(await confirmBox('Esconder comentário','Fica visível só para quem o escreveu. Dá para desfazer na app.','Esconder')))return;
+      const params={comment_id:String(c.comment_id)};if(c.net==='TT')params.video_id=String(c.video_id||'');
+      await mcp.callTool(WS,'execute_action',{connector:n[2],action:'hide_comment',account,params});
+      await db.collection('comentarios').doc(c._id).update({estado:'escondido',feito:new Date().toISOString()});toast('Escondido.');}}
+  catch(err){toast('Não consegui: '+errMsg(err,WS));b.disabled=false;b.textContent=act==='send'?'Enviar':act==='hide'?'Esconder':'Ignorar';}});
