@@ -12,7 +12,7 @@ const ROOMS=[
   {id:'laz',name:'LAZER',x:31,y:17,w:16,h:9,floor:'wood',col:'#d9a066',f2:'#c98f55'}];
 const RBY={};for(const r of ROOMS)RBY[r.id]=r;
 const CH=[
-  {id:'car',name:'Carteiro',sub:'Agenda · mudar hora e pausar',shirt:'#2e5fb0',pants:'#23304f',hair:'#3a2a1a',hat:'#2e5fb0',acc:'cap',seat:[4,21],sec:'sec-car'},
+  {id:'car',name:'Carteiro',sub:'Agenda · hora, redes, stories e pausar',shirt:'#2e5fb0',pants:'#23304f',hair:'#3a2a1a',hat:'#2e5fb0',acc:'cap',seat:[4,21],sec:'sec-car'},
   {id:'des',name:'Desafios',sub:'Desafios em imagem',shirt:'#1f9d55',pants:'#2b2d55',hair:'#6b3d1f',seat:[27,22],sec:'sec-des'},
   {id:'gui',name:'Guionista',sub:'Produção e a tua voz',shirt:'#f4b400',pants:'#2b2d55',hair:'#2a1a0e',acc:'glasses',seat:[15,9],sec:'sec-gui'},
   {id:'rea',name:'Realizador',sub:'Vídeos dos últimos 28 dias',shirt:'#0ca678',pants:'#1d1838',hair:'#111111',hat:'#111111',acc:'beret',seat:[23,10],sec:'sec-rea'},
