@@ -1,0 +1,35 @@
+[
+ {
+  "n": "10-legs", "mode": "legs",
+  "t1": "HOW MANY LEGS?", "t2": "COUNT EVERY SINGLE ONE",
+  "acc": "#7ee081", "bg1": "#0d2a1a", "bg2": "#2f6b3a", "panel": "#fbf7ec", "ink": "#1e2a1a",
+  "ans": 25
+ },
+ {
+  "n": "11-mrs-claus", "mode": "grid", "icon": "santa",
+  "t1": "FIND MRS. CLAUS AMONG THE SANTAS", "t2": "COMMENT THE ROW + COLUMN",
+  "acc": "#ffd21f", "bg1": "#3a0b10", "bg2": "#8f1d26", "panel": "#f6f9f4", "lab": "#9a3a3a",
+  "cols": 8, "rows": 10, "or": 5, "oc": 2, "sc": 0.93
+ },
+ {
+  "n": "12-spot-the-n", "mode": "grid", "icon": "letter",
+  "font": "60px Anton", "char": "M", "odd": "N", "ink": "#10233a",
+  "t1": "SPOT THE N AMONG THE M'S", "t2": "YOU HAVE 10 SECONDS",
+  "acc": "#4dd4ff", "bg1": "#08182c", "bg2": "#145a7a", "panel": "#f2f8fb", "lab": "#3a6f8a",
+  "cols": 10, "rows": 12, "or": 3, "oc": 8, "sc": 1
+ },
+ {
+  "n": "13-rectangles", "mode": "rect",
+  "t1": "HOW MANY RECTANGLES?", "t2": "SQUARES COUNT TOO!",
+  "acc": "#ff9ad5", "bg1": "#2a0b2e", "bg2": "#6e1f6a", "panel": "#fff6fb", "ink": "#2a0b2e",
+  "cols": 3, "rows": 2, "s": 190, "y0": 345,
+  "ans": 18
+ },
+ {
+  "n": "14-ebbinghaus", "mode": "ebb",
+  "t1": "WHICH ORANGE CIRCLE IS BIGGER?", "t2": "A OR B? TRUST YOUR EYES...",
+  "acc": "#ffb020", "bg1": "#101a2e", "bg2": "#2b3f73", "panel": "#f4f6fb", "ink": "#16203a",
+  "A": 290, "B": 800, "cy": 520, "R": 62, "bigR": 60, "gap": 26, "smR": 17, "gap2": 14, "ly": 800,
+  "ans": "SAME SIZE"
+ }
+]
