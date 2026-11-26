@@ -16,7 +16,7 @@ O documento dos agentes é estado/agentes (collection "estado", doc_id "agentes"
   factcheck:[{frase, ok:true|false, fonte}]  ← do guião 2 Factos de hoje,
   analise:[{acct, titulo, data, views, normal, x, veredito:"hit"|"flop"|"normal", acao}]  ← máx. 8, mais recentes primeiro,
   licoes:[{acct, data, texto}]  ← máx. 30, mais recentes primeiro }
-Escreve estado/agentes à medida que cada agente acaba (o Daniel vê os fios a acender na página).
+Escreve estado/agentes à medida que cada agente acaba (o Daniel vê cada sala do escritório a atualizar).
 
 1) PESQUISA (06:00) — "lê os últimos 30 vídeos de cada conta e encontra os outliers".
    - As tuas contas: com o Windsor.ai (não o Metricool), últimos 30 vídeos de cada rede de cada conta (instagram: media_caption, media_permalink, media_thumbnail_url, media_views, media_reel_skip_rate, timestamp; tiktok_organic; youtube). O "normal" de cada conta = mediana de views desses 30. x = views / normal.
