@@ -4,24 +4,24 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <style>
 :root{
-  --bg:#eef0f7; --panel:#ffffff; --panel2:#f6f4fd; --ink:#1d1838; --ink2:#46406b; --muted:#6b6590; --line:#e4dff2;
-  --accent:#6c4cf0; --ok:#1f9d55; --warn:#b86e00; --bad:#d64545; --chip:#efeafd; --glass:rgba(255,255,255,.86);
+  --bg:#07080b; --panel:#101218; --panel2:#161922; --ink:#eef0f5; --ink2:#b8bdc9; --muted:#7d8494; --line:#252a36; color-scheme:dark;
+  --accent:#7c5cff; --ok:#2fbf71; --warn:#f0a020; --bad:#ef5350; --chip:#1d2130; --glass:rgba(14,16,22,.82);
   --s-ig:#d6336c; --s-fb:#1c7ed6; --s-tt:#0ca678; --s-yt:#f08c00; --s-normal:#868e96; --s-trial:#6c4cf0;
   --pix:'Space Grotesk','Inter',system-ui,sans-serif; --body:'Inter',system-ui,sans-serif;
 }
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#121026;--panel:#1f1b3a;--panel2:#262147;--ink:#f1eeff;--ink2:#cfc8f5;--muted:#a49ccc;--line:#332d5a;--accent:#9b85ff;--chip:#2c2655;--glass:rgba(31,27,58,.88);
+@media (prefers-color-scheme: dark){:root[data-unused]{--bg:#121026;--panel:#1f1b3a;--panel2:#262147;--ink:#f1eeff;--ink2:#cfc8f5;--muted:#a49ccc;--line:#332d5a;--accent:#9b85ff;--chip:#2c2655;--glass:rgba(31,27,58,.88);
   --s-ig:#e64980;--s-fb:#339af0;--s-tt:#0ca678;--s-yt:#d9480f;--s-normal:#909296;--s-trial:#9b85ff;--ok:#40c057;--warn:#fab005;--bad:#ff6b6b;color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#121026;--panel:#1f1b3a;--panel2:#262147;--ink:#f1eeff;--ink2:#cfc8f5;--muted:#a49ccc;--line:#332d5a;--accent:#9b85ff;--chip:#2c2655;--glass:rgba(31,27,58,.88);
+:root[data-unused]{--bg:#121026;--panel:#1f1b3a;--panel2:#262147;--ink:#f1eeff;--ink2:#cfc8f5;--muted:#a49ccc;--line:#332d5a;--accent:#9b85ff;--chip:#2c2655;--glass:rgba(31,27,58,.88);
   --s-ig:#e64980;--s-fb:#339af0;--s-tt:#0ca678;--s-yt:#d9480f;--s-normal:#909296;--s-trial:#9b85ff;--ok:#40c057;--warn:#fab005;--bad:#ff6b6b;color-scheme:dark}
 html,body{height:100%}
 body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:14px;line-height:1.5;overflow:hidden;-webkit-font-smoothing:antialiased}
 #stage{position:fixed;inset:0}
 #gl{display:block;width:100%;height:100%;touch-action:none;outline:none;cursor:grab}
-#stage{background:#d7e2ec}
+#stage{background:#07080b}
 #ov{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:1}
 .hud{position:fixed;top:max(12px,env(safe-area-inset-top,0px));left:max(16px,env(safe-area-inset-left,0px));right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-wrap:wrap;gap:8px;align-items:flex-start;justify-content:space-between;pointer-events:none;z-index:5}
 .hud>*{pointer-events:auto}
-.glass{background:var(--glass);border:2px solid var(--ink);border-radius:14px;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);box-shadow:0 4px 0 rgba(20,16,40,.18)}
+.glass{background:var(--glass);border:1px solid var(--line);border-radius:12px;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 10px 30px rgba(0,0,0,.45)}
 .brand{padding:8px 12px;display:grid;gap:2px;min-width:0}
 .brand-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 h1{font-family:var(--pix);font-weight:700;font-size:clamp(15px,2.6vw,21px);margin:0;letter-spacing:1px;line-height:1.1}
@@ -32,7 +32,7 @@ h1{font-family:var(--pix);font-weight:700;font-size:clamp(15px,2.6vw,21px);margi
 .now{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--ink2);margin-top:2px}
 .now b{font-variant-numeric:tabular-nums;color:var(--ink)}
 .tools{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
-button,.btn{font:inherit;font-weight:700;font-size:13px;padding:7px 12px;border-radius:10px;border:2px solid var(--ink);background:var(--glass);color:var(--ink);cursor:pointer;line-height:1.2;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+button,.btn{font:inherit;font-weight:700;font-size:13px;padding:7px 12px;border-radius:10px;border:1px solid var(--line);background:var(--glass);color:var(--ink);cursor:pointer;line-height:1.2;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
 button:hover,.btn:hover{background:var(--chip)}
 button:disabled{opacity:.5;cursor:default}
 button[aria-pressed="true"]{background:var(--ink);color:var(--panel)}
@@ -54,9 +54,9 @@ button.sm{padding:4px 9px;font-size:12px;border-width:1.5px;border-radius:8px}
 .tag{position:fixed;left:0;top:0;font-family:var(--pix);font-size:10px;padding:1px 6px;border-radius:6px;background:rgba(20,16,40,.8);color:#fff;pointer-events:none;white-space:nowrap;z-index:2}
 .tag.net{font-family:var(--body);font-weight:700;font-size:11px;padding:2px 7px}
 .tag .badge{display:inline-block;margin-left:4px;background:#ffd21f;color:#1d1838;border-radius:4px;padding:0 3px}
-.bubble{position:fixed;left:0;top:0;max-width:250px;font-size:13px;font-weight:600;padding:8px 11px;border-radius:12px;background:#fff;color:#1d1838;border:2px solid #1d1838;pointer-events:none;box-shadow:0 3px 0 #1d1838;opacity:0;transition:opacity .2s;z-index:3}
+.bubble{position:fixed;left:0;top:0;max-width:250px;font-size:13px;font-weight:600;padding:8px 11px;border-radius:12px;background:#11131a;color:#eef0f5;border:1px solid #2a2f3d;pointer-events:none;box-shadow:0 8px 24px rgba(0,0,0,.5);opacity:0;transition:opacity .2s;z-index:3}
 .bubble.on{opacity:1}
-.drawer{position:fixed;top:78px;right:max(16px,env(safe-area-inset-right,0px));bottom:92px;width:min(470px,calc(100vw - 32px));background:var(--panel);border:2px solid var(--ink);border-radius:16px;display:flex;flex-direction:column;transform:translateX(calc(100% + 40px));transition:transform .32s cubic-bezier(.2,.8,.2,1);box-shadow:0 6px 0 rgba(20,16,40,.18);z-index:6}
+.drawer{position:fixed;top:78px;right:max(16px,env(safe-area-inset-right,0px));bottom:92px;width:min(470px,calc(100vw - 32px));background:var(--panel);border:1px solid var(--line);border-radius:16px;display:flex;flex-direction:column;transform:translateX(calc(100% + 40px));transition:transform .32s cubic-bezier(.2,.8,.2,1);box-shadow:0 20px 60px rgba(0,0,0,.6);z-index:6}
 .drawer.open{transform:none}
 @media (max-width:700px){.drawer{top:auto;left:12px;right:12px;width:auto;bottom:84px;height:64vh;transform:translateY(calc(100% + 120px))}}
 .dhead{display:flex;align-items:center;gap:10px;padding:12px 14px;border-bottom:1px solid var(--line)}
@@ -126,7 +126,7 @@ pre.guiao{white-space:pre-wrap;font:13px/1.5 var(--body);background:var(--panel2
 .empty{padding:14px;border:2px dashed var(--line);border-radius:12px;color:var(--muted);font-size:13px}
 .modal{position:fixed;inset:0;background:rgba(10,8,25,.5);display:grid;place-items:center;z-index:20;padding:16px}
 .modal[hidden]{display:none}
-.modal .box{background:var(--panel);border:2px solid var(--ink);border-radius:16px;padding:18px;max-width:420px;width:100%;display:grid;gap:12px;box-shadow:0 6px 0 rgba(0,0,0,.25)}
+.modal .box{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px;max-width:420px;width:100%;display:grid;gap:12px;box-shadow:0 6px 0 rgba(0,0,0,.25)}
 .modal h4{margin:0;font-family:var(--pix);font-size:15px}
 .modal p{margin:0;color:var(--ink2)}
 .modal .acts{display:flex;gap:8px;justify-content:flex-end}
@@ -148,11 +148,11 @@ pre.guiao{white-space:pre-wrap;font:13px/1.5 var(--body);background:var(--panel2
 .pub input[type=checkbox]{width:14px;height:14px;margin:0;accent-color:var(--accent)}
 .pub select{font:inherit;font-size:12px;padding:3px 6px;border:1.5px solid var(--line);border-radius:8px;background:var(--panel);color:var(--ink)}
 .chip.ig{background:#d6336c;color:#fff}.chip.tt{background:#111;color:#fff}.chip.yt{background:#e62117;color:#fff}
-.bb{border:2px solid var(--ink);border-radius:14px;overflow:hidden;background:var(--panel)}
-.bb-h{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 12px;background:var(--ink);color:var(--panel)}
+.bb{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--panel)}
+.bb-h{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 12px;background:var(--panel2);color:var(--ink)}
 .bb-h b{font-family:var(--pix);font-size:12px;letter-spacing:.5px}
 .bb-h .nav{display:flex;gap:4px}
-.bb-h .nav button{padding:2px 9px;font-size:13px;border-color:var(--panel);background:transparent;color:var(--panel)}
+.bb-h .nav button{padding:2px 9px;font-size:13px;border-color:var(--line);background:transparent;color:var(--ink)}
 .bb-s{display:grid;grid-template-columns:92px 1fr;gap:12px;padding:12px}
 .bb-s .th{width:92px;height:164px;border-radius:10px;background:linear-gradient(160deg,var(--accent),#1d1838);object-fit:cover;display:grid;place-items:center;color:#fff;font:700 28px var(--pix);overflow:hidden}
 .bb-s .th img{width:100%;height:100%;object-fit:cover;display:block}
@@ -187,6 +187,20 @@ pre.guiao{white-space:pre-wrap;font:13px/1.5 var(--body);background:var(--panel2
 .phone .empty{border-color:rgba(255,255,255,.25);color:#cfc8f5}
 #bell{position:relative}
 #bell .dot{position:absolute;top:-6px;right:-6px;min-width:18px;height:18px;border-radius:9px;background:var(--bad);color:#fff;font:700 11px/18px var(--body);padding:0 5px}
+.primary-glow{background:linear-gradient(135deg,#7c5cff,#2ec4b6)!important;border-color:transparent!important;color:#fff!important}
+.chat{display:flex;flex-direction:column;gap:10px}
+.msg{max-width:88%;padding:9px 12px;border-radius:14px;font-size:14px;line-height:1.5;white-space:pre-wrap;overflow-wrap:anywhere}
+.msg.u{align-self:flex-end;background:var(--accent);color:#fff;border-bottom-right-radius:4px}
+.msg.a{align-self:flex-start;background:var(--panel2);border:1px solid var(--line);border-bottom-left-radius:4px}
+.msg.think{color:var(--muted);font-style:italic}
+.msg.err{border-color:var(--bad)}
+.sugs{display:flex;flex-wrap:wrap;gap:6px}
+.sugs button{font-size:12px;font-weight:600;padding:6px 11px;border-radius:99px}
+.chat-in{position:sticky;bottom:-14px;background:var(--panel);padding:10px 0 4px;border-top:1px solid var(--line);display:grid;grid-template-columns:1fr auto;gap:8px;align-items:end}
+.chat-in textarea{font:inherit;font-size:16px;min-height:44px;max-height:140px;resize:none;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:var(--panel2);color:var(--ink)}
+.chat-in textarea:focus{outline:none;border-color:var(--accent)}
+.chat-in button{height:44px}
+#m-p{white-space:pre-wrap}
 </style>
 
 <div id="stage"><canvas id="gl" tabindex="0" aria-label="Escritório em 3D visto em perspetiva isométrica. Toca numa pessoa ou numa sala para abrir o painel."></canvas><canvas id="ov" aria-hidden="true"></canvas></div>
@@ -196,10 +210,12 @@ pre.guiao{white-space:pre-wrap;font:13px/1.5 var(--body);background:var(--panel2
 
 <div class="hud">
   <div class="brand glass">
-    <div class="brand-row"><h1>Estúdio dos Bonecos</h1><span class="live" id="live" hidden><i></i>AO VIVO</span><span class="upd" id="upd"></span></div>
+    <div class="brand-row"><canvas id="logo" width="64" height="64" aria-hidden="true" style="width:28px;height:28px;border-radius:7px;flex:none"></canvas><h1>Estúdio dos Bonecos</h1><span class="live" id="live" hidden><i></i>AO VIVO</span><span class="upd" id="upd"></span></div>
     
   </div>
   <div class="tools">
+    <button id="ask" type="button" class="glass primary-glow">✦ Claude</button>
+    <button id="install" type="button" class="glass" hidden>⬇ Instalar app</button>
     <button id="bell" type="button" class="glass" aria-label="Avisos dos bonecos">🔔 Avisos<span class="dot" id="bell-n" hidden></span></button>
     <button id="refresh" type="button" class="glass">↻ Atualizar</button>
     
@@ -235,12 +251,14 @@ pre.guiao{white-space:pre-wrap;font:13px/1.5 var(--body);background:var(--panel2
     <section class="sec" id="sec-pla" hidden><div id="pla"><div class="empty">A ir buscar os vídeos…</div></div></section>
     <section class="sec" id="sec-avi" hidden><div id="avi"><div class="empty">Ainda sem avisos.</div></div></section>
     <section class="sec" id="sec-por" hidden><div id="com"><div class="empty">Ainda sem comentários. A primeira ronda é às 13h.</div></div></section>
+    <section class="sec" id="sec-cla" hidden><div class="chat" id="chat-log" aria-live="polite"></div><div class="sugs" id="chat-sugs"></div><p class="note" id="chat-note"></p><form class="chat-in" id="chat-form"><textarea id="chat-in" rows="1" placeholder="Escreve ao Claude…" aria-label="Mensagem para o Claude"></textarea><button type="submit" class="primary" id="chat-send">Enviar</button></form></section>
   </div>
 </aside>
 
 <div class="modal" id="modal" hidden role="dialog" aria-modal="true" aria-labelledby="m-t"><div class="box"><h4 id="m-t"></h4><p id="m-p"></p><div class="acts"><button type="button" id="m-no">Cancelar</button><button type="button" id="m-ok" class="primary">Confirmar</button></div></div></div>
 <div class="toast" id="toast" role="status"></div>
 
+<script type="application/json" id="claude-artifacts-manifest">{"permissions": []}</script>
 <script>
 // =================== BASE ===================
 const MC='Metricool Social Media Management', WS='Windsor.ai';
@@ -555,10 +573,10 @@ $('ideas').addEventListener('click',async e=>{const L=lis();
 
 // ---------- produção ----------
 const ESTADOS=[['novo','Na fila'],['a_fazer','Em produção'],['precisa_voz','Precisa da tua voz'],['voz_recebida','Voz recebida'],['agendado','Agendado']];
-function renderProd(){const P=[...ST.ped].filter(p=>p.tipo!=='outra_ideia').sort((a,b)=>String(b.criado).localeCompare(String(a.criado)));
+function renderProd(){const P=[...ST.ped].filter(p=>p.tipo!=='outra_ideia'&&p.estado!=='cancelado').sort((a,b)=>String(b.criado).localeCompare(String(a.criado)));
   if(!ST.pedOk){return;}
   if(!P.length){$('prod').innerHTML='<div class="empty">Sem pedidos. Vai às Ideias.</div>';return;}
-  let h='<p class="note">A oficina passa de hora a hora (9h–23h).</p>';
+  const old=pedOld();let h=`<div style="display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap"><p class="note">A oficina passa de hora a hora (9h–23h).</p>${old.length?`<button type="button" class="sm" data-act="clean">🧹 Limpar ${old.length} antigo${old.length>1?'s':''}</button>`:''}</div>`;
   for(const p of P.slice(0,30)){const i=ESTADOS.findIndex(x=>x[0]===p.estado);const err=p.estado==='erro';
     h+=`<div class="ped"><div style="display:flex;justify-content:space-between;gap:8px;align-items:baseline"><span class="acct">${esc(p.acct)}${p.n!=null?' · ideia '+esc(p.n):''}</span><span class="note">${esc(wd(p.date||lis().date))} ${esc(dm(p.date||lis().date))} · ${esc(p.time||'')}</span></div>
     <div style="font-weight:600">${esc(p.text)}</div>${p.pub?`<div class="chips"><span class="chip">${esc(pubText(p.pub))}</span></div>`:''}<div class="steps" aria-hidden="true">${ESTADOS.map((x,j)=>`<i class="${err?'err':j<=i?'on':''}"></i>`).join('')}</div>
@@ -566,11 +584,22 @@ function renderProd(){const P=[...ST.ped].filter(p=>p.tipo!=='outra_ideia').sort
     ${p.nota?`<p class="note">${esc(p.nota)}</p>`:''}
     ${p.guiao&&p.estado==='precisa_voz'?`<pre class="guiao">${esc(p.guiao)}</pre><div style="display:flex;gap:6px;flex-wrap:wrap"><button type="button" class="sm" data-act="copy" data-id="${esc(p._id)}">Copiar guião</button><label class="btn sm" style="padding:4px 9px;font-size:12px;border-width:1.5px;border-radius:8px">Enviar MP3<input type="file" accept="audio/mpeg,audio/mp3,.mp3,audio/*" data-act="mp3" data-id="${esc(p._id)}" class="sr"></label><span class="note" id="up-${esc(p._id)}"></span></div>`:''}
     ${(p.links||[]).filter(safeUrl).length?`<div class="chips">${p.links.filter(safeUrl).map(u=>`<a class="chip" href="${esc(u)}" target="_blank" rel="noopener">abrir</a>`).join('')}</div>`:''}
-    ${p.estado==='novo'?`<div><button type="button" class="sm danger" data-act="del" data-id="${esc(p._id)}">Cancelar pedido</button></div>`:''}</div>`;}
+    <div style="display:flex;gap:6px;flex-wrap:wrap">${['precisa_voz','erro','novo'].includes(p.estado)?`<button type="button" class="sm" data-act="done" data-id="${esc(p._id)}">✓ Já está agendado</button>`:''}${p.estado==='agendado'||err?`<button type="button" class="sm" data-act="rm" data-id="${esc(p._id)}">🗑 Apagar da lista</button>`:`<button type="button" class="sm danger" data-act="del" data-id="${esc(p._id)}">Cancelar pedido</button>`}</div></div>`;}
   $('prod').innerHTML=h;}
 $('prod').addEventListener('click',async e=>{const b=e.target.closest('button[data-act]');if(!b)return;const p=ST.ped.find(x=>x._id===b.dataset.id);if(!p)return;
   if(b.dataset.act==='copy'){try{await navigator.clipboard.writeText(p.guiao);toast('Guião copiado.');}catch{toast('Não deu para copiar; seleciona o texto à mão.');}}
-  if(b.dataset.act==='del'){if(!(await confirmBox('Cancelar pedido',`Cancelar "${String(p.text).slice(0,60)}"?`,'Cancelar pedido')))return;try{await db.collection('pedidos').doc(p._id).delete();toast('Pedido cancelado.');}catch{toast('Não consegui cancelar. Tenta outra vez.');}}});
+  if(b.dataset.act==='del'||b.dataset.act==='rm'){const del=b.dataset.act==='del';
+    if(!(await confirmBox(del?'Cancelar pedido':'Apagar da lista',`${del?'Cancelar':'Apagar'} "${String(p.text).slice(0,60)}"?${del?' A oficina deixa de o fazer.':' O que já está agendado no Metricool não muda.'} A voz enviada também é apagada.`,del?'Cancelar pedido':'Apagar')))return;
+    try{await pedDelete(p);toast(del?'Pedido cancelado.':'Apagado da lista.');}catch{toast('Não consegui. Tenta outra vez.');}}
+  if(b.dataset.act==='done'){if(!(await confirmBox('Já está agendado',`Marcar "${String(p.text).slice(0,60)}" como agendado? A oficina deixa de mexer neste pedido.`,'Marcar')))return;
+    try{await db.collection('pedidos').doc(p._id).update({estado:'agendado',nota:'Agendado pelo Daniel.'});await vozDelete(p);toast('Marcado como agendado.');}catch{toast('Não consegui. Tenta outra vez.');}}});
+// apagar pedidos e as partes da voz (poupa espaço)
+async function vozDelete(p){const n=+(p.voz?.partes||0);for(let i=0;i<n;i++){try{await db.collection(`vozes/${p._id}/partes`).doc('p'+String(i).padStart(3,'0')).delete();}catch{}}}
+async function pedDelete(p){await vozDelete(p);await db.collection('pedidos').doc(p._id).delete();}
+function pedOld(){const t=lis().date;return ST.ped.filter(p=>p.tipo!=='outra_ideia'&&(p.estado==='cancelado'||((p.estado==='agendado'||p.estado==='erro')&&String(p.date||'')<t)));}
+$('prod').addEventListener('click',async e=>{const b=e.target.closest('button[data-act="clean"]');if(!b)return;const old=pedOld();if(!old.length)return;
+  if(!(await confirmBox('Limpar pedidos antigos',`Apagar ${old.length} pedido${old.length>1?'s':''} já agendado${old.length>1?'s':''}, com erro ou cancelado${old.length>1?'s':''} de dias anteriores? O que está no Metricool não muda.`,'Limpar')))return;
+  b.disabled=true;let k=0;for(const p of old){try{await pedDelete(p);k++;}catch{}}toast(`Limpei ${k} pedido${k!==1?'s':''}.`);});
 $('prod').addEventListener('change',async e=>{const inp=e.target;if(inp.dataset.act!=='mp3'||!inp.files?.[0])return;const f=inp.files[0];const p=ST.ped.find(x=>x._id===inp.dataset.id);const st=$('up-'+inp.dataset.id);
   if(f.size>6*1024*1024){toast('O MP3 é grande demais (máx. 6 MB).');return;}
   st.textContent='A ler…';const b64=await new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(String(r.result).split(',')[1]||'');r.onerror=rej;r.readAsDataURL(f);}).catch(()=>null);
@@ -688,8 +717,11 @@ function renderAvi(){const el=$('avi');if(!el)return;const now=new Date();
   if(!ST.aviOk)h+='<div class="empty">A ligar…</div>';else if(!A.length)h+='<div class="empty">Ainda sem avisos. Os bonecos escrevem aqui quando acabam alguma coisa.</div>';
   for(const a of A){const c=whoAvi(a.quem);const id='av-'+a._id;const link=safeUrl(a.link);
     h+=`<div class="noti ${String(a.quando)>seen?'new':''}"><canvas width="16" height="16" data-av="${esc(c.id)}" data-avq="${esc(a.quem)}"></canvas><div><div class="h"><b>${esc(c.name)}</b><span>${esc(agoIso(a.quando))}</span></div><div class="x">${esc(String(a.texto).slice(0,400))}</div>${link?`<a href="${esc(link)}" target="_blank" rel="noopener">abrir</a>`:''}</div></div>`;}
-  h+='</div><p class="note" style="text-align:center">Os mesmos avisos chegam ao teu telemóvel, assinados por cada boneco. Ficam aqui 7 dias.</p>';
+  h+=`</div><p class="note" style="text-align:center">Os mesmos avisos chegam ao teu telemóvel, assinados por cada boneco. Ficam aqui 7 dias.</p>${ST.aviOk&&ST.avi.length?`<div style="display:flex;justify-content:center"><button type="button" class="sm" id="avi-clean">🧹 Apagar todos os avisos (${ST.avi.length})</button></div>`:''}`;
   el.innerHTML=h;for(const cv of el.querySelectorAll('canvas[data-avq]'))avatarTo(cv,whoAvi(cv.dataset.avq));}
+$('avi').addEventListener('click',async e=>{const b=e.target.closest('#avi-clean');if(!b||!db)return;const A=[...ST.avi];
+  if(!(await confirmBox('Apagar avisos',`Apagar os ${A.length} avisos? Não mexe em pedidos nem posts.`,'Apagar')))return;b.disabled=true;
+  let k=0;for(const a of A){try{await db.collection('avisos').doc(a._id).delete();k++;}catch{}}toast(`Apaguei ${k} aviso${k!==1?'s':''}.`);});
 $('bell').addEventListener('click',()=>{if(selected===AVISOS){select(null);return;}select(AVISOS,false);});
 // ---------- placards ----------
 const PLA={slide:{},list:null};
@@ -734,6 +766,76 @@ function renderPla(){const P=plaData();PLA.list=P;if(!P){return;}let h='';
 $('pla').addEventListener('click',e=>{const b=e.target.closest('button[data-d]');if(!b)return;const id=b.closest('.bb').dataset.id;PLA.slide[id]=(PLA.slide[id]||0)+(+b.dataset.d)+10;renderPla();});
 {let sx=null;$('pla').addEventListener('touchstart',e=>{sx=e.touches[0].clientX;},{passive:true});$('pla').addEventListener('touchend',e=>{if(sx==null)return;const dx=e.changedTouches[0].clientX-sx;const bb=e.target.closest('.bb');sx=null;if(!bb||Math.abs(dx)<40)return;PLA.slide[bb.dataset.id]=(PLA.slide[bb.dataset.id]||0)+(dx<0?1:-1)+10;renderPla();});}
 setInterval(()=>{if(!PLA.list)return;for(const a of ['2factos','hit0ms'])for(const b of PLA.list[a])if(b.slides.length>1)PLA.slide[b.id]=(PLA.slide[b.id]||0)+1;if($('drawer').classList.contains('open')&&!$('sec-pla').hidden)renderPla();},9000);
+
+// =================== LOGO ===================
+function drawLogo(cv,S=64){cv.width=cv.height=S;const x=cv.getContext('2d');x.setTransform(S/64,0,0,S/64,0,0);x.clearRect(0,0,64,64);
+  const R=(a,b,w,h,r)=>{x.beginPath();if(x.roundRect)x.roundRect(a,b,w,h,r);else x.rect(a,b,w,h);};
+  const bg=x.createLinearGradient(0,0,64,64);bg.addColorStop(0,'#171a24');bg.addColorStop(1,'#050608');x.fillStyle=bg;R(0,0,64,64,14);x.fill();
+  x.strokeStyle='rgba(255,255,255,.10)';x.lineWidth=1;R(.5,.5,63,63,13.5);x.stroke();
+  const gr=x.createLinearGradient(16,14,48,50);gr.addColorStop(0,'#a48bff');gr.addColorStop(1,'#2ec4b6');x.fillStyle=gr;
+  R(16,14,8,36,3);x.fill();R(16,14,30,8,3);x.fill();R(16,28,20,8,3);x.fill();R(16,42,30,8,3);x.fill();
+  x.fillStyle='#2ec4b6';x.beginPath();x.arc(44,32,4,0,Math.PI*2);x.fill();return cv;}
+function logoPng(S){return drawLogo(document.createElement('canvas'),S).toDataURL('image/png');}
+drawLogo($('logo'));
+try{const u=logoPng(180);for(const rel of ['icon','apple-touch-icon']){const l=document.createElement('link');l.rel=rel;l.href=u;document.head.appendChild(l);}}catch{}
+// app no PC (janela própria, sem a moldura do Claude)
+claude.use('desktop').then(async d=>{if(!d)return;
+  if(d.window&&d.app){d.app.dock.setIcon(logoPng(256)).catch(()=>{});d.window.setOptions({backgroundColor:'#07080b',minWidth:900,minHeight:600}).catch(()=>{});return;}
+  try{if((await d.install?.state())==='available'){const b=$('install');b.hidden=false;b.onclick=()=>d.install.request().then(r=>{if(r==='installed')toast('A instalar… o Estúdio vai aparecer como app no teu PC.');}).catch(()=>{});}}catch{}});
+
+// =================== CLAUDE NO ESCRITÓRIO ===================
+const CLAUDE={id:'cla',name:'Claude',sub:'Pergunta o que quiseres sobre o estúdio',sec:'sec-cla'};
+const CHAT={msgs:[],busy:false,ctrl:null,ready:null};let sampleFn=null,chatDb=null;
+const SUGS=['Como estão as contas esta semana?','Qual foi o melhor vídeo dos últimos dias?','O que sai hoje?','Há alguma coisa à minha espera?'];
+claude.use('sample').then(s=>{sampleFn=s;CHAT.ready=!!s;renderChat();});
+claude.use('db').then(d=>{chatDb=d;if(!d)return;d.doc('chat/historico').onSnapshot(s=>{if(CHAT.busy)return;const m=s.exists?s.data()?.msgs:null;if(Array.isArray(m)){CHAT.msgs=m.filter(x=>x&&typeof x.t==='string').slice(-40);renderChat();}},()=>{});});
+function chatSave(){if(!chatDb)return;chatDb.doc('chat/historico').set({msgs:CHAT.msgs.filter(m=>m.t).slice(-40).map(m=>({r:m.r,t:String(m.t).slice(0,4000),...(m.err?{err:true}:{})})),quando:new Date().toISOString()}).catch(()=>{});}
+function scrollChat(){const b=$('dbody');b.scrollTop=b.scrollHeight;}
+function renderChat(){const log=$('chat-log');if(!log)return;log.textContent='';
+  if(!CHAT.msgs.length){const w=document.createElement('div');w.className='msg a';w.textContent='Olá Daniel. Vejo os números, a agenda, a produção, as ideias e os comentários do estúdio, ao vivo. Pergunta-me o que quiseres ou pede-me um vídeo novo.';log.append(w);}
+  for(const m of CHAT.msgs){const e=document.createElement('div');e.className='msg '+(m.r==='u'?'u':'a')+(m.err?' err':'');e.textContent=m.t||'';log.append(e);}
+  const sg=$('chat-sugs');sg.textContent='';if(!CHAT.msgs.length)for(const s of SUGS){const b=document.createElement('button');b.type='button';b.textContent=s;b.onclick=()=>chatSend(s);sg.append(b);}
+  $('chat-note').textContent=CHAT.ready===false?'O Claude só responde com o escritório aberto no claude.ai ou na app instalada.':'';
+  const sb=$('chat-send');sb.textContent=CHAT.busy?'Parar':'Enviar';sb.classList.toggle('danger',CHAT.busy);sb.classList.toggle('primary',!CHAT.busy);
+  if(!$('sec-cla').hidden)scrollChat();}
+function autoGrow(){const i=$('chat-in');i.style.height='auto';i.style.height=Math.min(140,i.scrollHeight)+'px';}
+$('chat-in').addEventListener('input',autoGrow);
+$('chat-in').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey&&!e.isComposing&&!matchMedia('(max-width:700px)').matches){e.preventDefault();$('chat-form').requestSubmit();}});
+$('chat-form').addEventListener('submit',e=>{e.preventDefault();if(CHAT.busy){CHAT.ctrl?.abort();return;}const i=$('chat-in');const t=i.value;i.value='';autoGrow();chatSend(t);});
+$('ask').addEventListener('click',()=>select(selected===CLAUDE?null:CLAUDE,false));
+function chatInstr(){const now=new Date().toLocaleString('pt-PT',{timeZone:'Europe/Lisbon',weekday:'long',day:'numeric',month:'long',hour:'2-digit',minute:'2-digit'});
+  return `És o Claude, o assistente dentro do "Estúdio dos Bonecos", o escritório onde o Daniel gere as suas contas de vídeos curtos: "2 Factos" (factos curiosos animados) e "Hit0Ms" (vídeos de pausar no momento exato), publicados no Instagram, Facebook, TikTok e YouTube Shorts. Agora são ${now} (hora de Lisboa).
+No escritório trabalham bonecos: Carteiro (agenda no Metricool), Analista (números), Realizador (vídeos), Engenheiro (trial reels), Ideias (ideias do dia), Guionista (produção; uma oficina automática passa de hora a hora das 9h às 23h), Porta-voz (comentários) e Desafios.
+Regras:
+- Responde sempre em português de Portugal, curto e direto, como um gestor profissional. Texto simples, sem markdown nem asteriscos; para listas usa "•".
+- Para números, agenda, vídeos, pedidos, ideias ou comentários usa as ferramentas: dão os dados ao vivo. Nunca inventes números; se uma ferramenta falhar, diz isso.
+- Ao analisar, diz o que está a correr bem, o que está a correr mal e uma sugestão concreta.
+- Para fazer um vídeo novo usa pedir_video (o Daniel confirma no ecrã). Para mudar horas, pausar ou mudar redes de um post, diz-lhe para abrir o Carteiro. Para responder a comentários, o Porta-voz.
+- Só vês o que está neste escritório: não tens acesso ao PC do Daniel nem a outras conversas.`;}
+function chatInput(){const H=CHAT.msgs.filter(m=>m.t&&!m.err).slice(-16);while(H.length&&H[0].r!=='u')H.shift();
+  const arr=[];for(const m of H){const role=m.r==='u'?'user':'assistant';if(arr.length&&arr[arr.length-1].role===role)arr[arr.length-1].content+='\n\n'+m.t;else arr.push({role,content:m.t});}
+  if(arr.length)arr[0].content=chatInstr()+'\n\n---\nMensagem do Daniel:\n'+arr[0].content;return arr;}
+const T0={type:'object',properties:{}};
+function needD(){if(!D)throw new Error('O escritório ainda está a carregar.');}
+const CHAT_TOOLS=[
+ {name:'resumo_contas',description:'Resumo dos últimos 7 dias de cada conta (2 Factos e Hit0Ms): views por rede, semana anterior, seguidores e subscritores.',inputSchema:T0,execute:()=>{needD();if(!D.hasW)throw new Error('Os números do Windsor ainda não chegaram.');const o={};for(const [k,a] of Object.entries(D.a))o[LABEL[k]]={instagram_views_7d:a.ig7,instagram_views_semana_anterior:a.igP7,instagram_views_ontem:a.igYesterday,facebook_plays_reels_7d:a.fb7,facebook_plays_semana_anterior:a.fbP7,tiktok_views_dos_videos_desta_semana:a.tt7,tiktok_videos_desta_semana:a.ttN,youtube_views_dos_videos_desta_semana:a.yt7,youtube_videos_desta_semana:a.ytN,seguidores_instagram:a.igFol,novos_seguidores_instagram_7d:a.igNew7,seguidores_facebook:a.fbFol,novos_seguidores_facebook_7d:a.fbNew7,subscritores_youtube:a.ytSubs};return o;}},
+ {name:'views_por_dia',description:'Views do Instagram, plays de reels do Facebook e novos seguidores do Instagram por dia, últimos 14 dias, por conta.',inputSchema:T0,execute:()=>{needD();const days=D.days.slice(-15,-1);const o={};for(const [k,a] of Object.entries(D.a))o[LABEL[k]]=days.map(d=>({dia:d,ig:a.igV[d]??null,fb:a.fbP[d]??null,novos_seg_ig:a.igNew[d]??null}));return o;}},
+ {name:'videos',description:'Vídeos dos últimos 28 dias com views por rede (IG, TT, YT), se é trial reel e a taxa de quem salta nos primeiros 3s no Instagram.',inputSchema:{type:'object',properties:{conta:{type:'string',enum:['todas','2factos','hit0ms']},ordem:{type:'string',enum:['recentes','views']},limite:{type:'number'}}},execute:(i={})=>{needD();const s=[UI.vidAcct,UI.vidSort];UI.vidAcct=i.conta==='2factos'||i.conta==='hit0ms'?i.conta:'all';UI.vidSort=i.ordem==='views'?'views':'date';const r=vidRows();UI.vidAcct=s[0];UI.vidSort=s[1];return r.slice(0,Math.min(25,i.limite||12)).map(v=>({dia:v.date,conta:LABEL[v.acct],video:capLine(v.cap).slice(0,90),ig:v.IG,tt:v.TT,yt:v.YT,trial_reel:!!v.trial,salta_3s:v.skip!=null?Math.round(v.skip*100)+'%':null}));}},
+ {name:'agenda',description:'Posts agendados de hoje e dos próximos 7 dias no Metricool, com o estado em cada rede.',inputSchema:T0,execute:()=>{needD();const L=lis();return D.posts.filter(p=>p.date>=L.date).slice(0,30).map(p=>({dia:p.date,hora:p.time,conta:LABEL[p.acct],titulo:String(p.title).slice(0,90),estado:p.state,redes:p.nets.map(n=>(NET[n.k]||n.k)+':'+n.s).join(', '),trial_reel:p.trial}));}},
+ {name:'producao',description:'Pedidos de vídeo na produção: na fila, em produção, precisa da voz, agendado ou erro.',inputSchema:T0,execute:()=>ST.ped.filter(p=>p.tipo!=='outra_ideia').sort((a,b)=>String(b.criado).localeCompare(String(a.criado))).slice(0,15).map(p=>({conta:p.acct,ideia:String(p.text).slice(0,140),dia:p.date,hora:p.time,estado:p.estado,nota:String(p.nota||'').slice(0,160)}))},
+ {name:'comentarios',description:'Comentários à espera de resposta e quantos foram respondidos hoje.',inputSchema:T0,execute:()=>{const L=lis();return {a_espera:ST.com.filter(c=>c.estado==='pendente').slice(0,15).map(c=>({rede:c.net,conta:LABEL[c.acct]||c.acct,texto:String(c.text||'').slice(0,160),resposta_sugerida:String(c.resposta||'').slice(0,160)})),respondidos_hoje:ST.com.filter(c=>['auto','enviado'].includes(c.estado)&&String(c.feito||'').slice(0,10)===L.date).length};}},
+ {name:'ideias',description:'Ideias do dia e ideias em alta (tendências) propostas pelo boneco Ideias.',inputSchema:T0,execute:()=>ideaList().slice(0,15).map(i=>({n:i.n,conta:i.acct,ideia:String(i.text).slice(0,200),em_alta:!!i.trend,sinal:i.sinal||null}))},
+ {name:'avisos',description:'Últimos avisos que os bonecos mandaram.',inputSchema:T0,execute:()=>aviSorted().slice(0,10).map(a=>({quem:whoAvi(a.quem).name,quando:a.quando,texto:String(a.texto).slice(0,200)}))},
+ {name:'pedir_video',description:'Manda um vídeo novo para a produção. O Daniel tem de confirmar no ecrã; avisa-o disso.',inputSchema:{type:'object',properties:{conta:{type:'string',enum:['2 Factos','Hit0Ms','Desafio FB']},ideia:{type:'string',description:'A ideia do vídeo, com detalhe'},dia:{type:'number',description:'0 hoje, 1 amanhã, 2 depois de amanhã'},hora:{type:'string',description:'HH:MM, hora de Lisboa'}},required:['conta','ideia']},execute:async(i={})=>{const acct=['2 Factos','Hit0Ms','Desafio FB'].includes(i.conta)?i.conta:'2 Factos';const text=String(i.ideia||'').trim().slice(0,600);if(text.length<6)throw new Error('Falta a ideia.');const L=lis();const day=Math.max(0,Math.min(2,Math.round(+i.dia||0)));const date=addDays(L.date,day);const time=/^\d\d:\d\d$/.test(i.hora||'')?i.hora:(DEF_T[acct]||['18:00','18:00'])[1];if(date===L.date&&(+time.slice(0,2)*60+ +time.slice(3,5))<L.min+60)throw new Error('Para hoje precisa de pelo menos 1 hora de antecedência.');const pub=defPub(acct);
+   if(!(await confirmBox('Pedido do Claude',`${acct} · ${wd(date)} ${dm(date)} às ${time} · ${pubText(pub)}\n\n${text}`,'Mandar para a produção')))return {enviado:false,motivo:'O Daniel cancelou.'};
+   const ok=await addPedidos([{n:null,acct,text,date,time,pub,estado:'novo',criado:new Date().toISOString(),relatorio:'',nota:'Pedido feito pelo Claude no escritório.'}]);return ok?{enviado:true,dia:date,hora:time}:{enviado:false,motivo:'Não consegui guardar o pedido.'};}}];
+async function chatSend(text){text=String(text||'').trim();if(!text||CHAT.busy)return;
+  if(!sampleFn){toast('O Claude só responde com o escritório aberto no claude.ai.');return;}
+  CHAT.msgs.push({r:'u',t:text.slice(0,4000)});const input=chatInput();const a={r:'a',t:''};CHAT.msgs.push(a);CHAT.busy=true;renderChat();
+  const el=$('chat-log').lastElementChild;el.classList.add('think');el.textContent='A pensar…';const ctrl=CHAT.ctrl=new AbortController();
+  try{const res=await sampleFn(input,{cache:false,modelTier:'default',signal:ctrl.signal,tools:CHAT_TOOLS,onText:({text:t})=>{if(!t||/^Thinking/.test(t))return;a.t=t;el.classList.remove('think');el.textContent=t;scrollChat();}});a.t=res?.text||a.t||'(sem resposta)';}
+  catch(e){if(ctrl.signal.aborted){a.t=(a.t?a.t+'\n\n':'')+'(parado)';}else{const why=e?.code==='rate_limited'?'Estou com muitos pedidos agora. Tenta daqui a um minuto.':e?.code==='not_granted'?'Esta página ainda não tem autorização para falar comigo. Abre o escritório no claude.ai e aceita o pedido.':'Não consegui responder agora. Tenta outra vez.';a.t=(e?.text?e.text+'\n\n':'')+why;a.err=true;}}
+  CHAT.busy=false;CHAT.ctrl=null;renderChat();chatSave();}
 
 // =================== ESCRITÓRIO 3D (isométrico) ===================
 const MW=48,MH=33;
@@ -789,13 +891,14 @@ function avatarTo(cv,c){const S=64;cv.width=cv.height=S;const x=cv.getContext('2
 for(const c of CH){const b=document.createElement('button');b.type='button';b.dataset.id=c.id;b.setAttribute('aria-pressed','false');b.title=c.sub;
   const cv=document.createElement('canvas');avatarTo(cv,c);const dot=document.createElement('span');dot.className='dot';dot.hidden=true;
   b.append(cv,document.createTextNode(c.name),dot);$('dock').append(b);}
+{const b=document.createElement('button');b.type='button';b.dataset.id='cla';b.setAttribute('aria-pressed','false');b.title=CLAUDE.sub;const cv=document.createElement('canvas');drawLogo(cv);cv.style.borderRadius='8px';b.append(cv,document.createTextNode('Claude'));$('dock').prepend(b);}
 let selected=null,focusOn=()=>{},say=()=>{};
 function select(c,fly){selected=c;for(const b of $('dock').children)b.setAttribute('aria-pressed',String(!!c&&b.dataset.id===c.id));
   if(!c){$('drawer').classList.remove('open');$('bubble').classList.remove('on');return;}
   $('dtitle').textContent=c.name;$('dsub').textContent=c.sub;avatarTo($('dav'),c);
-  for(const sec of document.querySelectorAll('#dbody .sec'))sec.hidden=sec.id!==c.sec;$('dbody').scrollTop=0;$('drawer').classList.add('open');if(c.sec==='sec-avi'){UI.aviSeenAt=aviSeen();renderAvi();aviMark();return;}if(c.sec==='sec-pla'){renderPla();if(fly)focusBoards();return;}say(c);if(fly)focusOn(c);}
+  for(const sec of document.querySelectorAll('#dbody .sec'))sec.hidden=sec.id!==c.sec;$('dbody').scrollTop=0;$('drawer').classList.add('open');if(c.sec==='sec-cla'){drawLogo($('dav'));renderChat();setTimeout(()=>$('chat-in')?.focus(),350);return;}if(c.sec==='sec-avi'){UI.aviSeenAt=aviSeen();renderAvi();aviMark();return;}if(c.sec==='sec-pla'){renderPla();if(fly)focusBoards();return;}say(c);if(fly)focusOn(c);}
 const PLACARD={id:'pla',name:'Placards',sub:'Vídeos mais recentes e a bombar · ao vivo',shirt:'#e0b02a',pants:'#1d1838',hair:'#1d1838',skin:'#d9a382',sec:'sec-pla'};let focusBoards=()=>{};
-$('dock').addEventListener('click',e=>{const b=e.target.closest('button[data-id]');if(b)select(CH.find(c=>c.id===b.dataset.id),true);});
+$('dock').addEventListener('click',e=>{const b=e.target.closest('button[data-id]');if(b)select(b.dataset.id==='cla'?CLAUDE:CH.find(c=>c.id===b.dataset.id),b.dataset.id!=='cla');});
 $('dclose').addEventListener('click',()=>select(null));
 addEventListener('keydown',e=>{if(e.key==='Escape'&&$('modal').hidden)select(null);});
 setTabs();
@@ -849,7 +952,7 @@ setTabs();
     if(c.id==='rea'){if(!D.hasW)return 'A rever gravações…';const top=[...D.vids].sort((a,b)=>(+b.views||0)-(+a.views||0))[0];return top?`Campeão: ${capLine(top.cap).slice(0,26)}… ${short(top.views)}`:'Sem vídeos.';}
     if(c.id==='eng'){if(!D.hasW)return 'A calibrar…';return `${D.vids.filter(v=>v.k==='IG'&&v.trial).length} trial reels testados 🧪`;}
     if(c.id==='ide'){const n=ST.db?.ideas?.length||0,tr=trends().length;return tr?`🔥 ${tr} ideias em alta + ${n} do dia`:n?`${n} ideias novas! 💡`:'Ideias às 8:53 ☕';}
-    if(c.id==='gui'){const v=ST.ped.filter(p=>p.estado==='precisa_voz').length,a=ST.ped.filter(p=>!['agendado','erro'].includes(p.estado)).length;return v?'Preciso da tua voz! 🎙️':a?`${a} em produção ✍️`:'Manda-me ideias!';}
+    if(c.id==='gui'){const v=ST.ped.filter(p=>p.estado==='precisa_voz').length,a=ST.ped.filter(p=>!['agendado','erro','cancelado'].includes(p.estado)&&p.tipo!=='outra_ideia').length;return v?'Preciso da tua voz! 🎙️':a?`${a} em produção ✍️`:'Manda-me ideias!';}
     if(c.id==='por'){const p_=ST.com.filter(x=>x.estado==='pendente').length;return p_?`${p_} comentários à tua espera 💬`:'Comentários em dia 💬';}
     if(c.id==='des'){const n=ST.db?.challenges?.length||0;return n?`${n} desafios publicados 🔺`:'Quantos 🔺 vês?';}
     return '';}
@@ -896,8 +999,8 @@ setTabs();
     tiles:base=>ctex(256,256,(g,w,h)=>{const n=4,s=w/n;for(let j=0;j<n;j++)for(let i=0;i<n;i++){g.fillStyle=jit(base,.06,i*5+j*11);g.fillRect(i*s,j*s,s,s);}g.strokeStyle='rgba(90,85,80,.35)';g.lineWidth=2;for(let k=0;k<=n;k++){g.beginPath();g.moveTo(k*s,0);g.lineTo(k*s,h);g.moveTo(0,k*s);g.lineTo(w,k*s);g.stroke();}},true),
     epoxy:base=>ctex(256,256,(g,w,h)=>{g.fillStyle=base;g.fillRect(0,0,w,h);for(let i=0;i<2500;i++){g.fillStyle=`rgba(255,255,255,${rnd(i)*.08})`;g.fillRect(rnd(i*3)*w,rnd(i*5)*h,2,2);}},true),
     concrete:()=>ctex(256,256,(g,w,h)=>{g.fillStyle='#cfccc6';g.fillRect(0,0,w,h);for(let i=0;i<6000;i++){g.fillStyle=rnd(i)>.5?'rgba(255,255,255,.08)':'rgba(0,0,0,.06)';g.fillRect(rnd(i*3)*w,rnd(i*7)*h,2,2);}g.strokeStyle='rgba(0,0,0,.08)';g.strokeRect(0,0,w,h);},true),
-    grass:()=>ctex(256,256,(g,w,h)=>{g.fillStyle='#6f9a4e';g.fillRect(0,0,w,h);for(let i=0;i<9000;i++){g.fillStyle=['#5f8a42','#7eab5a','#86b363','#58803c'][i%4];g.fillRect(rnd(i*3)*w,rnd(i*7)*h,1.5,3);}},true),
-    path:()=>ctex(256,256,(g,w,h)=>{g.fillStyle='#d9ccb0';g.fillRect(0,0,w,h);for(let i=0;i<3000;i++){g.fillStyle=rnd(i)>.5?'rgba(120,100,70,.12)':'rgba(255,255,255,.12)';g.fillRect(rnd(i*3)*w,rnd(i*7)*h,2.5,2.5);}},true)};
+    grass:()=>ctex(256,256,(g,w,h)=>{g.fillStyle='#0d0f14';g.fillRect(0,0,w,h);for(let i=0;i<9000;i++){g.fillStyle=['#10131a','#0a0c10','#13161e','#0c0e13'][i%4];g.fillRect(rnd(i*3)*w,rnd(i*7)*h,1.5,3);}},true),
+    path:()=>ctex(256,256,(g,w,h)=>{g.fillStyle='#1a1d25';g.fillRect(0,0,w,h);for(let i=0;i<3000;i++){g.fillStyle=rnd(i)>.5?'rgba(120,100,70,.12)':'rgba(255,255,255,.12)';g.fillRect(rnd(i*3)*w,rnd(i*7)*h,2.5,2.5);}},true)};
   function floor(w,d,x,z,y,tex,rep,ud){tex=tex.clone();tex.needsUpdate=true;tex.repeat.set(w/rep,d/rep);const m=new THREE.Mesh(new THREE.PlaneGeometry(w,d),new THREE.MeshStandardMaterial({map:tex,roughness:.85}));m.rotation.x=-Math.PI/2;m.position.set(x,y,z);m.receiveShadow=true;if(ud)m.userData=ud;scene.add(m);return m;}
   // chão, relva, caminho
   floor(90,70,12,8.5,-0.01,FT.grass(),3);
@@ -1095,7 +1198,7 @@ setTabs();
   let hoverC=null,hovT=0;function hover(e){const n=performance.now();if(n-hovT<60)return;hovT=n;const h=hitAt(e.clientX,e.clientY);hoverC=h&&h.char||null;cv.style.cursor=h&&(h.char||h.placard||(h.room&&h.room!=='laz'))?'pointer':'grab';}
   // ---------- noite ----------
   function nightK(){const h=lis().min/60;return h<6.5?1:h<8?1-(h-6.5)/1.5:h<17.3?0:h<19?(h-17.3)/1.7:1;}
-  const skyDay=lin('#d7e2ec'),skyNight=lin('#141a2c');scene.background=skyDay.clone();let lampsOn=false;
+  const skyDay=lin('#0b0d13'),skyNight=lin('#05060a');scene.background=skyDay.clone();let lampsOn=false;
   function applyNight(){const n=nightK();scene.background.copy(skyDay).lerp(skyNight,n);sun.intensity=1.55*(1-n*0.85);sun.color.copy(lin('#fff1dc')).lerp(lin('#9fb3ff'),n);hemi.intensity=0.62*(1-n*0.55);
     const on=n>0.05;if(on!==lampsOn){lampsOn=on;for(const l of lamps)l.visible=on;}for(const l of lamps)l.intensity=1.1*n;if(FX.lamp)FX.lamp.material.emissiveIntensity=(ST.db?.ideas?.length?0.9:0.2)+n;}
   // ---------- ciclo ----------
@@ -1158,3 +1261,5 @@ setTabs();
   requestAnimationFrame(frame);
 })();
 </script>
+
+</body></html>
