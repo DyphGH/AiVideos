@@ -1,0 +1,50 @@
+2 FATOS (BR) — Como construir uma COLMEIA do zero (26/11/2026, 22:30)  (~42 s)
+Inspirado no "Você construiu uma colmeia" (@manual.da.natureza), no nosso formato: cada "solução" cria um problema, até à verdadeira.
+Escada: casa grátis → chove → própolis → potes redondos gastam cera → hexágono → favos pendurados com espaço de abelha → néctar aguado → abanar asas → opérculo → alvado → colmeia pronta.
+Texto no topo desde o frame 0: "VOCÊ PRECISA CONSTRUIR UMA COLMEIA" — abelha a voar até ao tronco oco, já em movimento.
+
+FONTES
+- Abelhas melíferas silvestres ocupam cavidades em árvores ocas (~40 L). — Seeley, "Honeybee Democracy" (2010)
+- Própolis: resina recolhida das plantas, usada para vedar frestas e rachas do ninho. — Simone-Finstrom & Spivak, Apidologie (2010)
+- Células hexagonais: cobrem o plano sem espaços e com o menor perímetro para a mesma área (menos cera). — Hales, "The Honeycomb Conjecture" (2001)
+- Favos construídos de cima para baixo, pendurados do teto da cavidade; "espaço de abelha" (~6–9 mm) entre favos. — Langstroth; Winston, "The Biology of the Honey Bee"
+- Néctar desidratado pelas abelhas a abanar as asas até ~18% de água; depois as células são seladas com cera (opérculo). — USDA/ARS; Winston
+- Entrada pequena (alvado) mais fácil de defender. — Seeley (2010)
+
+VOZ DO GABRIEL
+[curious] Você é uma abelha… e precisa construir uma colmeia do zero.
+[playful] Primeiro, uma casa de graça: o buraco de uma árvore oca.
+[sighs] Mas aí chove… e a água entra pelas rachaduras!
+[excited] Então você tapa cada frestinha com própolis, uma cola que as abelhas fazem com resina das plantas.
+[curious] Agora precisa de potes pro mel. Se forem redondos… sobra buraco entre eles, e cera custa caro!
+[amazed] O hexágono encaixa sem buraco nenhum… e guarda mais mel gastando menos cera. Não é coincidência!
+[excited] Os favos ficam pendurados no teto… com um espaço certinho entre eles pra uma abelha passar.
+[curious] Mas o néctar é aguado demais… então as abelhas abanam as asas até a água sumir.
+[amazed] Aí fecham cada casinha com uma tampa de cera: o opérculo.
+[playful] E a porta? Um buraco pequeno, o alvado, fácil de defender.
+[excited] Pronto: você construiu uma colmeia! Já sabia? Comenta ABELHA. Não sabia? Comenta MEL.
+
+NOTAS (cenas)
+- Frame 0: abelha fofa a voar até um tronco grande, "?" a piscar, título no topo.
+- "árvore oca": corte do tronco a mostrar o oco por dentro.
+- "chove": chuva, gotas a escorrer pelas rachaduras para dentro, abelha encharcada.
+- "própolis": abelha a passar cola laranja nas rachas, gotas param. Etiqueta PRÓPOLIS.
+- "redondos": círculos amarelos lado a lado, buracos entre eles a piscar a vermelho, "CERA $$" ✗.
+- "hexágono": círculos viram hexágonos e encaixam sem espaços ✓; triângulo/quadrado/hexágono comparados.
+- "favos pendurados": vista de lado do oco com 3 favos pendurados do teto e abelha a passar no espaço (seta "ESPAÇO DE ABELHA").
+- "néctar aguado": células com néctar brilhante; abelhas a abanar as asas, vapor a subir, nível a baixar.
+- "opérculo": tampas brancas de cera a fechar as células uma a uma. Etiqueta OPÉRCULO.
+- "porta": tronco por fora, buraco pequeno, abelha guarda à porta. Etiqueta ALVADO.
+- Fim (acaba com a voz): colmeia pronta + plaquinhas ABELHA / MEL.
+
+LEGENDA
+Como construir uma colmeia do zero? 🐝🍯
+Árvore oca → chove 🌧️ → própolis → potes redondos gastam cera ❌ → HEXÁGONO ✅
+Já sabia? Comenta ABELHA 🐝 Não sabia? Comenta MEL 🍯
+#curiosidades #fatos #abelhas #natureza #2fatos
+
+TÍTULO YOUTUBE
+Como construir uma colmeia do zero? 🐝 #shorts
+
+COMENTÁRIO PARA FIXAR
+Já sabia? Comenta ABELHA 🐝 Não sabia? Comenta MEL 🍯

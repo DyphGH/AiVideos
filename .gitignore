@@ -14,3 +14,8 @@ fb/hit0ms/engine/*.woff2
 hit0ms/engine/v*/render.log
 hit0ms/engine/v*/clean_*.png
 hit0ms/engine/v*/test_*.jpg
+factos-canvas/mont900.woff2
+factos-canvas/*/test_*.jpg
+factos-canvas/*/clean_*.png
+factos-canvas/*/video_tmp.mp4
+factos-canvas/*/render.log
