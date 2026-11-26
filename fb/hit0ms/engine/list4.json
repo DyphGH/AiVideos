@@ -1,0 +1,12 @@
+[
+ {"n":"15-snowmen-circles","mode":"snow","t1":"HOW MANY CIRCLES?","t2":"COUNT EVERY SINGLE ONE",
+  "acc":"#8fd3ff","bg1":"#0b1f3a","bg2":"#2b5c9a","panel":"#f4f9ff","ink":"#16203a","ans":24},
+ {"n":"16-odd-snowflake","mode":"grid","icon":"flake","t1":"FIND THE ODD SNOWFLAKE","t2":"COMMENT THE ROW + COLUMN",
+  "acc":"#8fd3ff","bg1":"#06132b","bg2":"#1d4f8a","panel":"#f4f9ff","lab":"#3a5f8a","cols":8,"rows":10,"or":4,"oc":6,"sc":0.95},
+ {"n":"17-spot-the-6","mode":"grid","icon":"letter","font":"62px Anton","char":"9","odd":"6","ink":"#2a1040",
+  "t1":"SPOT THE 6 AMONG THE 9S","t2":"YOU HAVE 10 SECONDS","acc":"#ffb3f0","bg1":"#1d0b2e","bg2":"#6a1f7a","panel":"#fbf6ff","lab":"#7a3a8a","cols":10,"rows":12,"or":6,"oc":2,"sc":1},
+ {"n":"18-muller-lyer","mode":"ml","t1":"WHICH LINE IS LONGER?","t2":"A OR B? TRUST YOUR EYES...",
+  "acc":"#ffd21f","bg1":"#1a1a10","bg2":"#5a4a10","panel":"#fffbea","ink":"#1e1a08","L":520,"ya":440,"yb":700,"f":70,"ans":"SAME LENGTH"},
+ {"n":"19-gifts","mode":"gifts","t1":"HOW MANY GIFTS UNDER THE TREE?","t2":"LOOK BEHIND THE OTHERS!",
+  "acc":"#ff8a8a","bg1":"#2a0b0e","bg2":"#7a1f26","panel":"#fff8f2","ink":"#2a0b0e","ans":11}
+]
