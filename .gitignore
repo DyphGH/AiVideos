@@ -10,3 +10,7 @@ hit0ms/engine/v*/audio.wav
 hit0ms/engine/v*/fonts/
 hit0ms/engine/v*/video_tmp.mp4
 hit0ms/engine/v*/test_*
+fb/hit0ms/engine/*.woff2
+hit0ms/engine/v*/render.log
+hit0ms/engine/v*/clean_*.png
+hit0ms/engine/v*/test_*.jpg
