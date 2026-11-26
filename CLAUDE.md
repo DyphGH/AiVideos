@@ -14,3 +14,9 @@
 - Story com link (+30 min): só para o reel normal das 12:00 (o trial não aparece aos seguidores, não faz sentido mandá-los lá).
 - Se um pedido Hit0Ms vier para outra hora (ex.: 15:00), agenda-o na vaga livre (12:00 ou 18:00) desse dia ou do dia seguinte e diz isso na nota.
 - Os desafios em imagem do Facebook não contam para este limite.
+
+## Agentes (pedido do Daniel a 26/11/2026)
+- As instruções das tarefas agendadas estão em `agentes/` (`agentes-da-manha.txt` às 06:00, `oficina.txt` de hora a hora). Para mudar o comportamento, muda estes ficheiros (as tarefas leem-nos do GitHub em cada ronda).
+- Por dia, sozinhos: 2 Hit0Ms (12:00 e 18:00) prontos a aprovar + 1 guião 2 Factos verificado à espera da voz. Nada sai sem o Daniel carregar em ✓ Aprovar no Estúdio (estado "pronto" → "aprovado"/"agendado").
+- Pesquisa: contas do nicho (lista em estado/agentes.espiar, editável na página) + as contas dele. Na 2 Factos nunca repetir um tema que ele já fez.
+- Hit0Ms tem dois formatos: "queda" (`hit0ms/engine/vNN`) e "aprox" (`hit0ms/aprox`, ver README — agulha → balão e afins).
