@@ -1,4 +1,4 @@
-2 FATOS (BR) — Como construir um OLHO do zero? (26/11/2026)  (~28 s)
+2 FATOS (BR) — Como construir um OLHO do zero? (26/11/2026)  (~35 s)
 Formato do "Como construir um coração do zero?" (@golgimedicina): cada peça é uma "solução" que cria um PROBLEMA ao boneco (você), até chegar à solução verdadeira. Tensão em escada: escuro → cego → borrado → de cabeça pra baixo → enxerga.
 Texto no topo desde o frame 0: "COMO CONSTRUIR UM OLHO DO ZERO?" — boneco já às apalpadelas no escuro com uma bola no lugar do olho.
 
@@ -10,13 +10,13 @@ FONTES
 
 VOZ DO GABRIEL
 [curious] Como construir um olho do zero?
-[playful] Pega uma bola… e você? Não vê nada, tá tudo escuro!
-[excited] Então faz um furo pra luz entrar… mas entra luz demais e você fica cego!
-[curious] Põe uma cortina em volta do furo, a íris: com sol, ela fecha.
-[sighs] Agora a luz tá certa… mas tá tudo borrado!
-[excited] Coloca uma lente atrás do furo… e foca!
-[amazed] Ficou nítido… só que de cabeça pra baixo!
-[whispers] Liga um cabo até o cérebro… e ele desvira tudo.
+[playful] Pega uma bola… e você? Tá tudo escuro! Pra ver, a luz tem que entrar.
+[excited] Então faz um furo, a pupila… mas no sol entra luz demais e você fica cego!
+[curious] Por isso põe uma cortina em volta, a íris: ela aperta o furo quando tem muita luz… e abre no escuro.
+[sighs] Agora a luz tá certa… mas tá tudo borrado! A luz chega toda espalhada.
+[excited] Coloca uma lente: ela dobra a luz e junta tudo num ponto, na tela do fundo, a retina… e foca!
+[amazed] Mas a lente cruza os raios… e a imagem chega de cabeça pra baixo!
+[whispers] Então liga um cabo até o cérebro… e ele desvira tudo pra você.
 [playful] Já sabia? Comenta GÊNIO. Não sabia? Comenta CURIOSO.
 
 NOTAS (cenas — cada solução mostra o problema no boneco)
@@ -24,7 +24,8 @@ NOTAS (cenas — cada solução mostra o problema no boneco)
 - "furo": broca faz a pupila; raios de sol enormes entram, ecrã fica BRANCO, boneco tapa a cara e cai pro lado.
 - "íris": cortina colorida em anel fecha à volta do furo (pupila encolhe com o sol).
 - "borrado": vista do boneco toda desfocada (blur), boneco bate na parede.
-- "lente": lente desliza para dentro, a imagem fica nítida de repente.
+- "lente": lente desliza para dentro, raios dobram e juntam-se num ponto na retina; a imagem fica nítida de repente.
+- "cruza os raios": raios de cima vão parar em baixo e vice-versa (X), árvore aparece invertida na retina.
 - "cabeça pra baixo": a vista do boneco vira 180°, boneco fica tonto/de pernas pro ar.
 - "cabo / cérebro": nervo liga ao cérebro, faíscas, a imagem roda para a posição certa, boneco sorri.
 - Fim (acaba com a voz): duas plaquinhas GÊNIO / CURIOSO.
