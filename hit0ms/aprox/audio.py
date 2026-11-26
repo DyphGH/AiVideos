@@ -22,6 +22,11 @@ for a in TL['attempts']:
     n=int(6+a['level']*4)
     for j in range(n):
         tj=dur*(1-(1-j/n)**1.6);add(bp(noise(.02),2500,6000)*np.exp(-tt(.02)*200),vf(s)+tj,0.22)
+    # borracha a esticar (a agulha a entrar): rangido que sobe de tom
+    ps=s+0.62*(cf-s);pd=(cf-ps)/fps
+    if pd>0.05:
+        w=tt(pd);f=np.linspace(180,900,len(w));car=np.sin(2*np.pi*np.cumsum(f)/SR)*(0.6+0.4*np.sign(np.sin(2*np.pi*np.cumsum(f*0.12)/SR)))
+        add(bp(car+0.3*noise(pd),150,2500)*np.minimum(1,w/0.05)*(0.4+0.6*w/pd),vf(ps),0.22)
     # 0ms: "ding" curtinho
     w=tt(.25);add((np.sin(2*np.pi*1760*w)+.5*np.sin(2*np.pi*2640*w))*np.exp(-w*14),vf(cf),0.25)
     # POP: estalo seco + ar + borracha

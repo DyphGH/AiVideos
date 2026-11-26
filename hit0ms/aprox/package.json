@@ -1,0 +1,15 @@
+{
+  "name": "aprox",
+  "version": "1.0.0",
+  "description": "Uma coisa aproxima-se devagar de outra hiper-realista (agulha → balão, dardo → balão, martelo → copo de vidro, faca → melancia, pé → bolha de sabão…). A pessoa tem de pausar no frame exato do toque (0ms). Nesse frame — e só nesse — aparece a palavra secreta (impressa no objeto) e o cartão \"Comment WORD to prove it\". Depois rebenta/parte, rewind e o nível seguinte é mais rápido. 4 níveis, loop perfeito.",
+  "main": "render.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "three": "^0.170.0"
+  }
+}

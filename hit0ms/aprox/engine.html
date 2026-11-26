@@ -1,5 +1,6 @@
 <!doctype html>
 <html><head><meta charset="utf-8">
+<script type="importmap">{"imports":{"three":"/three/build/three.module.js","three/addons/":"/three/examples/jsm/"}}</script>
 <style>
 @font-face{font-family:Anton;src:url(/fonts/anton-latin-400-normal.woff2)}
 @font-face{font-family:Mono;font-weight:700;src:url(/fonts/jetbrains-mono-latin-700-normal.woff2)}
@@ -64,7 +65,7 @@ await Promise.all(['400 80px Anton','800 27px Inter','700 30px Mono'].map(f=>doc
 const SC=(await import('/config.js')).default(K);
 const $=id=>document.getElementById(id);
 $('tag').textContent=SC.tag||'';$('ask').innerHTML=SC.ask||'';if(SC.h2)$('h2').textContent=SC.h2;if(SC.askStyle)Object.assign($('ask').style,SC.askStyle);
-window.renderAt=(f0)=>{const fps=TL.fps;const f=(f0+TL.offset)%TL.total;const A=TL.attempts;const ai=A.findIndex(x=>f>=x.start&&f<x.end);const a=A[ai];const nx=A[(ai+1)%A.length];
+window.renderAt=async(f0)=>{const fps=TL.fps;const f=(f0+TL.offset)%TL.total;const A=TL.attempts;const ai=A.findIndex(x=>f>=x.start&&f<x.end);const a=A[ai];const nx=A[(ai+1)%A.length];
   const k=f-a.contact;let st;
   // fases: approach (u 0→1), contact (k==0: congelado no toque), after (k>0: rebenta), rewind (volta atrás e troca para a próxima)
   if(k<0)st={phase:'approach',u:(f-a.start)/(a.contact-a.start),k};
@@ -72,7 +73,7 @@ window.renderAt=(f0)=>{const fps=TL.fps;const f=(f0+TL.offset)%TL.total;const A=
   else if(k<a.hold)st={phase:'after',u:1,k,t:k/fps};
   else{const rw=(k-a.hold+1)/(a.rw+1);st=rw<0.7?{phase:'rewind',u:1-K.inout(rw/0.7),k,rw}:{phase:'next',u:0,k,rw,w:(rw-0.7)/0.3};}
   st.i=st.phase==='next'?(ai+1)%A.length:ai;st.level=a.level;st.f=f;st.fps=fps;
-  c.save();SC.draw(st);c.restore();
+  c.save();await SC.draw(st);c.restore();
   const ms=Math.round(k*1000/fps);let res,col;
   if(ms===0){res='PERFECT!';col='var(--g)';}else if(Math.abs(ms)<=100){res='ALMOST!';col='var(--y)';}else if(ms<0){res='TOO EARLY';col='var(--r)';}else{res='TOO LATE';col='var(--o)';}
   $('lv').textContent=`LEVEL ${a.level} / ${A.length}`;$('sp').textContent=`SPEED ${Math.round(a.speed*100)}%`;

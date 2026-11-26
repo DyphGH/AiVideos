@@ -2,6 +2,10 @@
 
 Uma coisa aproxima-se devagar de outra hiper-realista (agulha → balão, dardo → balão, martelo → copo de vidro, faca → melancia, pé → bolha de sabão…). A pessoa tem de pausar no frame exato do toque (0ms). Nesse frame — e só nesse — aparece a palavra secreta (impressa no objeto) e o cartão "Comment WORD to prove it". Depois rebenta/parte, rewind e o nível seguinte é mais rápido. 4 níveis, loop perfeito.
 
+## Duas maneiras
+- **3D realista (preferida, `v02-agulha-balao-3d`)**: three.js dentro do config.js (`npm i` nesta pasta instala o three; o render.js serve-o em /three/). A agulha encosta e ENTRA na borracha: cratera à volta da ponta + rugas de tensão que crescem, a palavra secreta aparece impressa no balão no frame antes de rebentar (0ms), depois rasga (2-3 frames) e rebenta em pedaços de borracha. Render ~1 s por frame (WebGL por software).
+- 2D em canvas (`v01-agulha-balao`): mais rápido, menos realista.
+
 ## Fazer um vídeo novo
 1. `mkdir vNN-nome && cp -r v01-agulha-balao/fonts vNN-nome/` e escreve `vNN-nome/config.js` (usa o `v01-agulha-balao/config.js` como modelo):
    - `export default (K)=>{… return {tag, h2, ask, askStyle?, attempts:[{word,…} ×4], draw(st)}}`
