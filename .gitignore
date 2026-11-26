@@ -19,3 +19,7 @@ factos-canvas/*/test_*.jpg
 factos-canvas/*/clean_*.png
 factos-canvas/*/video_tmp.mp4
 factos-canvas/*/render.log
+hit0ms/aprox/v*/audio.wav
+hit0ms/aprox/v*/video_tmp.mp4
+hit0ms/aprox/v*/test_*
+hit0ms/aprox/v*/clean_*

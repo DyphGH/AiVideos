@@ -1,0 +1,86 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+@font-face{font-family:Anton;src:url(/fonts/anton-latin-400-normal.woff2)}
+@font-face{font-family:Mono;font-weight:700;src:url(/fonts/jetbrains-mono-latin-700-normal.woff2)}
+@font-face{font-family:Inter;font-weight:800;src:url(/fonts/inter-latin-800-normal.woff2)}
+:root{--g:#2bff7a;--y:#ffd23f;--r:#ff3b3b;--o:#ff8a2b}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#000}
+canvas{position:absolute;inset:0}
+#ui{position:absolute;inset:0;pointer-events:none}
+#tag{position:absolute;top:40px;left:0;right:0;text-align:center;font-family:Mono;font-size:30px;letter-spacing:4px;color:#c9d1da;text-shadow:0 2px 10px rgba(0,0,0,.8)}
+#onepct{position:absolute;top:88px;left:50%;transform:translateX(-50%) rotate(-2deg);padding:8px 30px 6px;border-radius:99px;background:#ffd23f;color:#111;font-family:Inter;font-weight:800;font-size:40px;letter-spacing:2px;white-space:nowrap;box-shadow:0 6px 0 rgba(0,0,0,.35),0 0 40px rgba(255,210,63,.45);border:4px solid #111}
+#onepct b{color:#d6141f}
+.title{position:absolute;top:176px;left:0;right:0;text-align:center}
+.title h1{font-family:Anton;font-weight:400;font-size:150px;line-height:1;color:#fff;letter-spacing:2px;text-shadow:0 6px 30px rgba(0,0,0,.85)}
+.title h1 b{font-weight:400;color:var(--g)}
+.title h2{font-family:Inter;font-weight:800;font-size:46px;color:#ff4747;margin-top:12px;letter-spacing:1px;text-shadow:0 4px 20px rgba(0,0,0,.9)}
+.hud{position:absolute;left:150px;right:150px;top:1330px;padding:26px 34px 20px;border-radius:24px;background:rgba(16,19,24,.92);border:3px solid rgba(255,255,255,.12);box-shadow:0 20px 60px rgba(0,0,0,.6)}
+.hud .top{display:flex;justify-content:space-between;font-family:Mono;font-size:26px;color:#8d96a0;letter-spacing:2px}
+.hud .row{display:flex;justify-content:space-between;align-items:baseline;margin-top:8px}
+.hud .res{font-family:Inter;font-weight:800;font-size:66px}
+.hud .val{font-family:Mono;font-size:42px}
+.hud .bar{position:relative;height:14px;border-radius:99px;margin-top:18px;background:linear-gradient(90deg,var(--r),var(--y) 38%,var(--g) 50%,var(--y) 62%,var(--r))}
+.hud .bar i{position:absolute;left:50%;top:-6px;width:4px;height:26px;margin-left:-2px;background:#0b0f0c;border-radius:2px;opacity:.55}
+.hud .mk{position:absolute;top:-14px;width:10px;height:42px;margin-left:-5px;background:#fff;border-radius:99px;box-shadow:0 0 16px #fff}
+.hud .lbl{display:flex;justify-content:space-between;font-family:Mono;font-size:24px;letter-spacing:3px;margin-top:14px}
+.hud.perfect{border-color:var(--g);box-shadow:0 0 70px rgba(43,255,122,.6)}
+#ask{position:absolute;left:130px;right:130px;top:1575px;border-radius:22px;padding:16px 10px;text-align:center;font-family:Inter;font-weight:800;font-size:42px;line-height:1.15;color:#111;background:var(--y);box-shadow:0 10px 40px rgba(0,0,0,.6)}
+#secret{position:absolute;left:0;right:0;top:420px;display:none;justify-content:center}
+#secret .card{background:rgba(11,15,12,.92);border:6px solid var(--g);border-radius:36px;padding:22px 56px;text-align:center;box-shadow:0 0 120px rgba(43,255,122,.7)}
+#secret .a{font-family:Mono;font-size:32px;color:#a8ffc8;letter-spacing:4px}
+#secret .c{font-family:Inter;font-weight:800;font-size:50px;color:#fff;margin-top:6px}
+#secret .c b{color:var(--g)}
+#rw{position:absolute;left:70px;top:420px;font-family:Mono;font-size:44px;color:#fff;letter-spacing:3px;opacity:0;text-shadow:0 0 20px rgba(0,0,0,.8)}
+</style></head>
+<body>
+<canvas id="cv" width="1080" height="1920"></canvas>
+<div id="ui">
+  <div id="tag"></div><div id="onepct">ONLY <b>1%</b> CAN DO IT</div>
+  <div class="title"><h1>PAUSE AT <b>0ms</b></h1><h2 id="h2">BEFORE IT POPS</h2></div>
+  <div id="rw">&#9664;&#9664; REWIND</div>
+  <div id="secret"><div class="card"><div class="a">0 ms &middot; PERFECT</div><div class="c">Comment <b id="word"></b> to prove it</div></div></div>
+  <div class="hud" id="hud">
+    <div class="top"><span id="lv"></span><span id="sp"></span></div>
+    <div class="row"><span class="res" id="res"></span><span class="val" id="val"></span></div>
+    <div class="bar"><i></i><div class="mk" id="mk"></div></div>
+    <div class="lbl"><span style="color:var(--r)">&#9664; EARLY</span><span style="color:var(--g)">PERFECT</span><span style="color:var(--o)">LATE &#9654;</span></div>
+  </div>
+  <div id="ask"></div>
+</div>
+<script type="module">
+// Motor "aprox": uma coisa aproxima-se devagar de outra (agulha → balão…) e a pessoa tem de parar no frame do toque.
+// timeline.json (mktl.py): attempts[{level,speed,start,contact,hold,rw,end}], total, offset. config.js define a cena.
+const TL=await (await fetch('/timeline.json')).json();
+const cv=document.getElementById('cv'),c=cv.getContext('2d');const W=1080,H=1920;
+let seed=1;const rnd=()=>{seed=(seed*16807)%2147483647;return (seed-1)/2147483646;};
+const K={c,W,H,rnd,setSeed:s=>{seed=s;},
+  lin(x0,y0,x1,y1,st){const g=c.createLinearGradient(x0,y0,x1,y1);st.forEach(([o,col])=>g.addColorStop(o,col));return g;},
+  rad(x,y,r0,r1,st,x1=x,y1=y){const g=c.createRadialGradient(x,y,r0,x1,y1,r1);st.forEach(([o,col])=>g.addColorStop(o,col));return g;},
+  ell(x,y,rx,ry,rot=0){c.beginPath();c.ellipse(x,y,Math.max(.1,rx),Math.max(.1,ry),rot,0,Math.PI*2);},
+  ease:t=>1-Math.pow(1-t,3),inout:t=>t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2};
+await Promise.all(['400 80px Anton','800 27px Inter','700 30px Mono'].map(f=>document.fonts.load(f).catch(()=>{})));
+const SC=(await import('/config.js')).default(K);
+const $=id=>document.getElementById(id);
+$('tag').textContent=SC.tag||'';$('ask').innerHTML=SC.ask||'';if(SC.h2)$('h2').textContent=SC.h2;if(SC.askStyle)Object.assign($('ask').style,SC.askStyle);
+window.renderAt=(f0)=>{const fps=TL.fps;const f=(f0+TL.offset)%TL.total;const A=TL.attempts;const ai=A.findIndex(x=>f>=x.start&&f<x.end);const a=A[ai];const nx=A[(ai+1)%A.length];
+  const k=f-a.contact;let st;
+  // fases: approach (u 0→1), contact (k==0: congelado no toque), after (k>0: rebenta), rewind (volta atrás e troca para a próxima)
+  if(k<0)st={phase:'approach',u:(f-a.start)/(a.contact-a.start),k};
+  else if(k===0)st={phase:'contact',u:1,k};
+  else if(k<a.hold)st={phase:'after',u:1,k,t:k/fps};
+  else{const rw=(k-a.hold+1)/(a.rw+1);st=rw<0.7?{phase:'rewind',u:1-K.inout(rw/0.7),k,rw}:{phase:'next',u:0,k,rw,w:(rw-0.7)/0.3};}
+  st.i=st.phase==='next'?(ai+1)%A.length:ai;st.level=a.level;st.f=f;st.fps=fps;
+  c.save();SC.draw(st);c.restore();
+  const ms=Math.round(k*1000/fps);let res,col;
+  if(ms===0){res='PERFECT!';col='var(--g)';}else if(Math.abs(ms)<=100){res='ALMOST!';col='var(--y)';}else if(ms<0){res='TOO EARLY';col='var(--r)';}else{res='TOO LATE';col='var(--o)';}
+  $('lv').textContent=`LEVEL ${a.level} / ${A.length}`;$('sp').textContent=`SPEED ${Math.round(a.speed*100)}%`;
+  $('res').textContent=res;$('res').style.color=col;$('val').textContent=(ms>0?'+':'')+ms+' ms';$('val').style.color=col;
+  $('mk').style.left=(50+Math.max(-1,Math.min(1,ms/1000))*50)+'%';$('hud').classList.toggle('perfect',ms===0);
+  $('secret').style.display=k===0?'flex':'none';$('word').textContent=SC.attempts[ai].word;
+  $('rw').style.opacity=(st.phase==='rewind'||st.phase==='next')?(0.55+0.45*Math.abs(Math.sin(f*0.9))):0;};
+window.hideUI=()=>{$('ui').style.display='none';};
+await document.fonts.ready;window.ready=true;
+</script>
+</body></html>
