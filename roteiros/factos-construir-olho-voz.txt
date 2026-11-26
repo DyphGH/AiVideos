@@ -1,6 +1,6 @@
-2 FATOS (BR) — Como construir um OLHO do zero? (26/11/2026)  (~24 s)
-Formato inspirado no "Como construir um coração do zero?" (@golgimedicina): monta-se o órgão peça a peça, uma palavra de legenda de cada vez, e no fim o boneco a usar o olho.
-Texto no topo desde o frame 0: "COMO CONSTRUIR UM OLHO DO ZERO?" — bola de gelatina já a cair e a ganhar forma, nunca parada.
+2 FATOS (BR) — Como construir um OLHO do zero? (26/11/2026)  (~28 s)
+Formato do "Como construir um coração do zero?" (@golgimedicina): cada peça é uma "solução" que cria um PROBLEMA ao boneco (você), até chegar à solução verdadeira. Tensão em escada: escuro → cego → borrado → de cabeça pra baixo → enxerga.
+Texto no topo desde o frame 0: "COMO CONSTRUIR UM OLHO DO ZERO?" — boneco já às apalpadelas no escuro com uma bola no lugar do olho.
 
 FONTES
 - O interior do olho é cheio de um gel transparente (humor vítreo). — American Academy of Ophthalmology
@@ -10,26 +10,28 @@ FONTES
 
 VOZ DO GABRIEL
 [curious] Como construir um olho do zero?
-[playful] Primeiro: uma bola cheia de gelatina.
-[excited] Faz um furinho na frente… a pupila. É por ali que a luz entra!
-[curious] Atrás do furo, uma lente que ajusta o foco.
-[amazed] E no fundo, uma tela: a retina… só que a imagem chega de cabeça pra baixo!
-[whispers] Quem desvira é o teu cérebro.
-[excited] Liga um cabo até ele… e pronto: você tá enxergando!
+[playful] Pega uma bola… e você? Não vê nada, tá tudo escuro!
+[excited] Então faz um furo pra luz entrar… mas entra luz demais e você fica cego!
+[curious] Põe uma cortina em volta do furo, a íris: com sol, ela fecha.
+[sighs] Agora a luz tá certa… mas tá tudo borrado!
+[excited] Coloca uma lente atrás do furo… e foca!
+[amazed] Ficou nítido… só que de cabeça pra baixo!
+[whispers] Liga um cabo até o cérebro… e ele desvira tudo.
 [playful] Já sabia? Comenta GÊNIO. Não sabia? Comenta CURIOSO.
 
-NOTAS (cenas)
-- Frame 0: bola de gelatina a cair numa bancada e a fazer "boing", título no topo.
-- "furinho": dedo/broca faz o furo, aparece íris colorida + pupila; raios de luz a entrar.
-- "lente": lente transparente desliza para dentro, raios a focar num ponto.
-- "retina": corte do olho; no fundo aparece uma casinha/árvore DE CABEÇA PRA BAIXO.
-- "cérebro desvira": cérebro rosa roda a imagem para a posição certa.
-- "cabo": nervo ótico liga ao cérebro com faíscas; boneco pisca e sorri.
+NOTAS (cenas — cada solução mostra o problema no boneco)
+- Frame 0: boneco com uma bola branca lisa no lugar do olho, ecrã quase preto, braços esticados a tropeçar. Título no topo.
+- "furo": broca faz a pupila; raios de sol enormes entram, ecrã fica BRANCO, boneco tapa a cara e cai pro lado.
+- "íris": cortina colorida em anel fecha à volta do furo (pupila encolhe com o sol).
+- "borrado": vista do boneco toda desfocada (blur), boneco bate na parede.
+- "lente": lente desliza para dentro, a imagem fica nítida de repente.
+- "cabeça pra baixo": a vista do boneco vira 180°, boneco fica tonto/de pernas pro ar.
+- "cabo / cérebro": nervo liga ao cérebro, faíscas, a imagem roda para a posição certa, boneco sorri.
 - Fim (acaba com a voz): duas plaquinhas GÊNIO / CURIOSO.
 
 LEGENDA
 Como construir um olho do zero? 👁️🛠️
-Gelatina + furinho + lente + tela… e a imagem chega de CABEÇA PRA BAIXO 🙃
+Bola → escuro 🌑 Furo → cego ☀️ Íris → borrado 😵 Lente → de CABEÇA PRA BAIXO 🙃
 Quem desvira é o teu cérebro 🧠
 Já sabia? Comenta GÊNIO 🤓 Não sabia? Comenta CURIOSO 👀
 #curiosidades #fatos #olho #corpohumano #2fatos
