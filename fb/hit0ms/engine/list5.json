@@ -1,0 +1,12 @@
+[
+ {"n":"20-odd-candy-cane","mode":"grid","icon":"cane","t1":"FIND THE ODD CANDY CANE","t2":"ONE HAS ITS STRIPES THE WRONG WAY",
+  "acc":"#ff9aa2","bg1":"#2a0710","bg2":"#8a1f2e","panel":"#fff7f7","lab":"#8a3a46","cols":8,"rows":10,"or":2,"oc":5,"sc":0.95},
+ {"n":"21-spot-the-q","mode":"grid","icon":"letter","font":"62px Anton","char":"O","odd":"Q","ink":"#0e2a2a",
+  "t1":"SPOT THE Q AMONG THE O'S","t2":"YOU HAVE 10 SECONDS","acc":"#7ff0d8","bg1":"#05201f","bg2":"#0f6b62","panel":"#f3fffc","lab":"#2f7a70","cols":10,"rows":12,"or":5,"oc":1,"sc":1},
+ {"n":"22-legs-reindeer-elves","mode":"legs2","t1":"HOW MANY LEGS?","t2":"3 REINDEER + 2 ELVES... COUNT CAREFULLY",
+  "acc":"#ffd27a","bg1":"#1c1208","bg2":"#6a3d12","panel":"#fff9ef","ink":"#2a1608","ans":16},
+ {"n":"23-cafe-wall","mode":"cafe","t1":"ARE THESE LINES STRAIGHT?","t2":"LOOK AT THE GREY LINES... YES OR NO?",
+  "acc":"#c9c9ff","bg1":"#0d0d1a","bg2":"#34345a","panel":"#f6f6ff","ink":"#14142a","ans":"YES!"},
+ {"n":"24-snowman-no-nose","mode":"grid","icon":"snowface","t1":"FIND THE SNOWMAN WITHOUT A NOSE","t2":"COMMENT THE ROW + COLUMN",
+  "acc":"#8fd3ff","bg1":"#06132b","bg2":"#1d4f8a","panel":"#f4f9ff","lab":"#3a5f8a","cols":9,"rows":9,"or":3,"oc":7,"sc":0.98}
+]
