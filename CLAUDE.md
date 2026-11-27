@@ -20,3 +20,4 @@
 - Por dia, sozinhos: 2 Hit0Ms (12:00 e 18:00) prontos a aprovar + 1 guião 2 Factos verificado à espera da voz. Nada sai sem o Daniel carregar em ✓ Aprovar no Estúdio (estado "pronto" → "aprovado"/"agendado").
 - Pesquisa: contas do nicho (lista em estado/agentes.espiar, editável na página) + as contas dele. Na 2 Factos nunca repetir um tema que ele já fez.
 - Hit0Ms tem dois formatos: "queda" (`hit0ms/engine/vNN`) e "aprox" (`hit0ms/aprox`, ver README — agulha → balão e afins).
+- Legendas da 2 Factos: sempre sincronizadas com a voz via `factos-canvas/align3.py` (o engine.html usa os tempos de cada bloco). Nunca dividir a linha em partes iguais.
