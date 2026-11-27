@@ -14,7 +14,7 @@ const K={c,NV:'#0d1636',Y:'#ffd21f',
    c.fillStyle=K.rad(cx,cy,50,1300,[[0,'rgba(255,255,255,.12)'],[1,'rgba(0,0,0,.45)']]);c.fillRect(0,0,1080,1920);}
 };
 const S=(await import('/scene.js')).default(K);const CAP=await (await fetch('/captions.json')).json();
-function caption(t){const l=CAP.lines.find(l=>t>=l.start&&t<l.end);if(!l)return;const per=(l.end-l.start)/l.chunks.length;const i=Math.min(l.chunks.length-1,Math.floor((t-l.start)/per));const loc=t-l.start-i*per;const sc=loc<.1?1.15-loc/.1*.15:1;
+function caption(t){const l=CAP.lines.find(l=>t>=l.start&&t<l.end);if(!l)return;let i,loc;if(l.times){i=0;while(i+1<l.times.length&&t>=l.times[i+1])i++;loc=t-l.times[i];}else{const per=(l.end-l.start)/l.chunks.length;i=Math.min(l.chunks.length-1,Math.floor((t-l.start)/per));loc=t-l.start-i*per;}const sc=loc<.1?1.15-loc/.1*.15:1;
   const parts=l.chunks[i].split('*').map((s,k)=>[s,k%2?'#ffd21f':'#ffffff']);c.save();c.translate(540,CAP.y);c.scale(sc,sc);K.rich(parts,0,0,92,20);c.restore();}
 window.renderAt=(f)=>{const t=f/30;c.setTransform(1,0,0,1,0,0);c.clearRect(0,0,1080,1920);S.frame(t);if(!window.nocap)caption(t);};
 await document.fonts.load('900 40px M');window.ready=true;
