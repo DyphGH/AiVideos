@@ -40,6 +40,22 @@ for a in TL['attempts']:
             f0=rng.uniform(2500,7500);dd=rng.uniform(.04,.12);w=tt(dd);add(np.sin(2*np.pi*f0*w)*np.exp(-w*(40+rng.uniform(0,60))),p+abs(rng.normal(0.25,0.3)),rng.uniform(.05,.18))
         rw=vf(cf+a['hold']);w=tt(.35);f=np.linspace(2400,300,len(w));add(np.sin(2*np.pi*np.cumsum(f)/SR)*np.sin(np.pi*w/.35)*0.18,rw)
         continue
+    if KIND=='melancia':
+        # faca a descer: aço a vibrar (parciais agudos) + sopro grave que cresce
+        w=tt(dur);add(lp(noise(dur),500)*np.minimum(1,w/0.2)*(0.15+0.85*(w/dur)**2),vf(s),0.25)
+        add(sum(np.sin(2*np.pi*f0*w)*g0 for f0,g0 in ((3150,.5),(4720,.3),(6280,.2)))*np.minimum(1,w/0.4)*(0.3+0.7*w/dur),vf(s),0.05)
+        p=vf(cf+1)
+        add(hp(noise(.04),2500)*np.exp(-tt(.04)*90),p,0.9)                                         # casca a estalar
+        w=tt(.35);add(np.sin(2*np.pi*np.cumsum(95*np.exp(-w*9)+45)/SR)*np.exp(-w*12),p,0.9)          # chop grave
+        w=tt(.45);sq=bp(noise(.45),300,2200)*(0.6+0.4*np.sin(2*np.pi*w*(18+30*w)));add(sq*np.exp(-w*6),p+0.01,0.55)   # polpa sumarenta
+        w=tt(.18);add(np.sin(2*np.pi*np.cumsum(220*np.exp(-w*14)+120)/SR)*np.exp(-w*25),vf(cf+2),0.7) # faca bate na tábua
+        add(bp(noise(.6),1500,7000)*np.exp(-tt(.6)*7),p+0.02,0.25)                                 # spray
+        for _ in range(26):                                                                         # gotas a cair
+            dd=rng.uniform(.02,.05);add(bp(noise(dd),600,2500)*np.exp(-tt(dd)*120),p+abs(rng.normal(0.3,0.15)),rng.uniform(.08,.2))
+        w=tt(.3);add(lp(noise(.3),700)*np.exp(-tt(.3)*14),p+0.28,0.5)                               # metades a tombar
+        rw=vf(cf+a['hold']);w=tt(.35);f=np.linspace(2400,300,len(w));add(np.sin(2*np.pi*np.cumsum(f)/SR)*np.sin(np.pi*w/.35)*0.18,rw)
+        add(bp(noise(.35),500,4000)*np.sin(np.pi*tt(.35)/.35),rw,0.15)
+        continue
     # POP: estalo seco + ar + borracha
     p=vf(cf+1);add(hp(noise(.06),1200)*np.exp(-tt(.06)*70),p,1.0)
     w=tt(.25);add(np.sin(2*np.pi*np.cumsum(90*np.exp(-w*10)+40)/SR)*np.exp(-w*16),p,0.9)
