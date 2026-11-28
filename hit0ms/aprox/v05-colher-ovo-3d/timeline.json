@@ -1,0 +1,43 @@
+{
+ "fps": 30,
+ "attempts": [
+  {
+   "level": 1,
+   "speed": 0.38,
+   "start": 0,
+   "contact": 78,
+   "hold": 26,
+   "rw": 10,
+   "end": 114
+  },
+  {
+   "level": 2,
+   "speed": 0.53,
+   "start": 114,
+   "contact": 171,
+   "hold": 26,
+   "rw": 10,
+   "end": 207
+  },
+  {
+   "level": 3,
+   "speed": 0.72,
+   "start": 207,
+   "contact": 249,
+   "hold": 26,
+   "rw": 10,
+   "end": 285
+  },
+  {
+   "level": 4,
+   "speed": 1.0,
+   "start": 285,
+   "contact": 315,
+   "hold": 35,
+   "rw": 10,
+   "end": 360
+  }
+ ],
+ "total": 360,
+ "offset": 321
+}

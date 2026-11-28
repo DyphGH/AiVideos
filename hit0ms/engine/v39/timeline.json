@@ -1,0 +1,55 @@
+{
+ "fps": 30,
+ "attempts": [
+  {
+   "level": 1,
+   "speed": 0.4,
+   "start": 0,
+   "release": 20,
+   "impact": 47,
+   "hold": 14,
+   "rw": 8,
+   "obj": "cookie",
+   "word": "CRUNCH",
+   "end": 69
+  },
+  {
+   "level": 2,
+   "speed": 0.6,
+   "start": 69,
+   "release": 89,
+   "impact": 107,
+   "hold": 14,
+   "rw": 8,
+   "obj": "cocoa",
+   "word": "COZY",
+   "end": 129
+  },
+  {
+   "level": 3,
+   "speed": 0.8,
+   "start": 129,
+   "release": 153,
+   "impact": 167,
+   "hold": 14,
+   "rw": 8,
+   "obj": "cane",
+   "word": "MINTY",
+   "end": 189
+  },
+  {
+   "level": 4,
+   "speed": 1.0,
+   "start": 189,
+   "release": 201,
+   "impact": 212,
+   "hold": 20,
+   "rw": 8,
+   "obj": "pudding",
+   "word": "LEGEND",
+   "end": 240
+  }
+ ],
+ "total": 240,
+ "offset": 216
+}

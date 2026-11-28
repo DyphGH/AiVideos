@@ -56,6 +56,23 @@ for a in TL['attempts']:
         rw=vf(cf+a['hold']);w=tt(.35);f=np.linspace(2400,300,len(w));add(np.sin(2*np.pi*np.cumsum(f)/SR)*np.sin(np.pi*w/.35)*0.18,rw)
         add(bp(noise(.35),500,4000)*np.sin(np.pi*tt(.35)/.35),rw,0.15)
         continue
+    if KIND=='ovo':
+        # colher a descer: sopro grave suave que cresce
+        w=tt(dur);add(lp(noise(dur),450)*np.minimum(1,w/0.2)*(0.15+0.85*(w/dur)**2),vf(s),0.22)
+        p=vf(cf+1)
+        w=tt(.3);add(sum(np.sin(2*np.pi*f0*w)*g0*np.exp(-w*d0) for f0,g0,d0 in ((2350,.6,18),(3900,.35,26),(6100,.2,40))),p,0.35)   # "tink" da colher na casca
+        add(hp(noise(.025),3000)*np.exp(-tt(.025)*160),p,1.0)                                       # estalo seco da casca
+        for j in range(14):                                                                         # racha a correr (crepitar curto)
+            dd=rng.uniform(.004,.012);add(hp(noise(dd),2500)*np.exp(-tt(dd)*400),p+0.01+j*0.006+rng.uniform(0,.004),rng.uniform(.25,.6))
+        w=tt(.2);add(np.sin(2*np.pi*np.cumsum(140*np.exp(-w*12)+70)/SR)*np.exp(-w*20),vf(cf+2),0.45)   # casca a ceder
+        w=tt(.5);gl=bp(noise(.5),150,1200)*(0.55+0.45*np.sin(2*np.pi*w*(9+22*w)));add(gl*np.exp(-w*7)*np.minimum(1,w/0.03),vf(cf+3),0.75)   # clara a cair (glop molhado)
+        w=tt(.16);add(np.sin(2*np.pi*np.cumsum(260*np.exp(-w*16)+90)/SR)*np.exp(-w*22),vf(cf+6),0.35)  # gema a assentar (blop)
+        add(bp(noise(.35),800,4000)*np.exp(-tt(.35)*10),vf(cf+5),0.18)                              # splash
+        for _ in range(12):                                                                          # lascas a tilintar na ardósia
+            dd=rng.uniform(.01,.03);w=tt(dd);add(bp(noise(dd),2500,7000)*np.exp(-w*180),p+abs(rng.normal(0.3,0.12)),rng.uniform(.08,.2))
+        rw=vf(cf+a['hold']);w=tt(.35);f=np.linspace(2400,300,len(w));add(np.sin(2*np.pi*np.cumsum(f)/SR)*np.sin(np.pi*w/.35)*0.18,rw)
+        add(bp(noise(.35),500,4000)*np.sin(np.pi*tt(.35)/.35),rw,0.15)
+        continue
     # POP: estalo seco + ar + borracha
     p=vf(cf+1);add(hp(noise(.06),1200)*np.exp(-tt(.06)*70),p,1.0)
     w=tt(.25);add(np.sin(2*np.pi*np.cumsum(90*np.exp(-w*10)+40)/SR)*np.exp(-w*16),p,0.9)
